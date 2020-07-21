@@ -1,0 +1,9 @@
+name: SpyGame
+main: com.laskdjlaskdj12.spygame.Run
+version: 0.0.1
+description: Spy game for Streamer
+author: laskdjlaskdj12
+
+commands:
+  start:
+    description: "랜덤으로 사람들을 뽑아서 게임을 시작합니다."
