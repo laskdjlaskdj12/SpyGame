@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class MessageContent {
-    private World world;
+    private final World world;
 
     public MessageContent(World world) {
         this.world = world;
