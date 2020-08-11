@@ -13,9 +13,7 @@ public class BasicCharacter implements ICharacter {
     private ILifecycle lifeCycle;
 
     @Override
-    public void changeState(LIFE_STATUS born) {
-        lifeCycle = LifeCycleFactory.createLifeCycle(born);
-    }
+    public void changeState(LIFE_STATUS born) { lifeCycle = LifeCycleFactory.createLifeCycle(born); }
 
     @Override
     public void setRole(IRole role) {
@@ -28,12 +26,8 @@ public class BasicCharacter implements ICharacter {
     }
 
     @Override
-    public IRole getRole() {
-        return role;
-    }
+    public IRole getRole() { return role; }
 
     @Override
-    public Player getPlayer() {
-        return player;
-    }
+    public Player getPlayer() { return player; }
 }
