@@ -5,4 +5,9 @@ public class Cervent implements IRole {
     public String name() {
         return "Cervent";
     }
+
+    @Override
+    public String KRName() {
+        return "신하";
+    }
 }

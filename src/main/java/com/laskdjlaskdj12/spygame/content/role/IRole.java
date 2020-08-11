@@ -1,5 +1,7 @@
 package com.laskdjlaskdj12.spygame.content.role;
 
 public interface IRole {
-    public String name();
+    String name();
+
+    String KRName();
 }

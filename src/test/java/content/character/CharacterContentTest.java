@@ -65,5 +65,7 @@ public class CharacterContentTest {
         Assert.assertTrue(isCharacterMarlineInclude);
         Assert.assertTrue(isCharacterPercivalInclude);
         Assert.assertTrue(isCharacterCerventInclude);
+
+        iCharacters.forEach(character -> System.out.println(character.getRole().KRName()));
     }
 }

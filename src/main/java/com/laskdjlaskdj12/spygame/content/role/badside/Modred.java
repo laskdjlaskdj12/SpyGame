@@ -7,4 +7,9 @@ public class Modred implements IRole {
     public String name() {
         return "Modred";
     }
+
+    @Override
+    public String KRName() {
+        return "모드레드";
+    }
 }

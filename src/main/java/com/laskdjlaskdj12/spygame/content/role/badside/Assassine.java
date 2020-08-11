@@ -7,4 +7,9 @@ public class Assassine implements IRole {
     public String name() {
         return "Assassine";
     }
+
+    @Override
+    public String KRName() {
+        return "어쌔신";
+    }
 }

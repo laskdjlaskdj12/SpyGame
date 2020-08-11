@@ -7,4 +7,8 @@ public class Percival implements IRole {
     public String name() {
         return "Percival";
     }
+    @Override
+    public String KRName() {
+        return "퍼시벌";
+    }
 }

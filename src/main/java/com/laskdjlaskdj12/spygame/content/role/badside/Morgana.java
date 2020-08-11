@@ -7,4 +7,9 @@ public class Morgana implements IRole {
     public String name() {
         return "Morgana";
     }
+
+    @Override
+    public String KRName() {
+        return "모르가나";
+    }
 }

@@ -7,4 +7,9 @@ public class Marline implements IRole {
     public String name() {
         return "Marline";
     }
+
+    @Override
+    public String KRName() {
+        return "멀린";
+    }
 }
