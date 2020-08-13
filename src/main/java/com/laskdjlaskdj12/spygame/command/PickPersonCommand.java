@@ -26,7 +26,7 @@ public class PickPersonCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //Todo: 리팩토링 및 라이브 테스트 준비할것ㅆ
+        //Todo: 리팩토링 및 라이브 테스트 준비할것
 
         List<ICharacter> characters = gameModeContent.characterList();
 
