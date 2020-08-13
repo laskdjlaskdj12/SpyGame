@@ -7,3 +7,10 @@ author: laskdjlaskdj12
 commands:
   start:
     description: "랜덤으로 사람들을 뽑아서 게임을 시작합니다."
+    usage: /<command>
+  vote:
+    description: "투표를 시작합니다."
+    usage: /<command>
+  pickPerson:
+    description: "지명 투표를 시작합니다."
+    usage: /<command>

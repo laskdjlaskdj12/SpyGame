@@ -1,11 +1,11 @@
 package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.CharacterContent;
+import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.RoleContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
-import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -16,18 +16,21 @@ import org.bukkit.entity.Player;
 import java.awt.*;
 import java.util.List;
 
-public class Start implements CommandExecutor {
+public class StartCommand implements CommandExecutor {
 
-    private RoleContent roleContent;
-    private CharacterContent characterContent;
-    private MessageContent messageContent;
+    private final RoleContent roleContent;
+    private final CharacterContent characterContent;
+    private final MessageContent messageContent;
+    private final GameModeContent gameModeContent;
 
-    public Start(RoleContent roleContent,
-                 CharacterContent characterContent,
-                 MessageContent messageContent) {
+    public StartCommand(RoleContent roleContent,
+                        CharacterContent characterContent,
+                        MessageContent messageContent,
+                        GameModeContent gameModeContent) {
         this.roleContent = roleContent;
         this.characterContent = characterContent;
         this.messageContent = messageContent;
+        this.gameModeContent = gameModeContent;
     }
 
     @Override
@@ -63,11 +66,8 @@ public class Start implements CommandExecutor {
         List<ICharacter> characters = characterContent.createCharacter(roleList, players);
         messageContent.sendWorldMessage(Color.YELLOW + "각 캐릭터마다 역활 배정 완료!");
 
-//        messageContent.sendWorldMessage(Color.YELLOW + "각 역활 이펙트들 및 OBS 효과 세팅중....");
-        // 각 character 마다 상황들을 보여줌.
-//        for (ICharacter character : characters) {
-//            character.changeState(LIFE_STATUS.BORN);
-//        }
+        // 유저정보들을 저장
+        gameModeContent.saveCharacter(characters);
 
         messageContent.sendWorldMessage("모든 세팅이 완료되었습니다!! Dev by " +  Color.YELLOW + "laskdjlaskdj12 (라스크) " + Color.WHITE + "& Thanks for " + Color.GREEN + "우리들의 마인크래프트 공간");
         return true;
