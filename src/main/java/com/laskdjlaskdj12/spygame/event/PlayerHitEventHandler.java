@@ -23,6 +23,8 @@ public class PlayerHitEventHandler implements Listener {
 
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent event) {
+
+        //Todo: 리팩토링할것
         //플레이어의 인터랙티브 이벤트를 더함
         if (event.getItem() == null || event.getItem().getType() != Material.GOLDEN_SWORD) {
             return;
