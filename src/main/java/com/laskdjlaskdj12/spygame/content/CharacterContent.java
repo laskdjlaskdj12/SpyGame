@@ -27,4 +27,15 @@ public class CharacterContent {
                 })
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Todo: 디버그용이므로 반드시 제거를 해야할것
+     * @param sender
+     */
+    public ICharacter createCharacterDebug(Player sender) {
+        ICharacter iCharacter = new BasicCharacter();
+        iCharacter.setPlayer(sender);
+
+        return iCharacter;
+    }
 }

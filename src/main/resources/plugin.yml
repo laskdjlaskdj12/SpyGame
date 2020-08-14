@@ -3,6 +3,7 @@ main: com.laskdjlaskdj12.spygame.Run
 version: 0.0.1
 description: Spy game for Streamer
 author: laskdjlaskdj12
+api-version: 1.13
 
 commands:
   start:
@@ -13,4 +14,13 @@ commands:
     usage: /<command>
   pickPerson:
     description: "지명 투표를 시작합니다."
+    usage: /<command>
+  원정:
+    description: "원정 진행 커맨드입니다."
+    usage: /<command>
+  원정끝:
+    description: "원정 진행 커맨드입니다."
+    usage: /<command>
+  투표결과:
+    description: "투표결과 디버깅 커맨드입니다."
     usage: /<command>
