@@ -1,4 +1,4 @@
-package com.laskdjlaskdj12.spygame.command;
+package com.laskdjlaskdj12.spygame.command.experdition;
 
 import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
@@ -39,17 +39,6 @@ public class StartExperditionCommand implements CommandExecutor {
 
         //원정이 없다면 원정을 등록함
         experditionContent.init();
-
-        /**
-         * 디버그모드로 원정 캐릭터 사람을 추가
-         */
-
-        ICharacter iCharacter = characterContent.createCharacterDebug((Player)sender);
-        experditionContent.addExperditioner(iCharacter);
-
-        //Todo: 디버깅 커맨드이므로 지워야합니다.
-        sender.sendMessage("[테스트] : " + iCharacter.getPlayer().getDisplayName() + "님을 원정대원으로 추가했습니다.");
-
         return true;
     }
 }

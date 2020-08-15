@@ -30,6 +30,7 @@ public class ExperditionContent {
     }
 
     public void stopExperdition() {
+        //Todo: 원정대의 정보들을 전부 초기화
         experditionInfo = null;
     }
 

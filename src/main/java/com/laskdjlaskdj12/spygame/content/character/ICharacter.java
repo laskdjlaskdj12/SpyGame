@@ -1,7 +1,9 @@
 package com.laskdjlaskdj12.spygame.content.character;
 
 import com.laskdjlaskdj12.spygame.content.role.IRole;
+import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
+import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 
 /*
@@ -15,7 +17,11 @@ public interface ICharacter {
 
     void setPlayer(Player player);
 
+    void setGameRole(GAME_ROLE gameRole);
+
     IRole getRole();
 
     Player getPlayer();
+
+    GAME_ROLE getGameRole();
 }

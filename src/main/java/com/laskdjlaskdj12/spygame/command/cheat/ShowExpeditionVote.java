@@ -1,4 +1,4 @@
-package com.laskdjlaskdj12.spygame.command.test;
+package com.laskdjlaskdj12.spygame.command.cheat;
 
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import org.bukkit.command.Command;
