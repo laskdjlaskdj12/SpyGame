@@ -30,15 +30,15 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK || !event.hasBlock()) {
-            return;
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
+                event.hasBlock() &&
+                event.getClickedBlock().getType() == Material.GOLD_BLOCK) {
+            voteExperditionResult(event);
         }
+    }
 
-        if (event.getClickedBlock().getType() != Material.GOLD_BLOCK) {
-            return;
-        }
-
-        //Todo: 백엔드 데이터를 만듬
+    private void voteExperditionResult(PlayerInteractEvent event) {
+        //Todo: 백엔드에 데이터 전송하는 기능 추가
 
         Player player = event.getPlayer();
         World world = player.getWorld();
