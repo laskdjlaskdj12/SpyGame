@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.content;
 
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
+import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -48,5 +49,20 @@ public class GameModeContent {
      */
     public void addCharacterDebug(ICharacter character){
         characterList.add(character);
+    }
+
+    public ExperditionContent experditionContent(){
+        return experditionContent;
+    }
+
+    @Nullable
+    public ICharacter findCharacterByGameRole(GAME_ROLE gameRole) {
+        for(ICharacter iCharacter: characterList){
+            if(iCharacter.getGameRole() == gameRole){
+                return iCharacter;
+            }
+        }
+
+        return null;
     }
 }

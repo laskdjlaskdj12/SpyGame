@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
 
 public class ExperditionContent {
 
@@ -61,7 +62,25 @@ public class ExperditionContent {
                 .orElse(null);
     }
 
+    @Nullable
+    public List<ICharacter> applyExperditioner(){ return experditionInfo.getApplyCharacters(); }
+
     public int roundCount(){
         return experditionRoundCount;
+    }
+
+    public boolean changeVote(ICharacter victimCharacter) {
+        VoteInfo characterVote = experditionInfo.getVoteInfoList()
+                .stream()
+                .filter(voteInfo -> voteInfo.getVoteingCharacter() == victimCharacter)
+                .findFirst()
+                .orElse(null);
+
+        if(characterVote == null){
+            return false;
+        }
+
+        characterVote.setAi(!characterVote.isAi());
+        return true;
     }
 }
