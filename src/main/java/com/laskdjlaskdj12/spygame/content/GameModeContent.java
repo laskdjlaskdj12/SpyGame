@@ -10,6 +10,11 @@ import java.util.List;
 public class GameModeContent {
 
     private List<ICharacter> characterList = new ArrayList<>();
+    private final ExperditionContent experditionContent;
+
+    public GameModeContent(ExperditionContent experditionContent) {
+        this.experditionContent = experditionContent;
+    }
 
     public void saveCharacter(List<ICharacter> characters) {
         characterList = characters;
@@ -32,6 +37,10 @@ public class GameModeContent {
                 .filter(character -> character.getPlayer().getDisplayName().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int experditionCount(){
+        return experditionContent.roundCount();
     }
 
     /**

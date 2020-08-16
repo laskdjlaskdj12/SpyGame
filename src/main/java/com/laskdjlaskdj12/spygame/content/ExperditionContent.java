@@ -11,7 +11,7 @@ import java.util.HashSet;
 public class ExperditionContent {
 
     private ExperditionInfo experditionInfo;
-    private int experditionCount;
+    private int experditionRoundCount;
 
     public boolean isExsist() {
         return experditionInfo != null;
@@ -25,7 +25,7 @@ public class ExperditionContent {
      * 원정 관련된 초기화
      */
     public void init() {
-        this.experditionCount = 0;
+        this.experditionRoundCount = 0;
         this.experditionInfo = new ExperditionInfo();
     }
 
@@ -59,5 +59,9 @@ public class ExperditionContent {
                 .filter(character -> character.getPlayer().getUniqueId() == player.getUniqueId())
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int roundCount(){
+        return experditionRoundCount;
     }
 }
