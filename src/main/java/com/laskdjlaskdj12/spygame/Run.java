@@ -8,7 +8,7 @@ import com.laskdjlaskdj12.spygame.command.cheat.ForceAddExpeditionCommand;
 import com.laskdjlaskdj12.spygame.command.cheat.ForceCreateCharacterCommand;
 import com.laskdjlaskdj12.spygame.command.cheat.ShowExpeditionVote;
 import com.laskdjlaskdj12.spygame.content.*;
-import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
+import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerJoinEventHandler;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +34,7 @@ public class Run extends JavaPlugin {
         //Todo: 이벤트 핸들러 construct들에 컨텐츠 핸들러 factory를 dependency로 리팩토링
         //이벤트 등록
         getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
-        getServer().getPluginManager().registerEvents(new PlayerHitEventHandler(experditionContent), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractiveEventHandler(experditionContent), this);
 
         //커맨드 등록
         getCommand("start").setExecutor(new StartCommand(roleContent, characterContent, messageContent, gameModeContent));

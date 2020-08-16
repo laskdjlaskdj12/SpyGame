@@ -13,11 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class PlayerHitEventHandler implements Listener {
+public class PlayerInteractiveEventHandler implements Listener {
 
     private final ExperditionContent experditionContent;
 
-    public PlayerHitEventHandler(ExperditionContent experditionContent) {
+    public PlayerInteractiveEventHandler(ExperditionContent experditionContent) {
         this.experditionContent = experditionContent;
     }
 
