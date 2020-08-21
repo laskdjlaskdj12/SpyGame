@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame;
 
 import com.laskdjlaskdj12.spygame.command.*;
+import com.laskdjlaskdj12.spygame.command.cheat.CollectVoteResultBlock;
 import com.laskdjlaskdj12.spygame.command.experdition.AddExperditionerCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StartExperditionCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StopExperditionCommand;
@@ -45,11 +46,13 @@ public class Run extends JavaPlugin {
         getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent, experditionContent, characterContent, this));
         getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
         getCommand("원정종료").setExecutor(new StopExperditionCommand(gameModeContent, experditionContent, characterContent, this));
+        getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
+        getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
     }
 
     @Override

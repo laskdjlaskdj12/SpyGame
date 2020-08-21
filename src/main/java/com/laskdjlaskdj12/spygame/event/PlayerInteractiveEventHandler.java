@@ -26,15 +26,32 @@ public class PlayerInteractiveEventHandler implements Listener {
 
         //Todo: 리팩토링할것
         //플레이어의 인터랙티브 이벤트를 더함
-        if (event.getItem() == null || event.getItem().getType() != Material.GOLDEN_SWORD) {
+        if (event.getItem() == null) {
             return;
         }
 
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
+        if(event.getItem().getType() == Material.WOODEN_AXE){
+            showBlockData(event);
+        }
+
+        else if (event.getItem().getType() == Material.GOLDEN_SWORD &&
+                event.getAction() == Action.LEFT_CLICK_BLOCK &&
                 event.hasBlock() &&
                 event.getClickedBlock().getType() == Material.GOLD_BLOCK) {
             voteExperditionResult(event);
         }
+    }
+
+    private void showBlockData(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
+
+        if(block == null){ return;}
+
+        double X = block.getLocation().getX();
+        double Y = block.getLocation().getY();
+        double Z = block.getLocation().getZ();
+
+        System.out.println("X : " + X + " Y : " + Y + " Z : " + Z);
     }
 
     private void voteExperditionResult(PlayerInteractEvent event) {

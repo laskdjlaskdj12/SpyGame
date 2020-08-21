@@ -56,6 +56,4 @@ public class PickPersonCommand implements CommandExecutor {
 
         return true;
     }
-
-
 }

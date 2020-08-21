@@ -83,4 +83,6 @@ public class ExperditionContent {
         characterVote.setAi(!characterVote.isAi());
         return true;
     }
+
+    public ExperditionInfo getExperditionInfo(){ return experditionInfo;}
 }
