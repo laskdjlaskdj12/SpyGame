@@ -23,7 +23,7 @@ public class CloseExpeditionCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         sender.sendMessage("원정을 끝냅니다.");
-        experditionContent.stopExperdition();
+        experditionContent.stop();
 
         return true;
     }

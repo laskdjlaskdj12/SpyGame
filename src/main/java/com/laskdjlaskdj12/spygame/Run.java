@@ -44,9 +44,10 @@ public class Run extends JavaPlugin {
         getCommand("vote").setExecutor(new VoteCommand(gameModeContent, this));
         getCommand("pickPerson").setExecutor(new PickPersonCommand(gameModeContent, this));
         getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent, experditionContent, characterContent, this));
-        getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
         getCommand("원정종료").setExecutor(new StopExperditionCommand(gameModeContent, experditionContent, characterContent, this));
+        getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
         getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
+        getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
