@@ -16,7 +16,7 @@ commands:
     description: "지명 투표를 시작합니다."
     usage: /<command>
 
-#    원정 커맨드
+#원정 커맨드
   원정:
     description: "원정 진행 커맨드입니다."
     usage: /<command>
@@ -26,13 +26,16 @@ commands:
   원정종료:
     description: "원정종료 커맨드입니다."
     usage: /<command>
+  마차시퀸스:
+    description: "원정종료 커맨드입니다."
+    usage: /<command>
 
 #투표 커맨드
   투표결과공개:
     description: "원정종료 커맨드입니다."
     usage: /<command>
 
-#    디버깅용 커맨드
+#디버깅용 커맨드
   투표결과:
     description: "투표결과 디버깅 커맨드입니다."
     usage: /<command>

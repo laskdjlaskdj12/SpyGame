@@ -60,16 +60,16 @@ public class StartCommand implements CommandExecutor {
         }
 
         // 각 player마다 역활들을 랜덤으로 정함
-        messageContent.sendWorldMessage(Color.YELLOW + "플레이어에게 역활을 랜덤으로 나누는 중...");
+        messageContent.sendWorldMessage(ChatColor.YELLOW + "플레이어에게 역활을 랜덤으로 나누는 중...");
 
         List<IRole> roleList = roleContent.assignmentRole(players);
         List<ICharacter> characters = characterContent.createCharacter(roleList, players);
-        messageContent.sendWorldMessage(Color.YELLOW + "각 캐릭터마다 역활 배정 완료!");
+        messageContent.sendWorldMessage(ChatColor.YELLOW + "각 캐릭터마다 역활 배정 완료!");
 
         // 유저정보들을 저장
         gameModeContent.saveCharacter(characters);
 
-        messageContent.sendWorldMessage("모든 세팅이 완료되었습니다!! Dev by " +  Color.YELLOW + "laskdjlaskdj12 (라스크) " + Color.WHITE + "& Thanks for " + Color.GREEN + "우리들의 마인크래프트 공간");
+        messageContent.sendWorldMessage("모든 세팅이 완료되었습니다!! Dev by " +  ChatColor.YELLOW + "laskdjlaskdj12 (라스크) " + ChatColor.WHITE + "& Thanks for " + ChatColor.GREEN + "우리들의 마인크래프트 공간");
         return true;
     }
 }

@@ -53,7 +53,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         }
 
         voteInfoList = experditionInfo.getVoteInfoList().stream()
-                .sorted((o1, o2) -> Boolean.compare(o1.isAi(), o2.isAi()))
+                .sorted((o1, o2) -> Boolean.compare(!o1.isAi(), !o2.isAi()))
                 .collect(Collectors.toList());
 
         taskID = Bukkit.getScheduler().runTaskTimer(javaPlugin, () -> {

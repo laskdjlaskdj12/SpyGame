@@ -30,7 +30,7 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
     }
 
     public static BukkitTask bukkitTask;
-    public static int timerCount = 10;
+    public static int timerCount = TickUtil.secondToTick(10);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -49,24 +49,25 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
 
                 //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
+                Bukkit.broadcastMessage("메인장소로 다들 티피를 시킵니다.");
                 return;
             }
 
             Bukkit.broadcastMessage(TickUtil.tickToSecond(timerCount) + "초 남았습니다.");
 
             //칼을 들고있는지 체크
-            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.KING);
-            if(kingCharacter == null){
-                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
-                return;
-            }
+//            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.);
+//            if(kingCharacter == null){
+//                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
+//                return;
+//            }
 
-            ItemStack handItem = kingCharacter.getPlayer()
+            ItemStack handItem = player
                     .getInventory()
                     .getItemInMainHand();
 
             if (handItem.getType() == Material.DIAMOND_SWORD){
-                player.sendMessage("[테스트] 칼을 들고있으므로 타이머를 잠시 중지합니다.");
+                Bukkit.broadcastMessage("[테스트] 칼을 들고있으므로 타이머를 잠시 중지합니다.");
                 return;
             }
 
