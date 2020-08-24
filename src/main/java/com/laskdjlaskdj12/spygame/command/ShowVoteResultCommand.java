@@ -90,9 +90,9 @@ public class ShowVoteResultCommand implements CommandExecutor {
         Block block = gameModeContent.getActiveVoteResultBlock().get(showVoteInfoListIndex);
 
         if (voteInfo.isAi()) {
-            block.setType(Material.WHITE_WOOL);
+            block.setType(Material.SEA_LANTERN);
         } else {
-            block.setType(Material.BLACK_WOOL);
+            block.setType(Material.BEACON);
         }
     }
 
