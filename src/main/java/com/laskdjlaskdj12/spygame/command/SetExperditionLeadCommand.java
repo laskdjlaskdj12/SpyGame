@@ -24,14 +24,14 @@ public class SetExperditionLeadCommand implements CommandExecutor {
 
         String name = args[1];
 
-        ICharacter kingCharacter = gameModeContent.findCharacterFromName(name);
+        ICharacter experditionLead = gameModeContent.findCharacterFromName(name);
 
-        if(kingCharacter == null){
+        if(experditionLead == null){
             sender.sendMessage("해당 플레이어를 찾지 못했습니다.");
             return true;
         }
 
-        kingCharacter.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
+        experditionLead.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
         return true;
     }
 }
