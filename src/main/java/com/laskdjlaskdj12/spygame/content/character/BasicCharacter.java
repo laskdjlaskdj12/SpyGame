@@ -23,14 +23,6 @@ public class BasicCharacter implements ICharacter {
     @Override
     public void setRole(IRole role) {
         this.role = role;
-
-        String title = new StringBuilder()
-                .append("당신은 이제 [")
-                .append(role.KRName())
-                .append("] 입니다.")
-                .toString();
-
-        player.sendTitle(title, "", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
     }
 
     @Override
@@ -41,6 +33,14 @@ public class BasicCharacter implements ICharacter {
     @Override
     public void setGameRole(GAME_ROLE gameRole) {
         this.gameRole = gameRole;
+
+        String title = new StringBuilder()
+                .append("당신은 이제 [")
+                .append(gameRole.getNameKR())
+                .append("] 입니다.")
+                .toString();
+
+        player.sendTitle(title, "", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
     }
 
     @Override
