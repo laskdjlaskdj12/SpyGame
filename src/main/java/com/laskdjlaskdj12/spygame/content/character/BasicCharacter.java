@@ -5,6 +5,7 @@ import com.laskdjlaskdj12.spygame.content.role.IRole;
 import com.laskdjlaskdj12.spygame.factory.LifeCycleFactory;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.entity.Player;
 
 public class BasicCharacter implements ICharacter {
@@ -22,6 +23,14 @@ public class BasicCharacter implements ICharacter {
     @Override
     public void setRole(IRole role) {
         this.role = role;
+
+        String title = new StringBuilder()
+                .append("당신은 이제 [")
+                .append(role.KRName())
+                .append("] 입니다.")
+                .toString();
+
+        player.sendTitle(title, "", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
     }
 
     @Override
