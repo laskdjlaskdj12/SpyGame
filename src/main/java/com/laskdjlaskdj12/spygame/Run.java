@@ -7,7 +7,7 @@ import com.laskdjlaskdj12.spygame.command.experdition.StartExperditionCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StopExperditionCommand;
 import com.laskdjlaskdj12.spygame.command.cheat.ForceAddExpeditionCommand;
 import com.laskdjlaskdj12.spygame.command.cheat.ForceCreateCharacterCommand;
-import com.laskdjlaskdj12.spygame.command.cheat.ShowExpeditionVote;
+import com.laskdjlaskdj12.spygame.command.cheat.ShowExpeditionVoteCommand;
 import com.laskdjlaskdj12.spygame.content.*;
 import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
@@ -50,7 +50,7 @@ public class Run extends JavaPlugin {
         getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbyCommand(gameModeContent, this));
 
         //Todo: 디버깅용으로 제거해야함
-        getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
+        getCommand("투표결과").setExecutor(new ShowExpeditionVoteCommand(experditionContent));
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));

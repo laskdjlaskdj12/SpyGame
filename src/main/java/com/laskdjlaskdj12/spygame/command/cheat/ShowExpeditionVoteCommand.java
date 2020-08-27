@@ -8,10 +8,10 @@ import org.bukkit.command.CommandSender;
 /**
  * Todo 디버깅 커맨드 이므로 나중에 지워야함
  */
-public class ShowExpeditionVote implements CommandExecutor {
+public class ShowExpeditionVoteCommand implements CommandExecutor {
     private final ExperditionContent experditionContent;
 
-    public ShowExpeditionVote(ExperditionContent experditionContent) {
+    public ShowExpeditionVoteCommand(ExperditionContent experditionContent) {
         this.experditionContent = experditionContent;
     }
 
