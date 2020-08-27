@@ -40,7 +40,7 @@ public class AssinssineKillMarlineCommand implements CommandExecutor {
 
         gameModeContent.characterList()
                 .stream()
-                .forEach(character -> character.getPlayer().sendTitle(ChatColor.RED + "어쌔신의 살인의 시간이 왔습니다.", "", 20, 40, 20));
+                .forEach(character -> character.getPlayer().sendTitle(ChatColor.RED + "어쌔신의 멀린 지목시간이 왔습니다.", "", 20, 40, 20));
         return true;
     }
 }
