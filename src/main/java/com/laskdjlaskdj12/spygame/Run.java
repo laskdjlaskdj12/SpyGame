@@ -12,6 +12,7 @@ import com.laskdjlaskdj12.spygame.content.*;
 import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerJoinEventHandler;
+import com.laskdjlaskdj12.spygame.sequence.ExperditionLeadSequence;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,6 +49,9 @@ public class Run extends JavaPlugin {
         getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
         getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
+
+        //시퀸스커맨드
+        getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent, this));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));

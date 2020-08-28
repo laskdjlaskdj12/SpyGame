@@ -42,7 +42,11 @@ public class PickPlayerVoteContent extends AVoteContent {
             if (VoteCountTime == 0) {
                 VoteCountTime = TickUtil.secondToTick(3);
                 Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
-                collectVoteResult(voterList);
+                VotingResult votingResult = collectVoteResult(voterList);
+
+                if(iVoteResultHandler != null){
+                    iVoteResultHandler.result(votingResult, voteStarter);
+                }
                 return;
             }
 
@@ -53,16 +57,12 @@ public class PickPlayerVoteContent extends AVoteContent {
     }
 
     @Override
-    public void collectVoteResult(List<ICharacter> characterList) {
+    public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
                 .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_BLOCK)
                 .collect(Collectors.toList());
 
-        VotingResult votingResult = votingTotal(voteResult);
-
-        //5. 집계 내용을 모든 플레이어에게 표시함
-        Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount());
-
+        return votingTotal(voteResult);
     }
 }
