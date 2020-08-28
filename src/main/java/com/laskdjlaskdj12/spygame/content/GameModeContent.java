@@ -24,6 +24,9 @@ public class GameModeContent {
     private List<Block> voteResultBlock = new ArrayList<>();
     private List<Block> activeVoteResultBlock = new ArrayList<>();
 
+    private int winCount = 0;
+    private int loseCount = 0;
+
     private boolean collectVoteBlock = false;
 
     public GameModeContent(ExperditionContent experditionContent) {
@@ -107,5 +110,13 @@ public class GameModeContent {
 
     public List<Block> getActiveVoteResultBlock() {
         return activeVoteResultBlock;
+    }
+
+    public int getLoseCount() {
+        return loseCount;
+    }
+
+    public int getWinCount(){
+        return winCount;
     }
 }
