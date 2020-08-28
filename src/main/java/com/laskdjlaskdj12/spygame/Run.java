@@ -12,6 +12,7 @@ import com.laskdjlaskdj12.spygame.content.*;
 import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerJoinEventHandler;
+import com.laskdjlaskdj12.spygame.sequence.ChooseLakeElfSequence;
 import com.laskdjlaskdj12.spygame.sequence.ExperditionLeadSequence;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -52,6 +53,7 @@ public class Run extends JavaPlugin {
 
         //시퀸스커맨드
         getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent, this));
+        getCommand("호수의요정지정").setExecutor(new ChooseLakeElfSequence(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));

@@ -42,6 +42,10 @@ commands:
     description: "원정대장선정하는 시퀸스를 시작합니다."
     usage: /<commnad>
 
+  호수의요정지정:
+    description: "호수의 요정을 지정합니다."
+    usage: /<commnad>
+
 #디버깅용 커맨드
   투표결과:
     description: "투표결과 디버깅 커맨드입니다."
