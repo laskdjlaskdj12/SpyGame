@@ -59,3 +59,6 @@ commands:
   투표결과블록수집:
     description: "투표결과 블록수집을 하는 디버깅 커맨드입니다."
     usage: /<command>
+  원정역활보기:
+    description: "원정결과를 보는 디버깅 커맨드입니다."
+    usage: /<command>
