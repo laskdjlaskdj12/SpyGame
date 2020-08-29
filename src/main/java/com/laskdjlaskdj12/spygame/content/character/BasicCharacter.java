@@ -153,7 +153,7 @@ public class BasicCharacter implements ICharacter {
 
     private void initAssassine(GameModeContent gameModeContent) {
         //악의 세력들을 보여주기
-        showEvilMessage(MODRED, gameModeContent);
+        showEvilMessage(ASSASSINE, gameModeContent);
 
     }
 
@@ -168,7 +168,7 @@ public class BasicCharacter implements ICharacter {
 
     private void initMorgana(GameModeContent gameModeContent) {
         //악의 세력 보여주기
-        showEvilMessage(MODRED, gameModeContent);
+        showEvilMessage(MORGANA, gameModeContent);
 
     }
 
