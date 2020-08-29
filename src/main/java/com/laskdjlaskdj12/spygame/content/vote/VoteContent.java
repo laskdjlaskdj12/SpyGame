@@ -27,7 +27,7 @@ public class VoteContent extends AVoteContent {
         }
 
         //1. 현재 서버에 있는 사람들중에 나간 사람들 있는지 체크
-        if (isCharacterExist(voterList, voteStarter.getWorld().getPlayers())) {
+        if (!isCharacterExist(voterList, voteStarter.getWorld().getPlayers())) {
             voteStarter.sendMessage(ChatColor.RED + "게임도중에 퇴장한 참가자가 있습니다. 투표 진행이 불가능합니다.");
             return;
         }

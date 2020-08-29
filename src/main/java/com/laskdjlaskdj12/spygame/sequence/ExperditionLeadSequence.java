@@ -54,7 +54,7 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
         ICharacter candidate = gameModeContent.findCharacterFromPlayer(voteStarter);
 
         if(candidate == null){
-            Bukkit.broadcastMessage("게임 참여자가 아니여서 우너정대장을 할수가 없습니다.");
+            Bukkit.broadcastMessage("게임 참여자가 아니여서 원정대장을 할수가 없습니다.");
             return;
         }
 

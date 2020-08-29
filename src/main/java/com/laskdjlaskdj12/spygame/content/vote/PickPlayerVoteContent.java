@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -44,7 +45,7 @@ public class PickPlayerVoteContent extends AVoteContent {
                 Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
                 VotingResult votingResult = collectVoteResult(voterList);
 
-                if(iVoteResultHandler != null){
+                if (iVoteResultHandler != null) {
                     iVoteResultHandler.result(votingResult, voteStarter);
                 }
                 return;
@@ -53,7 +54,7 @@ public class PickPlayerVoteContent extends AVoteContent {
             Bukkit.broadcastMessage(TickUtil.tickToSecond(VoteCountTime) + "초 남았습니다.");
 
             VoteCountTime -= TickUtil.secondToTick(1);
-        }, 0, 20L)  ;
+        }, 0, 20L);
     }
 
     @Override
@@ -63,6 +64,8 @@ public class PickPlayerVoteContent extends AVoteContent {
                 .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_BLOCK)
                 .collect(Collectors.toList());
 
+        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
+        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(1, new ItemStack(Material.AIR)));
         return votingTotal(voteResult);
     }
 }

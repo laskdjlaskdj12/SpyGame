@@ -37,7 +37,7 @@ public class Run extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractiveEventHandler(experditionContent), this);
         getServer().getPluginManager().registerEvents(new PlayerHitEventHandler(gameModeContent), this);
-
+ 
         //커맨드 등록
         getCommand("start").setExecutor(new StartCommand(roleContent, characterContent, messageContent, gameModeContent));
         getCommand("vote").setExecutor(new VoteCommand(gameModeContent, this));

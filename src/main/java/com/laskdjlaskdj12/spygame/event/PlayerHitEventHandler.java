@@ -23,7 +23,7 @@ public class PlayerHitEventHandler implements Listener {
 
     @EventHandler
     public void playerHitEventHandler(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
+        if ((event.getEntity() instanceof Player) && (event.getDamager() instanceof Player)) {
             //Todo: interface나 어노테이션을 사용해서 커스텀 PlayerHit 이벤트 핸들러를 만들것
             if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
                 return;
@@ -37,6 +37,7 @@ public class PlayerHitEventHandler implements Listener {
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD) {
                 activeExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
+                Bukkit.broadcastMessage("givePlayerExcaliburactive");
                 givePlayerExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE) {
                 activeMarlineAssine(attacker, victim);
@@ -70,10 +71,10 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
+        Bukkit.broadcastMessage(attacker.getDisplayName() + " 님이 " + victim.getDisplayName() + " 님에게 엑스칼리버를 수여하였습니다.");
         gameModeContent.setExcaliberExsist(true);
 
         //플레이어에게 엑스칼리버를 수여함
-        Bukkit.broadcastMessage("엑스칼리버를 " + victim.getDisplayName() + " 님 에게 수여합니다.");
         excaliberCharacter.setGameRole(GAME_ROLE.EXCALIBUR_OWNER);
         excaliberCharacter.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
 

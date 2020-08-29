@@ -2,6 +2,7 @@ package com.laskdjlaskdj12.spygame.content.vote;
 
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.domain.VotingResult;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,7 @@ public abstract class AVoteContent {
     protected IVoteResultHandler iVoteResultHandler;
 
     public AVoteContent(JavaPlugin plugin, int voteCountTime) {
-        VoteCountTime = voteCountTime;
+        VoteCountTime = TickUtil.secondToTick(voteCountTime);
         this.plugin = plugin;
     }
 
