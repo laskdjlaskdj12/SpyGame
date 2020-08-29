@@ -37,6 +37,10 @@ public class ExperditionContent {
     }
 
     public void stop() {
+        if(this.experditionRoundCount == 5){
+            this.experditionRoundCount += 1;
+        }
+
         //Todo: 원정대의 정보들을 전부 초기화
         experditionInfo = null;
     }
