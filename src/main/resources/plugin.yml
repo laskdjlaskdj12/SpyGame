@@ -62,3 +62,6 @@ commands:
   지정캐릭터추가:
     description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
     usage: /<command>
+  지정캐릭터게임롤추가:
+    description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
+    usage: /<command>

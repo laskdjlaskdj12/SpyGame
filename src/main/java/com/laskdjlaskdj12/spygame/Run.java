@@ -59,6 +59,7 @@ public class Run extends JavaPlugin {
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
         getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(experditionContent, characterContent, gameModeContent));
+        getCommand("지정캐릭터게임롤추가").setExecutor(new ForceCreateExpeditionRoleCommand(gameModeContent));
     }
 
     @Override
