@@ -5,7 +5,6 @@ import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.vote.IVoteResultHandler;
 import com.laskdjlaskdj12.spygame.content.vote.VoteContent;
 import com.laskdjlaskdj12.spygame.domain.VotingResult;
-import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,14 +26,14 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(args.length == 0){
+        if (args.length == 0) {
             sender.sendMessage("/원정대장선정 <플레이어닉네임>");
             return true;
         }
 
         ICharacter candidate = gameModeContent.findCharacterFromName(args[0]);
 
-        if(candidate == null){
+        if (candidate == null) {
             sender.sendMessage(new StringBuilder()
                     .append(candidate)
                     .append(ChatColor.RED + "은 게임참여자가 아닙니다. 다시 체크해주세요")
@@ -54,13 +53,18 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
     public void result(VotingResult votingResult, Player voteStarter) {
         ICharacter candidate = gameModeContent.findCharacterFromPlayer(voteStarter);
 
-        if(votingResult.getAiCount() > votingResult.getNayCount()){
-            Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑혔습니다.");
-
-            //원정대장 뽑혔으니 새로 지정
-            candidate.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
-        } else {
-            Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑히지 못했습니다.");
+        if(candidate == null){
+            Bukkit.broadcastMessage("게임 참여자가 아니여서 우너정대장을 할수가 없습니다.");
+            return;
         }
+
+        if (votingResult.getAiCount() <= votingResult.getNayCount()) {
+            Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑히지 못했습니다.");
+            return;
+        }
+
+        //Todo: 원정대장의 권한을 수요하는 부분은 GameModeContent로 넣을것
+        Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑혔습니다.");
+        gameModeContent.giveExperditionLeadAuth(voteStarter, candidate);
     }
 }
