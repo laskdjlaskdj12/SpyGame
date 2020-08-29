@@ -3,7 +3,6 @@ package com.laskdjlaskdj12.spygame.content.character;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
-import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 
 /*

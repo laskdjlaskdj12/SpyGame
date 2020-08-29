@@ -23,7 +23,7 @@ public class GameModeContent {
     private List<ICharacter> characterList = new ArrayList<>();
     private List<Block> voteResultBlock = new ArrayList<>();
     private List<Block> activeVoteResultBlock = new ArrayList<>();
-
+    private boolean excaliberExsist = true;
     private int winCount = 0;
     private int loseCount = 0;
 
@@ -118,5 +118,13 @@ public class GameModeContent {
 
     public int getWinCount(){
         return winCount;
+    }
+
+    public boolean isExcaliberExsist() {
+        return excaliberExsist;
+    }
+
+    public void setExcaliberExsist(boolean exsist){
+        excaliberExsist = exsist;
     }
 }
