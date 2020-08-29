@@ -6,15 +6,15 @@ import com.laskdjlaskdj12.spygame.content.role.IRole;
 import com.laskdjlaskdj12.spygame.factory.LifeCycleFactory;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
+import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.laskdjlaskdj12.spygame.status.ROLE_TYPE.MARLINE;
-import static com.laskdjlaskdj12.spygame.status.ROLE_TYPE.MORGANA;
+import static com.laskdjlaskdj12.spygame.status.ROLE_TYPE.*;
 
 public class BasicCharacter implements ICharacter {
 
@@ -91,42 +91,85 @@ public class BasicCharacter implements ICharacter {
         }
     }
 
-    private void showEvilMembers(GameModeContent gameModeContent) {
+    private void showPosition(ROLE_TYPE roleType){
+        player.sendTitle("[ " + roleType.nameKR + " ]", "이 당신의 역할입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
+    }
+
+    private String showEvilMembers(GameModeContent gameModeContent) {
         List<String> evilCharacterNames = gameModeContent.evilCharacters()
                 .stream()
                 .map(character -> character.getPlayer().getDisplayName())
                 .collect(Collectors.toList());
 
 
-        StringBuilder mainTitle = new StringBuilder().append("[")
-                .append(String.join(",", evilCharacterNames))
-                .append("]");
+        return new StringBuilder().append("[")
+                .append(String.join(" , ", evilCharacterNames))
+                .append("]")
+                .toString();
+    }
+    
+    private String showEvilMemberExceptModred(GameModeContent gameModeContent) {
+        List<String> evilCharacterNames = gameModeContent.evilCharacters()
+                .stream()
+                .filter(iCharacter -> iCharacter.getRole().roleType() != MODRED)
+                .map(character -> character.getPlayer().getDisplayName())
+                .collect(Collectors.toList());
 
-        player.sendTitle(mainTitle.toString(), "은 악의 세력입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
+
+        return new StringBuilder().append("[")
+                .append(String.join(" , ", evilCharacterNames))
+                .append("]")
+                .toString();
+    }
+
+    private String showMorganaAndMarline(GameModeContent gameModeContent) {
+        String marlinePlayerName = gameModeContent.findCharacterFromRole(MARLINE).getPlayer().getDisplayName();
+        String morganaPlayerName = gameModeContent.findCharacterFromRole(MORGANA).getPlayer().getDisplayName();
+
+        return new StringBuilder().append("[")
+                .append(marlinePlayerName)
+                .append(" , ")
+                .append(morganaPlayerName)
+                .append("]")
+                .toString();
+    }
+    private void showEvilMessage(ROLE_TYPE roleType, GameModeContent gameModeContent){
+        player.sendTitle("[ " + ChatColor.RED + roleType.nameKR + ChatColor.WHITE + " ]", showEvilMembers(gameModeContent) + "님이 같은 편입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));
+    }
+
+    private void showMarlineMessage(GameModeContent gameModeContent){
+        player.sendTitle("[ " + ChatColor.GREEN + MARLINE.nameKR + ChatColor.WHITE + " ]", showEvilMemberExceptModred(gameModeContent) + "님이 악의세력입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));
+    }
+    
+    private void showPercivalMessage(GameModeContent gameModeContent){
+        //모르가나와 멀린을 두개의 멀린으로 보인다.
+        player.sendTitle("[ " + ChatColor.GREEN + PERCIVAL.nameKR + ChatColor.WHITE + " ]", showMorganaAndMarline(gameModeContent) + "님이 멀린입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));
     }
 
     private void initMordred(GameModeContent gameModeContent) {
         //악의 세력들을 보여주기
-        showEvilMembers(gameModeContent);
+        showEvilMessage(MODRED, gameModeContent);
     }
 
     private void initAssassine(GameModeContent gameModeContent) {
         //악의 세력들을 보여주기
-        showEvilMembers(gameModeContent);
+        showEvilMessage(MODRED, gameModeContent);
+
     }
 
     private void initCervent(GameModeContent gameModeContent) {
-
+        showPosition(ROLE_TYPE.CERVENT);
     }
 
     private void initMarline(GameModeContent gameModeContent) {
-        //악의 세력 보여주기
-        showEvilMembers(gameModeContent);
+        //모드레드를 제외한 악의 세력 보여주기
+        showMarlineMessage(gameModeContent);
     }
 
     private void initMorgana(GameModeContent gameModeContent) {
         //악의 세력 보여주기
-        showEvilMembers(gameModeContent);
+        showEvilMessage(MODRED, gameModeContent);
+
     }
 
     private void initOverone(GameModeContent gameModeContent) {
@@ -134,15 +177,11 @@ public class BasicCharacter implements ICharacter {
     }
 
     private void initPercival(GameModeContent gameModeContent) {
+        showPosition(ROLE_TYPE.PERCIVAL);
         if(gameModeContent.characterList().size() == 0){
             return;
         }
 
-        //모르가나와 멀린을 두개의 멀린으로 보인다.
-        String marlinePlayerName = gameModeContent.findCharacterFromRole(MARLINE).getPlayer().getDisplayName();
-        String morganaPlayerName = gameModeContent.findCharacterFromRole(MORGANA).getPlayer().getDisplayName();
-
-        //멀린이 두명이라는것을 보여줌
-        player.sendTitle(String.join(",", Arrays.asList(marlinePlayerName, morganaPlayerName)), "는 멀린입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
+        showPercivalMessage(gameModeContent);
     }
 }
