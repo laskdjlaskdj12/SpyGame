@@ -94,6 +94,16 @@ public class GameModeContent {
         return null;
     }
 
+    @Nullable
+    public ICharacter findCharacterByRole(ROLE_TYPE roleType){
+        for (ICharacter iCharacter : characterList) {
+            if (iCharacter.getRole().name() == roleType.name()) {
+                return iCharacter;
+            }
+        }
+
+        return null;    }
+
     public void deActiveVoteBlockSet() {
         collectVoteBlock = false;
     }

@@ -46,6 +46,7 @@ public class Run extends JavaPlugin {
         getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
         getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbyCommand(gameModeContent, this));
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
+        getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
