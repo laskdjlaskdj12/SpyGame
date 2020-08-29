@@ -9,6 +9,7 @@ import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
 import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.ChatColor;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -42,6 +43,14 @@ public class BasicCharacter implements ICharacter {
     @Override
     public void setGameRole(GAME_ROLE gameRole) {
         this.gameRole = gameRole;
+
+        String title = new StringBuilder()
+                .append("당신은 이제 [")
+                .append(gameRole.getNameKR())
+                .append("] 입니다.")
+                .toString();
+
+        player.sendTitle(title, "", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
     }
 
     @Override
@@ -107,7 +116,7 @@ public class BasicCharacter implements ICharacter {
                 .append("]")
                 .toString();
     }
-    
+
     private String showEvilMemberExceptModred(GameModeContent gameModeContent) {
         List<String> evilCharacterNames = gameModeContent.evilCharacters()
                 .stream()
@@ -140,7 +149,7 @@ public class BasicCharacter implements ICharacter {
     private void showMarlineMessage(GameModeContent gameModeContent){
         player.sendTitle("[ " + ChatColor.GREEN + MARLINE.nameKR + ChatColor.WHITE + " ]", showEvilMemberExceptModred(gameModeContent) + "님이 악의세력입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));
     }
-    
+
     private void showPercivalMessage(GameModeContent gameModeContent){
         //모르가나와 멀린을 두개의 멀린으로 보인다.
         player.sendTitle("[ " + ChatColor.GREEN + PERCIVAL.nameKR + ChatColor.WHITE + " ]", showMorganaAndMarline(gameModeContent) + "님이 멀린입니다.", TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));

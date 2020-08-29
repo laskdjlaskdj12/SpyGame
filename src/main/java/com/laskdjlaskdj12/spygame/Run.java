@@ -47,13 +47,18 @@ public class Run extends JavaPlugin {
         getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbyCommand(gameModeContent, this));
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
+        getCommand("왕지정").setExecutor(new SetKingCommand(gameModeContent));
+        getCommand("호수의요정지정").setExecutor(new SetLakeElfCommand(gameModeContent));
+        getCommand("원정대장지정").setExecutor(new SetExperditionLeadCommand(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
+        getCommand("투표결과").setExecutor(new ShowExpeditionVoteCommand(experditionContent));
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
+        getCommand("원정역활보기").setExecutor(new ShowGameRoleCommand(gameModeContent));
     }
 
     @Override

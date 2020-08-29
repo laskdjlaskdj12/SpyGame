@@ -19,7 +19,18 @@ commands:
       description: "멀린을 암살하는 시퀸스입니다."
       usage: /<command>
 
-  #원정 커맨드
+#게임 원정 커맨드
+  왕지정:
+    description: "왕지정 커맨드입니다."
+    usage: /<command>
+  호수의요정지정:
+    description: "호수의요정지정 커맨드입니다."
+    usage: /<command>
+  원정대장지:
+    description: "원정대장지정 커맨드입니다."
+    usage: /<command>
+
+#원정 커맨드
   원정:
     description: "원정 진행 커맨드입니다."
     usage: /<command>
@@ -58,4 +69,7 @@ commands:
     usage: /<command>
   캐릭터정보:
     description: "모든 캐릭터 정보들을 보여주는 디버깅 커맨드입니다."
+    usage: /<command>
+  원정역활보기:
+    description: "원정결과를 보는 디버깅 커맨드입니다."
     usage: /<command>
