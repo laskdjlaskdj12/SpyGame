@@ -25,7 +25,7 @@ public class ForceCreateExpeditionRoleCommand implements CommandExecutor {
         }
 
         if(args.length != 2){
-            sender.sendMessage("[테스트] /지정캐릭터추가 <닉네임> <캐릭터영어이름>");
+            sender.sendMessage("[테스트] /지정캐릭터게임롤추가 <닉네임> <룰단어>");
             return true;
         }
 

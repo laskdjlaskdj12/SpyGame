@@ -19,7 +19,7 @@ public enum GAME_ROLE {
     @Nullable
     public static GAME_ROLE findRoleByName(String arg) {
         for (GAME_ROLE v: values()){
-            if(v.getName() == arg){
+            if(v.getName().equals(arg)){
                 return v;
             }
         }
