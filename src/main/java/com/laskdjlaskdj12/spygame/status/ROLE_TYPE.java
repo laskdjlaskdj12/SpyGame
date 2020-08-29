@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 public enum ROLE_TYPE {
     MARLINE("Marline", "멀린"),
-    ASSASSINE("Assassine", "어쌔"),
+    ASSASSINE("Assassine", "어쌔신"),
     MODRED("Modred", "모드레드"),
     MORGANA("Morgana", "모르가나"),
     OVERONE("Overone", "오베론"),
