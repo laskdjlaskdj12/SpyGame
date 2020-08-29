@@ -25,7 +25,7 @@ public class RoundCheckCommand implements CommandExecutor {
         world.getPlayers().stream()
                 .forEach(this::showTitle);
 
-        return false;
+        return true;
     }
 
     private void showTitle(Player player) {
