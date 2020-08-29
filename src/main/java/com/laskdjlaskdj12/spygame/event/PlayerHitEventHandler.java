@@ -37,7 +37,6 @@ public class PlayerHitEventHandler implements Listener {
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD) {
                 activeExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
-                Bukkit.broadcastMessage("givePlayerExcaliburactive");
                 givePlayerExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE) {
                 activeMarlineAssine(attacker, victim);
@@ -88,6 +87,11 @@ public class PlayerHitEventHandler implements Listener {
 
         if (victimCharacter == null) {
             Bukkit.broadcastMessage(ChatColor.RED + "[에러] 엑스칼리버를 가질수없는 사람이 가지고 있습니다.");
+            return;
+        }
+
+        if(gameModeContent.experditionContent().getExperditionInfo() == null){
+            attacker.sendMessage(ChatColor.RED + "원정이 아직 시작이 안되서 엑스칼리버 검을 사용할수없습니다.");
             return;
         }
 
