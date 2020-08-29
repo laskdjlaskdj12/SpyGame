@@ -194,4 +194,35 @@ public class GameModeContent {
                 .findFirst()
                 .orElse(null);
     }
+
+    public void clearGame(){
+
+        //투표블록 전부 데이터 초기화
+        if(!this.voteResultBlock.isEmpty()){
+            this.voteResultBlock.forEach(block -> block.setType(Material.AIR));
+        }
+
+        //active블록결과 초기화
+        if(!activeVoteResultBlock.isEmpty()){
+            this.activeVoteResultBlock.clear();
+        }
+
+        //active 블록 결과 초기화
+        if(!excaliberExsist){
+            excaliberExsist = true;
+        }
+
+        //승리카운트 초기화
+        if(winCount != 0){
+            winCount = 0;
+        }
+
+        //승리카운트 초기화
+        if(loseCount != 0){
+            loseCount = 0;
+        }
+
+        //expedition clear
+        experditionContent.init();
+    }
 }
