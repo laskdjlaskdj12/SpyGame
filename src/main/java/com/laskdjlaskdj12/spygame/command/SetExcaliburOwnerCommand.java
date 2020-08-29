@@ -7,10 +7,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class SetKingCommand implements CommandExecutor {
+public class SetExcaliburOwnerCommand implements CommandExecutor {
     private final GameModeContent gameModeContent;
 
-    public SetKingCommand(GameModeContent gameModeContent) {
+    public SetExcaliburOwnerCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
     }
 
@@ -18,11 +18,11 @@ public class SetKingCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(args.length == 0){
-            sender.sendMessage("/왕지정 <닉네임>");
+            sender.sendMessage("/엑스칼리버지정 <닉네임>");
             return true;
         }
 
-        String name = args[1];
+        String name = args[0];
 
         ICharacter kingCharacter = gameModeContent.findCharacterFromName(name);
 
@@ -31,7 +31,7 @@ public class SetKingCommand implements CommandExecutor {
             return true;
         }
 
-        kingCharacter.setGameRole(GAME_ROLE.KING);
+        kingCharacter.setGameRole(GAME_ROLE.EXCALIBUR_OWNER);
         return true;
     }
 }

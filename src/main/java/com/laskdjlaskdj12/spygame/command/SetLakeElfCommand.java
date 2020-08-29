@@ -22,7 +22,7 @@ public class SetLakeElfCommand implements CommandExecutor {
             return true;
         }
 
-        String name = args[1];
+        String name = args[0];
 
         ICharacter elfCharacter = gameModeContent.findCharacterFromName(name);
 

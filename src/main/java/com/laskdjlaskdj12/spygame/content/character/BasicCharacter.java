@@ -50,7 +50,7 @@ public class BasicCharacter implements ICharacter {
                 .append("] 입니다.")
                 .toString();
 
-        player.sendTitle(title, "", TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
+        player.sendTitle("[ " + gameRole.getNameKR() + " ]", title, TickUtil.secondToTick(2), TickUtil.secondToTick(3), TickUtil.secondToTick(2));
     }
 
     @Override

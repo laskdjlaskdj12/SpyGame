@@ -2,7 +2,7 @@ package com.laskdjlaskdj12.spygame.status;
 
 public enum GAME_ROLE {
     NONE("Cervent", "신하"),
-    KING("King", "왕"),
+    EXCALIBUR_OWNER("Excalibur", "엑스칼리버"),
     LAKE_ELF("LakeElf", "호수의 요정"),
     EXPEDITION_LEAD("ExpeditionLead", "원정대장");
 
