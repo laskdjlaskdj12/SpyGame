@@ -5,6 +5,7 @@ import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.vote.VoteContent;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
+import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
@@ -102,7 +103,7 @@ public class GameModeContent {
     @Nullable
     public ICharacter findCharacterByRole(ROLE_TYPE roleType){
         for (ICharacter iCharacter : characterList) {
-            if (iCharacter.getRole().roleType() == roleType) {
+            if (iCharacter.getRole().name() == roleType.name()) {
                 return iCharacter;
             }
         }
