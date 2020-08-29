@@ -1,12 +1,16 @@
 package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import com.laskdjlaskdj12.spygame.content.character.ICharacter;
+import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,12 +55,12 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
 
             Bukkit.broadcastMessage(TickUtil.tickToSecond(timerCount) + "초 남았습니다.");
 
-            //칼을 들고있는지 체크
-//            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.);
-//            if(kingCharacter == null){
-//                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
-//                return;
-//            }
+            //엑스칼리버가 칼을 들고있는지 체크
+            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+            if(kingCharacter == null){
+                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
+                return;
+            }
 
             ItemStack handItem = player
                     .getInventory()

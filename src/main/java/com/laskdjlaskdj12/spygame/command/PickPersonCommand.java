@@ -2,18 +2,22 @@ package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
+import com.laskdjlaskdj12.spygame.content.vote.IVoteResultHandler;
 import com.laskdjlaskdj12.spygame.content.vote.PickPlayerVoteContent;
+import com.laskdjlaskdj12.spygame.domain.VotingResult;
+import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PickPersonCommand implements CommandExecutor {
+public class PickPersonCommand implements CommandExecutor, IVoteResultHandler {
 
     private final GameModeContent gameModeContent;
     private final JavaPlugin plugin;
@@ -51,9 +55,22 @@ public class PickPersonCommand implements CommandExecutor {
         ICharacter pickedCharacter = pickedCharacters.get(0);
 
         //플레이어가 지목한 사람에 대해 투표 절차 들어감
-        new PickPlayerVoteContent(plugin, 10)
-                .startVote(characters, pickedCharacter.getPlayer());
+        PickPlayerVoteContent pickPlayerVoteContent = new PickPlayerVoteContent(plugin, 10);
+        pickPlayerVoteContent.setResultHandler(this);
+        pickPlayerVoteContent.startVote(characters, pickedCharacter.getPlayer());
 
         return true;
+    }
+
+    @Override
+    public void result(VotingResult votingResult, Player voteStarter) {
+        ICharacter candidate = gameModeContent.findCharacterFromPlayer(voteStarter);
+
+        if(votingResult.getAiCount() > votingResult.getNayCount()){
+            Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 뽑혔습니다.");
+            candidate.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
+        } else {
+            Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 뽑히지 못했습니다.");
+        }
     }
 }

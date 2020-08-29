@@ -9,12 +9,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
+import java.util.function.Function;
 
+
+/**
+ * Todo: AVotecontent를 아래와 같이 리팩토링 할것
+ * 1. PreVote() // 투표시작하기전에 실행
+ * 2. OngoingVote() // 1초마다 한번씩 실행되는 VoteCommand
+ * 3. EndVote() // 투표가 종료됬을때 실행
+ */
 public abstract class AVoteContent {
 
     public static BukkitTask bukkitTask = null;
     public static int VoteCountTime = 0;
     protected final JavaPlugin plugin;
+    protected IVoteResultHandler iVoteResultHandler;
 
     public AVoteContent(JavaPlugin plugin, int voteCountTime) {
         VoteCountTime = voteCountTime;
@@ -23,7 +32,7 @@ public abstract class AVoteContent {
 
     public abstract void startVote(List<ICharacter> voterList, Player voteStarter);
 
-    public abstract void collectVoteResult(List<ICharacter> voterList);
+    public abstract VotingResult collectVoteResult(List<ICharacter> voterList);
 
     protected boolean isCharacterExist(List<ICharacter> iCharacters, List<Player> playerList) {
         //나간 사람들이 없는지 체크
@@ -54,5 +63,9 @@ public abstract class AVoteContent {
                 .aiCount(aiCount)
                 .nayCount(nayCount)
                 .build();
+    }
+
+    public void setResultHandler(IVoteResultHandler resultHandler){
+        this.iVoteResultHandler = resultHandler;
     }
 }
