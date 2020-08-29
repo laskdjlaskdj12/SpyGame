@@ -1,11 +1,9 @@
 package com.laskdjlaskdj12.spygame.content;
 
-import com.laskdjlaskdj12.spygame.command.cheat.CollectVoteResultBlock;
 import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
-import com.laskdjlaskdj12.spygame.content.vote.VoteContent;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
-import org.bukkit.Location;
+import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -50,7 +48,7 @@ public class GameModeContent {
 
         activeVoteResultBlock.clear();
 
-        for(int i = 0; i < voterCount; i++){
+        for (int i = 0; i < voterCount; i++) {
             activeVoteResultBlock.add(this.voteResultBlock.get(i));
         }
     }
@@ -118,5 +116,23 @@ public class GameModeContent {
 
     public int getWinCount(){
         return winCount;
+    }
+
+    public List<ICharacter> evilCharacters() {
+        return characterList.stream().filter(character -> character.getRole().roleType() == ROLE_TYPE.ASSASSINE ||
+                character.getRole().roleType() == ROLE_TYPE.MORGANA ||
+                character.getRole().roleType() == ROLE_TYPE.MODRED).collect(Collectors.toList());
+    }
+
+    @Nullable
+    public ICharacter findCharacterFromRole(ROLE_TYPE roleType) {
+        if (characterList.size() == 0) {
+            return null;
+        }
+
+        return characterList.stream()
+                .filter(character -> character.getRole().roleType() == roleType)
+                .findFirst()
+                .orElse(null);
     }
 }

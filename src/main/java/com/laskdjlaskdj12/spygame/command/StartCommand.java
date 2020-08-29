@@ -6,6 +6,7 @@ import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.RoleContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
+import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -67,8 +68,16 @@ public class StartCommand implements CommandExecutor {
         messageContent.sendWorldMessage(ChatColor.YELLOW + "각 캐릭터마다 역활 배정 완료!");
 
         // 유저정보들을 저장
+        messageContent.sendWorldMessage(ChatColor.YELLOW + "유저정보 저장 완료");
         gameModeContent.saveCharacter(characters);
 
+        //캐릭터 초기화 하기
+        for (ICharacter character: characters) {
+            character.changeState(LIFE_STATUS.BORN);
+            character.initCharacter(gameModeContent);
+        }
+
+        messageContent.sendWorldMessage(ChatColor.YELLOW + "유저정보 저장 완료");
         messageContent.sendWorldMessage("모든 세팅이 완료되었습니다!! Dev by " +  ChatColor.YELLOW + "laskdjlaskdj12 (라스크) " + ChatColor.WHITE + "& Thanks for " + ChatColor.GREEN + "우리들의 마인크래프트 공간");
         return true;
     }

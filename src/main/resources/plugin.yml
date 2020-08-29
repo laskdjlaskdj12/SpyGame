@@ -53,3 +53,6 @@ commands:
   투표결과블록수집:
     description: "투표결과 블록수집을 하는 디버깅 커맨드입니다."
     usage: /<command>
+  캐릭터정보:
+    description: "모든 캐릭터 정보들을 보여주는 디버깅 커맨드입니다."
+    usage: /<command>
