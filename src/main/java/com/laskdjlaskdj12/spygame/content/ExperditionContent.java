@@ -12,7 +12,7 @@ import java.util.List;
 public class ExperditionContent {
 
     private ExperditionInfo experditionInfo;
-    private int experditionRoundCount;
+    private int experditionRoundCount = 0;
 
     public boolean isExsist() {
         return experditionInfo != null;
@@ -25,12 +25,22 @@ public class ExperditionContent {
     /**
      * 원정 관련된 초기화
      */
-    public void init() {
+
+    public void init(){
         this.experditionRoundCount = 0;
         this.experditionInfo = new ExperditionInfo();
     }
 
-    public void stopExperdition() {
+    public void start() {
+        this.experditionRoundCount += 1;
+        this.experditionInfo = new ExperditionInfo();
+    }
+
+    public void stop() {
+        if(this.experditionRoundCount == 5){
+            this.experditionRoundCount += 1;
+        }
+
         //Todo: 원정대의 정보들을 전부 초기화
         experditionInfo = null;
     }

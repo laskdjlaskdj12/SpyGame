@@ -33,7 +33,7 @@ public class StopExperditionCommand implements CommandExecutor {
             return false;
         }
 
-        experditionContent.stopExperdition();
+        experditionContent.stop();
         sender.sendMessage("원정이 종료되었습니다");
 
         return true;

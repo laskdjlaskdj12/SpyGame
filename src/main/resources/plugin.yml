@@ -35,6 +35,11 @@ commands:
     description: "원정종료 커맨드입니다."
     usage: /<command>
 
+#라운드 커맨드
+  라운드체크:
+    description: "원정라운드를 보여줍니다."
+    usage: /<commnad>
+
 #디버깅용 커맨드
   투표결과:
     description: "투표결과 디버깅 커맨드입니다."
