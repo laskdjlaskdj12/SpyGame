@@ -54,8 +54,9 @@ public class PlayerHitEventHandler implements Listener {
         if(attackerCharacter.getRole().name().equals("Assassine") && victimCharacter.getRole().name().equals("Marline")){
             Bukkit.broadcastMessage("암살자가 멀린을 처리했습니다.!! 악의 팀 승리입니다.");
         }else{
-            Bukkit.broadcastMessage("암살자가 멀린이 아닌" + victimCharacter.getRole().KRName() + "을 지목했습니다!!. 선의 팀 승리입니다.");
+            Bukkit.broadcastMessage("암살자가 멀린이 아닌 " + victimCharacter.getRole().KRName() + "을 지목했습니다!!. 선의 팀 승리입니다.");
         }
+        victim.damage(20);
     }
 
     private void activeExcalibur(Player attacker, Player victim) {

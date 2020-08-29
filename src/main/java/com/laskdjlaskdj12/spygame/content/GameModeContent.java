@@ -97,7 +97,7 @@ public class GameModeContent {
     @Nullable
     public ICharacter findCharacterByRole(ROLE_TYPE roleType){
         for (ICharacter iCharacter : characterList) {
-            if (iCharacter.getRole().name() == roleType.name()) {
+            if (iCharacter.getRole().roleType() == roleType) {
                 return iCharacter;
             }
         }
