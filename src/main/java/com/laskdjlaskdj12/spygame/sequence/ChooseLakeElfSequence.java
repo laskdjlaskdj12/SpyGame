@@ -5,9 +5,11 @@ import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,23 +32,32 @@ public class ChooseLakeElfSequence implements CommandExecutor {
             return true;
         }
 
-
         // 호수의 요정 선정
         chooseLakeElf();
 
-        return false;
+        return true;
     }
 
     private void chooseLakeElf() {
-        Bukkit.broadcastMessage("원정대장 제외한 모든 인원들에게 호수의 요정을 선택합니다.");
+        Bukkit.broadcastMessage("원정대장을 제외한 모든 인원중에 호수의 요정을 뽑습니다.");
+
+        //기존의 호수의 요정을 제외함
+        ICharacter lakeElf = gameModeContent.findCharacterByGameRole(GAME_ROLE.LAKE_ELF);
+        if(lakeElf != null) {
+            lakeElf.getPlayer().getInventory().clear();
+            lakeElf.setGameRole(GAME_ROLE.NONE);
+        }
+
         List<ICharacter> characterList = gameModeContent.characterList()
                 .stream()
                 .filter(iCharacter -> iCharacter.getGameRole() != GAME_ROLE.EXPEDITION_LEAD)
                 .collect(Collectors.toList());
 
         Collections.shuffle(characterList);
-        ICharacter lakeElf = characterList.get(0);
+
+        lakeElf = characterList.get(0);
         lakeElf.setGameRole(GAME_ROLE.LAKE_ELF);
+        lakeElf.getPlayer().getInventory().addItem(new ItemStack(Material.BOOK));
 
         Bukkit.broadcastMessage(new StringBuilder().append("[")
                 .append(ChatColor.YELLOW + lakeElf.getPlayer().getDisplayName())
