@@ -23,25 +23,24 @@ public class PlayerHitEventHandler implements Listener {
 
     @EventHandler
     public void playerHitEventHandler(EntityDamageByEntityEvent event) {
-
         if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
-        //Todo: interface나 어노테이션을 사용해서 커스텀 PlayerHit 이벤트 핸들러를 만들것
-        if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)){
-            return;
-        }
+            //Todo: interface나 어노테이션을 사용해서 커스텀 PlayerHit 이벤트 핸들러를 만들것
+            if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
+                return;
+            }
 
-        Player attacker = (Player) event.getDamager();
-        Player victim = (Player) event.getEntity();
+            Player attacker = (Player) event.getDamager();
+            Player victim = (Player) event.getEntity();
 
-        if (attacker.getInventory().getItemInMainHand().getType() == Material.BOOK) {
-            activeLakeElf(attacker, victim);
-        } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD) {
-            activeExcalibur(attacker, victim);
-        } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
-            givePlayerExcalibur(attacker, victim);
-        }
-        else if(attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE){
-            activeMarlineAssine(attacker, victim);
+            if (attacker.getInventory().getItemInMainHand().getType() == Material.BOOK) {
+                activeLakeElf(attacker, victim);
+            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD) {
+                activeExcalibur(attacker, victim);
+            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
+                givePlayerExcalibur(attacker, victim);
+            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE) {
+                activeMarlineAssine(attacker, victim);
+            }
         }
     }
 
