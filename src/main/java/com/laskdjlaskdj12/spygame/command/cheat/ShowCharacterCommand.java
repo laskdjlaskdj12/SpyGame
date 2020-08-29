@@ -18,17 +18,18 @@ public class ShowCharacterCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        sender.sendMessage("커맨드를 시작합니다.");
         List<ICharacter> characters = gameModeContent.characterList();
-        if(characters.isEmpty()){
+        if (characters.isEmpty()) {
             sender.sendMessage("게임이 시작되지 않아서 캐릭터가 없습니다.");
             return true;
         }
-
+        sender.sendMessage("정보들을 수집합니다.");
         List<String> allCharacterInfoStringList = characters.stream()
                 .map(character -> new StringBuilder().append("[" + character.getPlayer().getDisplayName() + "]")
-                .append(" -> ")
-                .append(character.getRole().KRName())
-                .toString())
+                        .append(" -> ")
+                        .append(character.getRole().KRName())
+                        .toString())
                 .collect(Collectors.toList());
 
         sender.sendMessage(String.join("\n", allCharacterInfoStringList));

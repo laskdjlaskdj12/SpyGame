@@ -37,7 +37,7 @@ public class PlayerHitEventHandler implements Listener {
         else if(attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD){
             activeExcalibur(attacker, victim);
         }
-        else if(attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD){
+        else if(attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE){
             activeMarlineAssine(attacker, victim);
         }
     }

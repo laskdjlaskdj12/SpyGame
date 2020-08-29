@@ -49,11 +49,11 @@ public class Run extends JavaPlugin {
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
+        getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
         getCommand("투표결과").setExecutor(new ShowExpeditionVote(experditionContent));
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
-        getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
     }
 
     @Override
