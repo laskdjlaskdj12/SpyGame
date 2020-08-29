@@ -1,13 +1,10 @@
 package com.laskdjlaskdj12.spygame;
 
 import com.laskdjlaskdj12.spygame.command.*;
-import com.laskdjlaskdj12.spygame.command.cheat.CollectVoteResultBlock;
+import com.laskdjlaskdj12.spygame.command.cheat.*;
 import com.laskdjlaskdj12.spygame.command.experdition.AddExperditionerCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StartExperditionCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StopExperditionCommand;
-import com.laskdjlaskdj12.spygame.command.cheat.ForceAddExpeditionCommand;
-import com.laskdjlaskdj12.spygame.command.cheat.ForceCreateCharacterCommand;
-import com.laskdjlaskdj12.spygame.command.cheat.ShowExpeditionVote;
 import com.laskdjlaskdj12.spygame.content.*;
 import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
@@ -54,6 +51,7 @@ public class Run extends JavaPlugin {
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
+        getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
     }
 
     @Override
