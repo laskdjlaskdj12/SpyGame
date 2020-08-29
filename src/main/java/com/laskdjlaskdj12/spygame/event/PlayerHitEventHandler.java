@@ -24,7 +24,8 @@ public class PlayerHitEventHandler implements Listener {
     @EventHandler
     public void playerHitEventHandler(EntityDamageByEntityEvent event) {
 
-        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
+        //Todo: interface나 어노테이션을 사용해서 커스텀 PlayerHit 이벤트 핸들러를 만들것
+        if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)){
             return;
         }
 
@@ -37,6 +38,25 @@ public class PlayerHitEventHandler implements Listener {
             activeExcalibur(attacker, victim);
         } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
             givePlayerExcalibur(attacker, victim);
+        }
+        else if(attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD){
+            activeMarlineAssine(attacker, victim);
+        }
+    }
+
+    private void activeMarlineAssine(Player attacker, Player victim) {
+        ICharacter attackerCharacter = gameModeContent.findCharacterFromPlayer(attacker);
+        ICharacter victimCharacter = gameModeContent.findCharacterFromPlayer(victim);
+
+        if(attackerCharacter == null || victimCharacter == null){
+            Bukkit.broadcastMessage("[에러] 암살자와 지목대상을 찾을수가 없습니다.");
+            return;
+        }
+
+        if(attackerCharacter.getRole().name().equals("Assassine") && victimCharacter.getRole().name().equals("Marline")){
+            Bukkit.broadcastMessage("암살자가 멀린을 처리했습니다.!! 악의 팀 승리입니다.");
+        }else{
+            Bukkit.broadcastMessage("암살자가 멀린이 아닌" + victimCharacter.getRole().KRName() + "을 지목했습니다!!. 선의 팀 승리입니다.");
         }
     }
 
