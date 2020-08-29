@@ -54,8 +54,8 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
 
             Bukkit.broadcastMessage(TickUtil.tickToSecond(timerCount) + "초 남았습니다.");
 
-            //칼을 들고있는지 체크
-            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.KING);
+            //엑스칼리버가 칼을 들고있는지 체크
+            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
             if(kingCharacter == null){
                 Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
                 return;
