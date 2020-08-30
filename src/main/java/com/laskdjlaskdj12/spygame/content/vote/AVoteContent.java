@@ -6,11 +6,11 @@ import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
-import java.util.function.Function;
 
 
 /**
@@ -45,8 +45,12 @@ public abstract class AVoteContent {
     }
 
     protected void giveVoteItemToPlayer(ICharacter character) {
-        character.getPlayer().getInventory().setItem(0, new ItemStack(Material.DIAMOND_BLOCK));
-        character.getPlayer().getInventory().setItem(1, new ItemStack(Material.GOLD_BLOCK));
+
+        //기존 블록들을 아이템 슬롯 3번으로 옮김
+        moveItemToRightSlot(character);
+
+        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", Material.WHITE_WOOL));
+        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", Material.BLACK_WOOL));
     }
 
     protected VotingResult votingTotal(List<Boolean> voteResult) {
@@ -66,7 +70,35 @@ public abstract class AVoteContent {
                 .build();
     }
 
-    public void setResultHandler(IVoteResultHandler resultHandler){
+    public void setResultHandler(IVoteResultHandler resultHandler) {
         this.iVoteResultHandler = resultHandler;
+    }
+
+    protected void moveItemToRightSlot(ICharacter iCharacter) {
+        ItemStack zeroInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(0);
+        ItemStack oneInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(1);
+
+        iCharacter.getPlayer().getInventory().setItem(2, zeroInventorySlotItem);
+        iCharacter.getPlayer().getInventory().setItem(3, oneInventorySlotItem);
+    }
+
+    protected void moveItemToLeftSlot(ICharacter iCharacter) {
+        ItemStack zeroInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(2);
+        ItemStack oneInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(3);
+
+        iCharacter.getPlayer().getInventory().setItem(0, zeroInventorySlotItem);
+        iCharacter.getPlayer().getInventory().setItem(1, oneInventorySlotItem);
+
+        iCharacter.getPlayer().getInventory().setItem(2, new ItemStack(Material.AIR));
+        iCharacter.getPlayer().getInventory().setItem(3, new ItemStack(Material.AIR));
+    }
+
+    private ItemStack makeCustomItem(String name, Material blockMaterial) {
+        ItemStack block = new ItemStack(blockMaterial);
+        ItemMeta blockMetadata = block.getItemMeta();
+        blockMetadata.setDisplayName(name);
+        block.setItemMeta(blockMetadata);
+
+        return block;
     }
 }

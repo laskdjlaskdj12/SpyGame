@@ -61,11 +61,13 @@ public class PickPlayerVoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_BLOCK)
+                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_WOOL)
                 .collect(Collectors.toList());
 
         characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
         characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(1, new ItemStack(Material.AIR)));
+
+        characterList.forEach(iCharacter -> moveItemToLeftSlot(iCharacter));
         return votingTotal(voteResult);
     }
 }
