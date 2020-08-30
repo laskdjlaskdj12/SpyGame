@@ -23,6 +23,9 @@ public class GameModeContent {
 
     //Todo: 리팩토링 할것
     private final ExperditionContent experditionContent;
+    private final RoleContent roleContent;
+    private final CharacterContent characterContent;
+
     private List<ICharacter> characterList = new ArrayList<>();
     private List<Block> voteResultBlock = new ArrayList<>();
     private List<Block> activeVoteResultBlock = new ArrayList<>();
@@ -33,8 +36,12 @@ public class GameModeContent {
     private boolean collectVoteBlock = false;
 
     public GameModeContent(ExperditionContent experditionContent,
+                           RoleContent roleContent,
+                           CharacterContent characterContent,
                            JavaPlugin javaPlugin) {
         this.experditionContent = experditionContent;
+        this.roleContent = roleContent;
+        this.characterContent = characterContent;
         this.javaPlugin = javaPlugin;
     }
 
@@ -206,5 +213,13 @@ public class GameModeContent {
 
     public JavaPlugin getJavaPlugin() {
         return javaPlugin;
+    }
+
+    public RoleContent getRoleContent(){
+        return this.roleContent;
+    }
+
+    public CharacterContent getCharacterContent(){
+        return this.characterContent;
     }
 }

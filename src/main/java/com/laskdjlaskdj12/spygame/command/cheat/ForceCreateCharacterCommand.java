@@ -13,9 +13,8 @@ public class ForceCreateCharacterCommand implements CommandExecutor {
     private final CharacterContent characterContent;
     private final GameModeContent gameModeContent;
 
-    public ForceCreateCharacterCommand(CharacterContent characterContent,
-                                       GameModeContent gameModeContent) {
-        this.characterContent = characterContent;
+    public ForceCreateCharacterCommand(GameModeContent gameModeContent) {
+        this.characterContent = gameModeContent.getCharacterContent();
         this.gameModeContent = gameModeContent;
     }
 

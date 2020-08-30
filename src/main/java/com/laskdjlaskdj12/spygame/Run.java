@@ -5,13 +5,15 @@ import com.laskdjlaskdj12.spygame.command.cheat.*;
 import com.laskdjlaskdj12.spygame.command.experdition.AddExperditionerCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StartExperditionCommand;
 import com.laskdjlaskdj12.spygame.command.experdition.StopExperditionCommand;
-import com.laskdjlaskdj12.spygame.content.*;
+import com.laskdjlaskdj12.spygame.content.CharacterContent;
+import com.laskdjlaskdj12.spygame.content.ExperditionContent;
+import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import com.laskdjlaskdj12.spygame.content.RoleContent;
 import com.laskdjlaskdj12.spygame.event.PlayerHitEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerInteractiveEventHandler;
 import com.laskdjlaskdj12.spygame.event.PlayerJoinEventHandler;
 import com.laskdjlaskdj12.spygame.sequence.ChooseLakeElfSequence;
 import com.laskdjlaskdj12.spygame.sequence.ExperditionLeadSequence;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Run extends JavaPlugin {
@@ -24,13 +26,13 @@ public class Run extends JavaPlugin {
         getLogger().info("개발자: 라스크");
         getLogger().info("===========================================================");
 
-        World world = getServer().getWorlds().get(0);
-
         RoleContent roleContent = new RoleContent();
         CharacterContent characterContent = new CharacterContent();
-        MessageContent messageContent = new MessageContent(world);
         ExperditionContent experditionContent = new ExperditionContent();
-        GameModeContent gameModeContent = new GameModeContent(experditionContent, this);
+        GameModeContent gameModeContent = new GameModeContent(experditionContent,
+                roleContent,
+                characterContent,
+                this);
 
         //Todo: 이벤트 핸들러 construct들에 컨텐츠 핸들러 factory를 dependency로 리팩토링
         //이벤트 등록
@@ -39,7 +41,7 @@ public class Run extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerHitEventHandler(gameModeContent), this);
 
         //커맨드 등록
-        getCommand("start").setExecutor(new StartCommand(roleContent, characterContent, messageContent, gameModeContent));
+        getCommand("start").setExecutor(new StartCommand(gameModeContent));
         getCommand("vote").setExecutor(new VoteCommand(gameModeContent));
         getCommand("pickPerson").setExecutor(new PickPersonCommand(gameModeContent));
         getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent));
@@ -63,10 +65,10 @@ public class Run extends JavaPlugin {
         getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
         getCommand("투표결과").setExecutor(new ShowExpeditionVoteCommand(gameModeContent));
         getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(gameModeContent));
-        getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
+        getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
         getCommand("원정역할보기").setExecutor(new ShowGameRoleCommand(gameModeContent));
-        getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(characterContent, gameModeContent));
+        getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(gameModeContent));
         getCommand("지정캐릭터게임롤추가").setExecutor(new ForceCreateExpeditionRoleCommand(gameModeContent));
     }
 

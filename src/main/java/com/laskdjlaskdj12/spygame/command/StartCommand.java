@@ -2,11 +2,11 @@ package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
-import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.RoleContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -14,24 +14,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
 import java.util.List;
 
 public class StartCommand implements CommandExecutor {
 
     private final RoleContent roleContent;
     private final CharacterContent characterContent;
-    private final MessageContent messageContent;
     private final GameModeContent gameModeContent;
 
-    public StartCommand(RoleContent roleContent,
-                        CharacterContent characterContent,
-                        MessageContent messageContent,
-                        GameModeContent gameModeContent) {
-        this.roleContent = roleContent;
-        this.characterContent = characterContent;
-        this.messageContent = messageContent;
+    public StartCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
+        this.roleContent = gameModeContent.getRoleContent();
+        this.characterContent = gameModeContent.getCharacterContent();
     }
 
     @Override
@@ -61,14 +55,14 @@ public class StartCommand implements CommandExecutor {
         }
 
         // 각 player마다 역활들을 랜덤으로 정함
-        messageContent.sendWorldMessage(ChatColor.YELLOW + "플레이어에게 역활을 랜덤으로 나누는 중...");
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "플레이어에게 역활을 랜덤으로 나누는 중...");
 
         List<IRole> roleList = roleContent.assignmentRole(players);
         List<ICharacter> characters = characterContent.createCharacter(roleList, players);
-        messageContent.sendWorldMessage(ChatColor.YELLOW + "각 캐릭터마다 역활 배정 완료!");
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "각 캐릭터마다 역활 배정 완료!");
 
         // 유저정보들을 저장
-        messageContent.sendWorldMessage(ChatColor.YELLOW + "유저정보 저장 완료");
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "유저정보 저장 완료");
         gameModeContent.saveCharacter(characters);
 
         //캐릭터 초기화 하기
@@ -77,8 +71,8 @@ public class StartCommand implements CommandExecutor {
             character.initCharacter(gameModeContent);
         }
 
-        messageContent.sendWorldMessage(ChatColor.YELLOW + "유저정보 저장 완료");
-        messageContent.sendWorldMessage("모든 세팅이 완료되었습니다!! Dev by " +  ChatColor.YELLOW + "laskdjlaskdj12 (라스크) " + ChatColor.WHITE + "& Thanks for " + ChatColor.GREEN + "우리들의 마인크래프트 공간");
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "유저정보 저장 완료");
+        Bukkit.broadcastMessage("모든 세팅이 완료되었습니다!! Dev by " +  ChatColor.YELLOW + "laskdjlaskdj12 (라스크) " + ChatColor.WHITE + "& Thanks for " + ChatColor.GREEN + "우리들의 마인크래프트 공간");
         return true;
     }
 }

@@ -16,9 +16,8 @@ public class ForceCreatePacificCharacterCommand implements CommandExecutor {
     private final CharacterContent characterContent;
     private final GameModeContent gameModeContent;
 
-    public ForceCreatePacificCharacterCommand(CharacterContent characterContent,
-                                              GameModeContent gameModeContent) {
-        this.characterContent = characterContent;
+    public ForceCreatePacificCharacterCommand(GameModeContent gameModeContent) {
+        this.characterContent = gameModeContent.getCharacterContent();
         this.gameModeContent = gameModeContent;
     }
 
