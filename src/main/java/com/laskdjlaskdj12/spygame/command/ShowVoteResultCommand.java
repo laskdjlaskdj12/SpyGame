@@ -32,9 +32,9 @@ public class ShowVoteResultCommand implements CommandExecutor {
     public static List<VoteInfo> voteInfoList = new ArrayList<>();
     public static BukkitTask taskID;
     public static int voterCount = 0;
-    public ShowVoteResultCommand(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
+    public ShowVoteResultCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
-        this.javaPlugin = javaPlugin;
+        this.javaPlugin = gameModeContent.getJavaPlugin();
     }
 
     @Override

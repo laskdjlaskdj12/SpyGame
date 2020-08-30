@@ -22,10 +22,9 @@ public class PickPersonCommand implements CommandExecutor, IVoteResultHandler {
     private final GameModeContent gameModeContent;
     private final JavaPlugin plugin;
 
-    public PickPersonCommand(GameModeContent gameModeContent,
-                             JavaPlugin plugin) {
+    public PickPersonCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
-        this.plugin = plugin;
+        this.plugin = gameModeContent.getJavaPlugin();
     }
 
     @Override

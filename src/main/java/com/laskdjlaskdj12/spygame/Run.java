@@ -30,7 +30,7 @@ public class Run extends JavaPlugin {
         CharacterContent characterContent = new CharacterContent();
         MessageContent messageContent = new MessageContent(world);
         ExperditionContent experditionContent = new ExperditionContent();
-        GameModeContent gameModeContent = new GameModeContent(experditionContent);
+        GameModeContent gameModeContent = new GameModeContent(experditionContent, this);
 
         //Todo: 이벤트 핸들러 construct들에 컨텐츠 핸들러 factory를 dependency로 리팩토링
         //이벤트 등록
@@ -40,12 +40,12 @@ public class Run extends JavaPlugin {
 
         //커맨드 등록
         getCommand("start").setExecutor(new StartCommand(roleContent, characterContent, messageContent, gameModeContent));
-        getCommand("vote").setExecutor(new VoteCommand(gameModeContent, this));
-        getCommand("pickPerson").setExecutor(new PickPersonCommand(gameModeContent, this));
-        getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent, experditionContent, characterContent, this));
-        getCommand("원정종료").setExecutor(new StopExperditionCommand(gameModeContent, experditionContent, characterContent, this));
-        getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
-        getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
+        getCommand("vote").setExecutor(new VoteCommand(gameModeContent));
+        getCommand("pickPerson").setExecutor(new PickPersonCommand(gameModeContent));
+        getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent));
+        getCommand("원정종료").setExecutor(new StopExperditionCommand(gameModeContent));
+        getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(gameModeContent));
+        getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent));
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
@@ -56,17 +56,17 @@ public class Run extends JavaPlugin {
         getCommand("원정대장지정").setExecutor(new SetExperditionLeadCommand(gameModeContent));
 
         //시퀸스커맨드
-        getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent, this));
+        getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent));
         getCommand("호수의요정선정").setExecutor(new ChooseLakeElfSequence(gameModeContent));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
-        getCommand("투표결과").setExecutor(new ShowExpeditionVoteCommand(experditionContent));
-        getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(experditionContent, characterContent, gameModeContent));
+        getCommand("투표결과").setExecutor(new ShowExpeditionVoteCommand(gameModeContent));
+        getCommand("강제원정참여").setExecutor(new ForceAddExpeditionCommand(gameModeContent));
         getCommand("강제캐릭터생성").setExecutor(new ForceCreateCharacterCommand(characterContent, gameModeContent));
         getCommand("투표결과블록수집").setExecutor(new CollectVoteResultBlock(gameModeContent));
         getCommand("원정역할보기").setExecutor(new ShowGameRoleCommand(gameModeContent));
-        getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(experditionContent, characterContent, gameModeContent));
+        getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(characterContent, gameModeContent));
         getCommand("지정캐릭터게임롤추가").setExecutor(new ForceCreateExpeditionRoleCommand(gameModeContent));
     }
 

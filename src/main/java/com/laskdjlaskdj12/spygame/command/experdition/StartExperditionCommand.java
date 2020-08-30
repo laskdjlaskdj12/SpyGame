@@ -10,25 +10,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class StartExperditionCommand implements CommandExecutor {
     private final GameModeContent gameModeContent;
-    private final ExperditionContent experditionContent;
-    private final JavaPlugin javaPlugin;
-    private final CharacterContent characterContent;
 
-    public StartExperditionCommand(GameModeContent gameModeContent,
-                                   ExperditionContent experditionContent,
-                                   CharacterContent characterContent,
-                                   JavaPlugin plugin) {
-        this.experditionContent = experditionContent;
+    public StartExperditionCommand(GameModeContent gameModeContent){
         this.gameModeContent = gameModeContent;
-        this.javaPlugin = plugin;
-        this.characterContent = characterContent;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //지금 진행중인 원정이 있는지 체크
 
-        if (experditionContent.isExsist()) {
+        if (gameModeContent.experditionContent().isExsist()) {
             sender.sendMessage("이미 진행중인 원정이 있습니다. 진행중인 원정을 끝내주세요");
             return false;
         }
@@ -36,7 +27,7 @@ public class StartExperditionCommand implements CommandExecutor {
         sender.sendMessage("원정을 시작합니다.");
 
         //원정이 없다면 원정을 등록함
-        experditionContent.start();
+        gameModeContent.experditionContent().start();
         return true;
     }
 }

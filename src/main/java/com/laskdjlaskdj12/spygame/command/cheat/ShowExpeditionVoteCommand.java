@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.command.cheat;
 
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
+import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,8 +12,8 @@ import org.bukkit.command.CommandSender;
 public class ShowExpeditionVoteCommand implements CommandExecutor {
     private final ExperditionContent experditionContent;
 
-    public ShowExpeditionVoteCommand(ExperditionContent experditionContent) {
-        this.experditionContent = experditionContent;
+    public ShowExpeditionVoteCommand(GameModeContent gameModeContent) {
+        this.experditionContent = gameModeContent.experditionContent();
     }
 
     @Override

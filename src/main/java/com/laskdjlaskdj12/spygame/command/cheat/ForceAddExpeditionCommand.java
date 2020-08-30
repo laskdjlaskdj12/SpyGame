@@ -12,14 +12,10 @@ import org.bukkit.entity.Player;
 public class ForceAddExpeditionCommand implements CommandExecutor {
 
     private final ExperditionContent experditionContent;
-    private final CharacterContent characterContent;
     private final GameModeContent gameModeContent;
 
-    public ForceAddExpeditionCommand(ExperditionContent experditionContent,
-                                     CharacterContent characterContent,
-                                     GameModeContent gameModeContent) {
-        this.experditionContent = experditionContent;
-        this.characterContent = characterContent;
+    public ForceAddExpeditionCommand(GameModeContent gameModeContent) {
+        this.experditionContent = gameModeContent.experditionContent();
         this.gameModeContent = gameModeContent;
     }
 

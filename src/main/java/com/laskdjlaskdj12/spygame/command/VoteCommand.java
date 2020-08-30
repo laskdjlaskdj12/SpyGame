@@ -18,11 +18,9 @@ import java.util.List;
 public class VoteCommand implements CommandExecutor, IVoteResultHandler {
     //Todo: 리팩토링 및 라이브 테스트 진행하기
     private final GameModeContent gameModeContent;
-    private final JavaPlugin plugin;
 
-    public VoteCommand(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
+    public VoteCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
-        this.plugin = javaPlugin;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class VoteCommand implements CommandExecutor, IVoteResultHandler {
         List<ICharacter> characterList = gameModeContent.characterList();
         Player player = (Player) sender;
 
-        VoteContent voteContent = new VoteContent(plugin, 10);
+        VoteContent voteContent = new VoteContent(gameModeContent.getJavaPlugin(), 10);
         voteContent.setResultHandler(this);
         voteContent.startVote(characterList, player);
         return true;

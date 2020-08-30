@@ -13,14 +13,11 @@ import org.bukkit.entity.Player;
 
 public class ForceCreatePacificCharacterCommand implements CommandExecutor {
 
-    private final ExperditionContent experditionContent;
     private final CharacterContent characterContent;
     private final GameModeContent gameModeContent;
 
-    public ForceCreatePacificCharacterCommand(ExperditionContent experditionContent,
-                                     CharacterContent characterContent,
-                                     GameModeContent gameModeContent) {
-        this.experditionContent = experditionContent;
+    public ForceCreatePacificCharacterCommand(CharacterContent characterContent,
+                                              GameModeContent gameModeContent) {
         this.characterContent = characterContent;
         this.gameModeContent = gameModeContent;
     }
@@ -28,24 +25,24 @@ public class ForceCreatePacificCharacterCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage("[테스트] 콘솔로 치트코드를 조작할수없습니다.");
             return true;
         }
 
-        if(args.length != 2){
+        if (args.length != 2) {
             sender.sendMessage("[테스트] /지정캐릭터추가 <닉네임> <캐릭터영어이름>");
             return true;
         }
 
         Player targetPlayer = sender.getServer().getPlayerExact(args[0]);
-        if(targetPlayer == null){
+        if (targetPlayer == null) {
             sender.sendMessage(args[0] + "님을 찾을수가없습니다.");
             return true;
         }
 
         ROLE_TYPE changeType = ROLE_TYPE.findRoleByName(args[1]);
-        if(changeType == null){
+        if (changeType == null) {
             sender.sendMessage("잘못된 ROLE 입니다.");
             return true;
         }

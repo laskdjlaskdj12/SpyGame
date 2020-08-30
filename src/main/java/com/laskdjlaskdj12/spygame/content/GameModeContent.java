@@ -1,18 +1,16 @@
 package com.laskdjlaskdj12.spygame.content;
 
-import com.laskdjlaskdj12.spygame.command.cheat.CollectVoteResultBlock;
 import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
-import com.laskdjlaskdj12.spygame.content.vote.VoteContent;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -22,6 +20,7 @@ import java.util.stream.Collectors;
 
 public class GameModeContent {
 
+
     //Todo: 리팩토링 할것
     private final ExperditionContent experditionContent;
     private List<ICharacter> characterList = new ArrayList<>();
@@ -30,11 +29,13 @@ public class GameModeContent {
     private boolean excaliberExsist = true;
     private int winCount = 0;
     private int loseCount = 0;
-
+    private JavaPlugin javaPlugin;
     private boolean collectVoteBlock = false;
 
-    public GameModeContent(ExperditionContent experditionContent) {
+    public GameModeContent(ExperditionContent experditionContent,
+                           JavaPlugin javaPlugin) {
         this.experditionContent = experditionContent;
+        this.javaPlugin = javaPlugin;
     }
 
     public void saveCharacter(List<ICharacter> characters) {
@@ -201,5 +202,9 @@ public class GameModeContent {
                 .filter(character -> character.getRole().roleType() == roleType)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public JavaPlugin getJavaPlugin() {
+        return javaPlugin;
     }
 }

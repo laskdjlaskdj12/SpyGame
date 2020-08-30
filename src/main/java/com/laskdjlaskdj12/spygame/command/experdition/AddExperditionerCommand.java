@@ -11,16 +11,10 @@ import org.bukkit.command.CommandSender;
 
 public class AddExperditionerCommand implements CommandExecutor {
 
-    private final ExperditionContent experditionContent;
-    private final CharacterContent characterContent;
     private final GameModeContent gameModeContent;
 
-    public AddExperditionerCommand(CharacterContent characterContent,
-                                   GameModeContent gameModeContent,
-                                   ExperditionContent experditionContent) {
-        this.characterContent = characterContent;
+    public AddExperditionerCommand(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
-        this.experditionContent = experditionContent;
     }
 
     @Override
@@ -46,12 +40,12 @@ public class AddExperditionerCommand implements CommandExecutor {
         }
 
         //원정 정보 시작함
-        if(!experditionContent.isExsist()){
+        if(!gameModeContent.experditionContent().isExsist()){
             sender.sendMessage(ChatColor.RED + "진행중인 원정을 발견하지 못했습니다. 원정을 만들고 난다음에 시도해주세요");
             return false;
         }
 
-        experditionContent.addExperditioner(experditioner);
+        gameModeContent.experditionContent().addExperditioner(experditioner);
 
         sender.sendMessage(experditioner.getPlayer().getDisplayName() + "님을 원정대원으로 추가했습니다.");
 

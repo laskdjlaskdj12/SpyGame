@@ -18,9 +18,9 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
     private final GameModeContent gameModeContent;
     private final JavaPlugin javaPlugin;
 
-    public ExperditionLeadSequence(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
+    public ExperditionLeadSequence(GameModeContent gameModeContent) {
         this.gameModeContent = gameModeContent;
-        this.javaPlugin = javaPlugin;
+        this.javaPlugin = gameModeContent.getJavaPlugin();
     }
 
     @Override
