@@ -21,6 +21,12 @@ commands:
   멀린암살 :
       description: "멀린을 암살하는 시퀸스입니다."
       usage: /<command>
+  승리선언:
+    description: "승리선언을 하는 시퀸스입니다.."
+    usage: /<command>
+  패배선언:
+    description: "패배를 선언하는 시퀸스입니다."
+    usage: /<command>
 
 #게임 원정 커맨드
   엑스칼리버지정:
