@@ -68,7 +68,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
                 if(isEnd()){
                     javaPlugin.getLogger().info("투표결과를 끝냅니다.");
-                    end();
+                    end(voteInfoList);
                 }
 
                 return;
@@ -115,9 +115,25 @@ public class ShowVoteResultCommand implements CommandExecutor {
         return gameModeContent.getActiveVoteResultBlock().size() == voteInfoListIndex;
     }
 
-    private void end() {
+    private void end(List<VoteInfo> voteInfoList) {
         Bukkit.getScheduler().cancelTask(taskID.getTaskId());
+        resetVoteInfo();
 
+        //투표결과에 따라 원정결과 업데이트
+        VoteInfo nayVoteInfo = voteInfoList.stream().filter(voteInfo -> voteInfo.isAi() == false)
+                .findFirst()
+                .orElse(null);
+
+        if(nayVoteInfo != null){
+            Bukkit.broadcastMessage("원정이 실패했습니다.");
+            gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+        } else{
+            Bukkit.broadcastMessage("원정이 승리했습니다.");
+            gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+        }
+    }
+
+    private void resetVoteInfo(){
         second = 0;
         voteInfoListIndex = 0;
         taskID = null;

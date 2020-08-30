@@ -134,6 +134,14 @@ public class GameModeContent {
         return winCount;
     }
 
+    public void setWinCount(int count){
+        winCount = count;
+    }
+
+    public void setLoseCount(int count){
+        loseCount = count;
+    }
+
     public boolean isExcaliberExsist() {
         return excaliberExsist;
     }
