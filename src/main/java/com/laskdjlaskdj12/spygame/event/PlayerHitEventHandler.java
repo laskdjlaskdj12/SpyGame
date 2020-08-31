@@ -2,7 +2,10 @@ package com.laskdjlaskdj12.spygame.event;
 
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
+import com.laskdjlaskdj12.spygame.exception.AvalonGameError;
+import com.laskdjlaskdj12.spygame.exception.ExperditionNotStart;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,9 +19,11 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerHitEventHandler implements Listener {
 
     private final GameModeContent gameModeContent;
+    private final MessageContent messageContent;
 
-    public PlayerHitEventHandler(GameModeContent gameModeContent) {
+    public PlayerHitEventHandler(GameModeContent gameModeContent, MessageContent messageContent) {
         this.gameModeContent = gameModeContent;
+        this.messageContent = messageContent;
     }
 
     @EventHandler
@@ -40,7 +45,44 @@ public class PlayerHitEventHandler implements Listener {
                 givePlayerExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE) {
                 activeMarlineAssine(attacker, victim);
+            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE) {
+                chooseExperditionMember(attacker, victim);
             }
+        }
+    }
+
+    private void chooseExperditionMember(Player attacker, Player vicitim){
+
+        try {
+            //현재 원정라운드별 인원수가 있는지 체크
+            if (!gameModeContent.experditionContent().canAddMoreMember()) {
+
+                String title = "[" +
+                        gameModeContent.experditionContent().applyExperditionMemberCount() +
+                        "/" +
+                        gameModeContent.experditionContent().roundByMemberCount() +
+                        "]";
+
+                String subTitle = "더이상 대원을 선발 할수 없습니다!!";
+
+                messageContent.sendTitleToAll(title, subTitle);
+                return;
+            }
+
+            //원정대원 추가
+            gameModeContent.experditionContent().addExperditioner(gameModeContent.findCharacterFromPlayer(vicitim));
+
+            String title = "[" +
+                    gameModeContent.experditionContent().applyExperditionMemberCount() +
+                    "/" +
+                    gameModeContent.experditionContent().roundByMemberCount() +
+                    "]";
+
+            String subTitle  = vicitim.getDisplayName() + "님이 원정대원으로 선발되셨습니다.";
+            messageContent.sendTitleToAll(title, subTitle);
+
+        }catch(AvalonGameError e){
+            Bukkit.broadcastMessage(e.getMessage());
         }
     }
 

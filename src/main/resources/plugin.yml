@@ -67,8 +67,10 @@ commands:
   원정대장선정:
     description: "원정대장선정하는 시퀸스를 시작합니다."
     usage: /<commnad>
-
   호수의요정선정:
+    description: "호수의 요정을 지정합니다."
+    usage: /<commnad>
+  라운드별원정대원선발:
     description: "호수의 요정을 지정합니다."
     usage: /<commnad>
 
