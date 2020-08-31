@@ -73,8 +73,7 @@ public class ExperditionContent {
         }
 
         experditionInfo.getApplyCharacters().add(character);
-        experditionInfo.setMaxExperditionMembersCount(applyExperditionMemberCount() + 1);
-
+        experditionInfo.setMaxExperditionMembersCount(roundByMaxMemberCount());
         return true;
     }
 
@@ -133,7 +132,7 @@ public class ExperditionContent {
         return experditionInfo.getMaxExperditionMembersCount() > experditionInfo.getApplyCharacters().size();
     }
 
-    public int roundByMemberCount() {
+    public int roundByMaxMemberCount() {
         return experditionInfo.getMaxExperditionMembersCount();
     }
 

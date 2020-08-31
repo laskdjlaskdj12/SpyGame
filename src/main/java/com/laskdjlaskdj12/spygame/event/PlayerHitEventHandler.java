@@ -5,7 +5,6 @@ import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.exception.AvalonGameError;
-import com.laskdjlaskdj12.spygame.exception.ExperditionNotStart;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -60,7 +59,7 @@ public class PlayerHitEventHandler implements Listener {
                 String title = "[" +
                         gameModeContent.experditionContent().applyExperditionMemberCount() +
                         "/" +
-                        gameModeContent.experditionContent().roundByMemberCount() +
+                        gameModeContent.experditionContent().roundByMaxMemberCount() +
                         "]";
 
                 String subTitle = "더이상 대원을 선발 할수 없습니다!!";
@@ -86,7 +85,7 @@ public class PlayerHitEventHandler implements Listener {
             String title = "[" +
                     gameModeContent.experditionContent().applyExperditionMemberCount() +
                     "/" +
-                    gameModeContent.experditionContent().roundByMemberCount() +
+                    gameModeContent.experditionContent().roundByMaxMemberCount() +
                     "]";
 
             String subTitle  = vicitim.getDisplayName() + "님이 원정대원으로 선발되셨습니다.";

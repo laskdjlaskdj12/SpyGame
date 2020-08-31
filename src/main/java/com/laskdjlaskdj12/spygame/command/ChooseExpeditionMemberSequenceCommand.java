@@ -4,7 +4,6 @@ import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
-import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +24,7 @@ public class ChooseExpeditionMemberSequenceCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //원정대 멤버 선발
-        int pickMemberCount = gameModeContent.experditionContent().roundByMemberCount();
+        int pickMemberCount = gameModeContent.experditionContent().roundByMaxMemberCount();
         gameModeContent.setPickExperditionMemberCount(pickMemberCount);
 
         //엑스칼리버가 이미 있는지 체크
