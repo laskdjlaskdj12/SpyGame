@@ -15,6 +15,9 @@ commands:
   pickPerson:
     description: "지명 투표를 시작합니다."
     usage: /<command>
+  게임끝:
+    description: "게임이 끝났습니다. 게임을 초기화합니다."
+    usage: /<command>
   멀린암살 :
       description: "멀린을 암살하는 시퀸스입니다."
       usage: /<command>
