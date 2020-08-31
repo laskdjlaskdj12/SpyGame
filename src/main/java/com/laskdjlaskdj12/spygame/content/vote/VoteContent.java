@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -60,9 +61,10 @@ public class VoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.DIAMOND_BLOCK)
+                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_WOOL)
                 .collect(Collectors.toList());
 
+        characterList.forEach(iCharacter -> moveItemToLeftSlot(iCharacter));
         return votingTotal(voteResult);
     }
 }
