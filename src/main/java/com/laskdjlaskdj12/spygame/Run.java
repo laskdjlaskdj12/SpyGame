@@ -36,7 +36,7 @@ public class Run extends JavaPlugin {
         //이벤트 등록
         getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractiveEventHandler(experditionContent), this);
-        getServer().getPluginManager().registerEvents(new PlayerHitEventHandler(gameModeContent), this);
+        getServer().getPluginManager().registerEvents(new PlayerHitEventHandler(gameModeContent, messageContent), this);
 
         //커맨드 등록
         getCommand("start").setExecutor(new StartCommand(roleContent, characterContent, messageContent, gameModeContent));
@@ -52,6 +52,7 @@ public class Run extends JavaPlugin {
         getCommand("게임끝").setExecutor(new GameClearCommand(gameModeContent));
         getCommand("승리선언").setExecutor(new AnnounceWinCommand(gameModeContent));
         getCommand("패배선언").setExecutor(new AnnounceLoseCommand(gameModeContent));
+        getCommand("라운드별원정대원선발").setExecutor(new ChooseExpeditionMemberSequenceCommand(gameModeContent, messageContent));
 
         //원정 커맨드
         getCommand("엑스칼리버지정").setExecutor(new SetExcaliburOwnerCommand(gameModeContent));
