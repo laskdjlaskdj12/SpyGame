@@ -70,7 +70,18 @@ public class PlayerHitEventHandler implements Listener {
             }
 
             //원정대원 추가
-            gameModeContent.experditionContent().addExperditioner(gameModeContent.findCharacterFromPlayer(vicitim));
+            boolean isAddedComplete = gameModeContent.experditionContent().addExperditioner(gameModeContent.findCharacterFromPlayer(vicitim));
+
+            if(!isAddedComplete){
+                String title = "[" +
+                        ChatColor.RED +
+                        "실패" +
+                        ChatColor.WHITE +
+                        "]";
+
+                String subTitle  = vicitim.getDisplayName() + "님은 이미 원정대원입니다.";
+                messageContent.sendTitleToAll(title, subTitle);
+            }
 
             String title = "[" +
                     gameModeContent.experditionContent().applyExperditionMemberCount() +
@@ -121,7 +132,7 @@ public class PlayerHitEventHandler implements Listener {
         excaliberCharacter.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
 
         //원정대장에게 엑스칼리버를 하사하는 도끼 제거
-        attacker.getInventory().clear();
+        attacker.getInventory().setItem(0, new ItemStack(Material.AIR));
     }
 
     private void activeExcalibur(Player attacker, Player victim) {

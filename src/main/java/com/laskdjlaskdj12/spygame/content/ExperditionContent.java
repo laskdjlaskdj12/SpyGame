@@ -54,9 +54,28 @@ public class ExperditionContent {
      * 원정인원 추가
      */
 
-    public void addExperditioner(ICharacter character) {
+    @Nullable
+    public ICharacter findExpeditionMember(ICharacter findCharacter){
+
+        if(experditionInfo.getApplyCharacters() == null){
+            return null;
+        }
+
+        return experditionInfo.getApplyCharacters()
+                .stream()
+                .filter(iCharacter -> iCharacter == findCharacter).findFirst()
+                .orElse(null);
+    }
+
+    public boolean addExperditioner(ICharacter character) {
+        if(findExpeditionMember(character) != null){
+            return false;
+        }
+
         experditionInfo.getApplyCharacters().add(character);
-        experditionInfo.setMaxExperditionMembersCount(experditionInfo.getMaxExperditionMembersCount() + 1);
+        experditionInfo.setMaxExperditionMembersCount(applyExperditionMemberCount() + 1);
+
+        return true;
     }
 
     public void addVote(ICharacter character, boolean isAi) {

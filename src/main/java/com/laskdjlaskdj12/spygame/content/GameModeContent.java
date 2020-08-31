@@ -179,6 +179,7 @@ public class GameModeContent {
 
         //원정대장에게 다이아 도끼를 주기
         candidate.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE));
+        candidate.getPlayer().getInventory().setItem(1, new ItemStack(Material.DIAMOND_PICKAXE));
     }
 
     public List<ICharacter> evilCharacters() {
