@@ -50,6 +50,8 @@ public class Run extends JavaPlugin {
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
         getCommand("게임끝").setExecutor(new GameClearCommand(gameModeContent));
+        getCommand("승리선언").setExecutor(new AnnounceWinCommand(gameModeContent));
+        getCommand("패배선언").setExecutor(new AnnounceLoseCommand(gameModeContent));
 
         //원정 커맨드
         getCommand("엑스칼리버지정").setExecutor(new SetExcaliburOwnerCommand(gameModeContent));
