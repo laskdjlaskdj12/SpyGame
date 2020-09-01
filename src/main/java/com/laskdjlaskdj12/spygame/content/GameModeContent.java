@@ -66,7 +66,7 @@ public class GameModeContent {
     public ICharacter findCharacterFromName(String name) {
         return characterList.stream()
                 .filter(character -> character.getPlayer().getDisplayName().equals(name))
-                .findFirst()
+                .findAny()
                 .orElse(null);
     }
 
@@ -99,7 +99,7 @@ public class GameModeContent {
     @Nullable
     public ICharacter findCharacterByRole(ROLE_TYPE roleType){
         for (ICharacter iCharacter : characterList) {
-            if (iCharacter.getRole().name() == roleType.name()) {
+            if (iCharacter.getRole().roleType().equals(roleType)) {
                 return iCharacter;
             }
         }

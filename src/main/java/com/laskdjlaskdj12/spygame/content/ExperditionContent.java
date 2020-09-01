@@ -8,8 +8,11 @@ import com.laskdjlaskdj12.spygame.exception.ExperditionNotStart;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.nio.channels.FileChannel;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ExperditionContent {
 
@@ -28,7 +31,7 @@ public class ExperditionContent {
      * 원정 관련된 초기화
      */
 
-    public void init(){
+    public void init() {
         this.experditionRoundCount = 0;
         this.experditionInfo = new ExperditionInfo();
     }
@@ -40,7 +43,7 @@ public class ExperditionContent {
     }
 
     public void stop() {
-        if(this.experditionRoundCount == 5){
+        if (this.experditionRoundCount == 5) {
 
             // 6번 experdition으로 알려주고
             this.experditionRoundCount += 1;
@@ -55,9 +58,9 @@ public class ExperditionContent {
      */
 
     @Nullable
-    public ICharacter findExpeditionMember(ICharacter findCharacter){
+    public ICharacter findExpeditionMember(ICharacter findCharacter) {
 
-        if(experditionInfo.getApplyCharacters() == null){
+        if (experditionInfo.getApplyCharacters() == null) {
             return null;
         }
 
@@ -68,7 +71,7 @@ public class ExperditionContent {
     }
 
     public boolean addExperditioner(ICharacter character) {
-        if(findExpeditionMember(character) != null){
+        if (findExpeditionMember(character) != null) {
             return false;
         }
 
@@ -96,9 +99,11 @@ public class ExperditionContent {
     }
 
     @Nullable
-    public List<ICharacter> applyExperditioner(){ return experditionInfo.getApplyCharacters(); }
+    public List<ICharacter> applyExperditioner() {
+        return experditionInfo.getApplyCharacters();
+    }
 
-    public int roundCount(){
+    public int roundCount() {
         return experditionRoundCount;
     }
 
@@ -109,7 +114,7 @@ public class ExperditionContent {
                 .findFirst()
                 .orElse(null);
 
-        if(characterVote == null){
+        if (characterVote == null) {
             return false;
         }
 
@@ -117,15 +122,18 @@ public class ExperditionContent {
         return true;
     }
 
-    public ExperditionInfo getExperditionInfo(){ return experditionInfo;}
+    public ExperditionInfo getExperditionInfo() {
+        return experditionInfo;
+    }
 
     /**
      * 원정이 시작되고 나서 반드시 체크를 할것
+     *
      * @return
      */
     public boolean canAddMoreMember() throws ExperditionNotStart {
 
-        if(experditionInfo == null){
+        if (experditionInfo == null) {
             throw new ExperditionNotStart("원정을 선언하지 않았습니다. 원정을 선언해주세요");
         }
 
@@ -136,11 +144,51 @@ public class ExperditionContent {
         return experditionInfo.getMaxExperditionMembersCount();
     }
 
-    public int applyExperditionMemberCount() throws ExperditionNotStart{
-        if(experditionInfo == null){
+    public int applyExperditionMemberCount() throws ExperditionNotStart {
+        if (experditionInfo == null) {
             throw new ExperditionNotStart("원정을 선언하지 않았습니다. 원정을 선언해주세요");
         }
 
         return experditionInfo.getApplyCharacters().size();
+    }
+
+    public boolean isVoter(ICharacter compareCharacter) {
+        if (experditionInfo == null) {
+            return false;
+        }
+
+        for (VoteInfo voteInfo : experditionInfo.getVoteInfoList()) {
+            if (voteInfo.getVoteingCharacter() == compareCharacter) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void collectMissingVote() {
+        //누락된 투표가 있는지 체크
+        if (!hasMissingVoter()) {
+            return;
+        }
+
+        //누락된 투표들은 전부 반대처리
+        experditionInfo.getApplyCharacters().stream()
+                .filter(iCharacter -> !isVoter(iCharacter))
+                .forEach(iCharacter -> addVote(iCharacter, false));
+    }
+
+    public List<VoteInfo> sortVoteList() {
+        return experditionInfo.getVoteInfoList().stream()
+                .sorted((o1, o2) -> Boolean.compare(!o1.isAi(), !o2.isAi()))
+                .collect(Collectors.toList());
+    }
+
+    public boolean hasMissingVoter() {
+        return getExperditionInfo().getVoteInfoList().size() < getExperditionInfo().getMaxExperditionMembersCount();
+    }
+
+    public int getMissingVoterCount() {
+        return experditionInfo.getMaxExperditionMembersCount() - experditionInfo.getVoteInfoList().size();
     }
 }

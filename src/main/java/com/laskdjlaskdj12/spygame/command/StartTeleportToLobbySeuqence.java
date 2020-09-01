@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,13 +17,13 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 
-public class StartTeleportToLobbyCommand implements CommandExecutor {
+public class StartTeleportToLobbySeuqence implements CommandExecutor {
 
     private final GameModeContent gameModeContent;
     private final JavaPlugin plugin;
 
-    public StartTeleportToLobbyCommand(GameModeContent gameModeContent,
-                                       JavaPlugin plugin) {
+    public StartTeleportToLobbySeuqence(GameModeContent gameModeContent,
+                                        JavaPlugin plugin) {
         this.gameModeContent = gameModeContent;
         this.plugin = plugin;
     }
@@ -35,17 +34,17 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        //현재 사람들이 3명이 있는지 체크
-        sender.sendMessage("3명이 있는지 체크");
-
         Player player = (Player) sender;
+
+        //투표결과 안된 사람들 모두 반대로 처리
+        gameModeContent.experditionContent().collectMissingVote();
 
         //10초 타이머를 진행함
         BukkitScheduler scheduler = player.getServer().getScheduler();
 
         bukkitTask = scheduler.runTaskTimer(plugin, () -> {
             if (timerCount == 0) {
-                timerCount = TickUtil.secondToTick(3);
+                timerCount = TickUtil.secondToTick(10);
                 Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
 
                 //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
@@ -58,11 +57,16 @@ public class StartTeleportToLobbyCommand implements CommandExecutor {
             //엑스칼리버가 칼을 들고있는지 체크
             ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
             if(kingCharacter == null){
-                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 ");
+                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 엑스칼리버를 사용할수없습니다.");
+                Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
+
+                //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
+                Bukkit.broadcastMessage("메인장소로 다들 티피를 시킵니다.");
                 return;
             }
 
-            ItemStack handItem = player
+            ItemStack handItem = kingCharacter
+                    .getPlayer()
                     .getInventory()
                     .getItemInMainHand();
 

@@ -6,6 +6,7 @@ import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.exception.AvalonGameError;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
+import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ public class PlayerHitEventHandler implements Listener {
                 activeExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
                 givePlayerExcalibur(attacker, victim);
-            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.GOLDEN_AXE) {
+            } else if (attacker.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD) {
                 activeMarlineAssine(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_PICKAXE) {
                 chooseExperditionMember(attacker, victim);
@@ -90,6 +91,11 @@ public class PlayerHitEventHandler implements Listener {
 
             String subTitle  = vicitim.getDisplayName() + "님이 원정대원으로 선발되셨습니다.";
             messageContent.sendTitleToAll(title, subTitle);
+
+            if(gameModeContent.experditionContent().roundByMaxMemberCount() == gameModeContent.experditionContent().applyExperditionMemberCount()){
+                attacker.getInventory().setItem(0, new ItemStack(Material.AIR));
+                attacker.getInventory().setItem(1, new ItemStack(Material.AIR));
+            }
 
         }catch(AvalonGameError e){
             Bukkit.broadcastMessage(e.getMessage());
@@ -178,7 +184,7 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
-        GAME_ROLE gameRole = iCharacter.getGameRole();
-        attacker.sendMessage(iCharacter.getPlayer().getDisplayName() + "님은 " + gameRole.getNameKR() + "입니다.");
+        ROLE_TYPE gameRole = iCharacter.getRole().roleType();
+        attacker.sendMessage(iCharacter.getPlayer().getDisplayName() + "님은 " + gameRole.nameKR + "입니다.");
     }
 }

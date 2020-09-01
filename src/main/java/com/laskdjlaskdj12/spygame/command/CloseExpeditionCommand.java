@@ -2,6 +2,7 @@ package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,7 @@ public class CloseExpeditionCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        sender.sendMessage("원정을 끝냅니다.");
+        Bukkit.broadcastMessage("원정을 끝냅니다.");
         experditionContent.stop();
 
         return true;

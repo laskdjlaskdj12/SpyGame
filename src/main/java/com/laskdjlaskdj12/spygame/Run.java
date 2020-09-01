@@ -62,6 +62,7 @@ public class Run extends JavaPlugin {
         //시퀸스커맨드
         getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent, this));
         getCommand("호수의요정선정").setExecutor(new ChooseLakeElfSequence(gameModeContent));
+        getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbySeuqence(gameModeContent, this));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));

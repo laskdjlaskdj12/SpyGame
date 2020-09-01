@@ -66,5 +66,6 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
         //Todo: 원정대장의 권한을 수요하는 부분은 GameModeContent로 넣을것
         Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑혔습니다.");
         gameModeContent.giveExperditionLeadAuth(voteStarter, candidate);
+        gameModeContent.experditionContent().addExperditioner(candidate);
     }
 }

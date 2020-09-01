@@ -6,6 +6,7 @@ import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.domain.ExperditionInfo;
 import com.laskdjlaskdj12.spygame.domain.VoteInfo;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ShowVoteResultCommand implements CommandExecutor {
 
@@ -29,7 +29,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
     public static int second = 0;
     public static int term = 3;
     public static int voteInfoListIndex = 0;
-    public static List<VoteInfo> voteInfoList = new ArrayList<>();
+    public static List<VoteInfo> voteResult = new ArrayList<>();
     public static BukkitTask taskID;
     public static int voterCount = 0;
     public ShowVoteResultCommand(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
@@ -43,8 +43,8 @@ public class ShowVoteResultCommand implements CommandExecutor {
         ExperditionContent experditionContent = gameModeContent.experditionContent();
         ExperditionInfo experditionInfo = experditionContent.getExperditionInfo();
 
-        voterCount = experditionInfo.getVoteInfoList().size();
         Player player = (Player)sender;
+        voterCount = experditionInfo.getVoteInfoList().size();
         gameModeContent.loadVoteResultBlock(player.getWorld(), voterCount);
 
         if (experditionInfo == null) {
@@ -52,23 +52,20 @@ public class ShowVoteResultCommand implements CommandExecutor {
             return true;
         }
 
-        voteInfoList = experditionInfo.getVoteInfoList().stream()
-                .sorted((o1, o2) -> Boolean.compare(!o1.isAi(), !o2.isAi()))
-                .collect(Collectors.toList());
-
+        voteResult = gameModeContent.experditionContent().sortVoteList();
         taskID = Bukkit.getScheduler().runTaskTimer(javaPlugin, () -> {
 
             //투표 결과 한개씩 공개
             if (second == term) {
-                javaPlugin.getLogger().info( voteInfoList + "개의 블록이 공개됩니다.");
+                javaPlugin.getLogger().info( voteResult.size() + "개의 블록이 공개됩니다.");
 
                 showResultBlock(voteInfoListIndex);
 
                 showNext();
 
                 if(isEnd()){
-                    javaPlugin.getLogger().info("투표결과를 끝냅니다.");
-                    end(voteInfoList);
+                    javaPlugin.getLogger().info("투표결과 공개를 끝냅니다.");
+                    end();
                 }
 
                 return;
@@ -86,7 +83,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
     }
 
     private void showResultBlock(int showVoteInfoListIndex) {
-        VoteInfo voteInfo = voteInfoList.get(showVoteInfoListIndex);
+        VoteInfo voteInfo = voteResult.get(showVoteInfoListIndex);
         Block block = gameModeContent.getActiveVoteResultBlock().get(showVoteInfoListIndex);
 
         if (voteInfo.isAi()) {
@@ -103,6 +100,10 @@ public class ShowVoteResultCommand implements CommandExecutor {
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);
 
+        if(gameModeContent.getActiveVoteResultBlock().size() == 0){
+            Bukkit.broadcastMessage(ChatColor.RED + "모두 투표를 하지 않아서 보여줄 블록드링 없습니다.");
+        }
+
         Block block = gameModeContent.getActiveVoteResultBlock().get(showVoteInfoListIndex);
         Material material = voteListBlock.get(second);
 
@@ -115,13 +116,13 @@ public class ShowVoteResultCommand implements CommandExecutor {
         return gameModeContent.getActiveVoteResultBlock().size() == voteInfoListIndex;
     }
 
-    private void end(List<VoteInfo> voteInfoList) {
+    private void end() {
         Bukkit.getScheduler().cancelTask(taskID.getTaskId());
-        resetVoteInfo();
+        voteResult.forEach(voteInfo -> System.out.println("isVoteAi : " + voteInfo.isAi()));
 
         //투표결과에 따라 원정결과 업데이트
-        VoteInfo nayVoteInfo = voteInfoList.stream().filter(voteInfo -> voteInfo.isAi() == false)
-                .findFirst()
+        VoteInfo nayVoteInfo = voteResult.stream().filter(voteInfo -> !voteInfo.isAi())
+                .findAny()
                 .orElse(null);
 
         if(nayVoteInfo != null){
@@ -143,17 +144,17 @@ public class ShowVoteResultCommand implements CommandExecutor {
             //패배
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/패배선언");
         }
+
+        resetVoteTimer();
     }
 
-    private void resetVoteInfo(){
+    private void resetVoteTimer(){
         second = 0;
         voteInfoListIndex = 0;
         taskID = null;
-        voteInfoList.clear();
     }
 
     private void showNext() {
-        //만약 모든 블록이 보여줬다면 스케줄링을 취소
         second = 0;
         voteInfoListIndex += 1;
     }

@@ -36,7 +36,7 @@ public class AssinssineKillMarlineCommand implements CommandExecutor {
             return true;
         }
 
-        assassine.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+        assassine.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
 
         gameModeContent.characterList()
                 .stream()

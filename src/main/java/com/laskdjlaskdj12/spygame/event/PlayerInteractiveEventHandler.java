@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractiveEventHandler implements Listener {
 
@@ -70,6 +71,11 @@ public class PlayerInteractiveEventHandler implements Listener {
 
         ICharacter iCharacter = experditionContent.findExpertiesFromPlayer(event.getPlayer());
 
+        if(iCharacter == null){
+            player.sendMessage(ChatColor.RED + "원정대원이 아니여서 투표가 불가능합니다.");
+            return;
+        }
+
         //2. 투표 정보 저장
         experditionContent.addVote(iCharacter, true);
 
@@ -83,5 +89,8 @@ public class PlayerInteractiveEventHandler implements Listener {
         String displayName = event.getPlayer().getDisplayName();
         String ai = ChatColor.GREEN + "찬성" + ChatColor.WHITE;
         server.broadcastMessage(ChatColor.YELLOW + displayName + ChatColor.WHITE + "님이 " + ai + "을 하셨습니다.");
+
+        //플레이어의 황금칼을 뺏음
+        player.getInventory().setItem(0, new ItemStack(Material.AIR));
     }
 }
