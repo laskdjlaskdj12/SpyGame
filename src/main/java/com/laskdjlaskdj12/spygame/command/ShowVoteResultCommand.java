@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.config.BlockConfig;
+import com.laskdjlaskdj12.spygame.content.BlockContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.domain.ExperditionInfo;
@@ -13,6 +14,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShowVoteResultCommand implements CommandExecutor {
 
@@ -95,7 +98,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
     private void showRandomBlock(int showVoteInfoListIndex, int second) {
         //보여주는 블록 인덱스
-        List<Material> voteListBlock = Arrays.asList(BlockConfig.AnimatedBlockMaterialList);
+        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
 
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);
@@ -105,7 +108,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         }
 
         Block block = gameModeContent.getActiveVoteResultBlock().get(showVoteInfoListIndex);
-        Material material = voteListBlock.get(second);
+        Material material = voteListBlock.get(second).getType();
 
         //블록들을 변경하기
         block.setType(material);

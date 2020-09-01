@@ -31,11 +31,11 @@ public class PlayerInteractiveEventHandler implements Listener {
             return;
         }
 
-        if(event.getItem().getType() == Material.WOODEN_AXE){
+        if(event.getItem().getType() == Material.WOOD_AXE){
             showBlockData(event);
         }
 
-        else if (event.getItem().getType() == Material.GOLDEN_SWORD &&
+        else if (event.getItem().getType() == Material.GOLD_SWORD &&
                 event.getAction() == Action.LEFT_CLICK_BLOCK &&
                 event.hasBlock() &&
                 event.getClickedBlock().getType() == Material.GOLD_BLOCK) {

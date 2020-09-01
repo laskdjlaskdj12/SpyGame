@@ -1,10 +1,12 @@
 package com.laskdjlaskdj12.spygame.content.vote;
 
+import com.laskdjlaskdj12.spygame.content.BlockContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.domain.VotingResult;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +63,7 @@ public class PickPlayerVoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_WOOL)
+                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE))
                 .collect(Collectors.toList());
 
         characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
