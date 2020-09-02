@@ -184,13 +184,17 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
-        ICharacter iCharacter = gameModeContent.findCharacterFromPlayer(victim);
-        if (iCharacter == null) {
+        ICharacter elfAttacker = gameModeContent.findCharacterFromPlayer(attacker);
+        ICharacter elfVictim = gameModeContent.findCharacterFromPlayer(victim);
+        if (elfVictim == null) {
             attacker.sendMessage("호수의 여신 능력을 사용할수가 없습니다. [이유] : 게임에 참여하지 않는 사람입니다.");
             return;
         }
 
-        ROLE_TYPE gameRole = iCharacter.getRole().roleType();
-        attacker.sendMessage(iCharacter.getPlayer().getDisplayName() + "님은 " + gameRole.nameKR + "입니다.");
+        ROLE_TYPE gameRole = elfVictim.getRole().roleType();
+        attacker.sendMessage(elfVictim.getPlayer().getDisplayName() + "님은 " + gameRole.nameKR + "입니다.");
+
+        //호수의 여신에게 역할을 전달해주는 기능 추가
+        gameModeContent.gameRoleContent().transitionElf(elfAttacker, elfVictim);
     }
 }

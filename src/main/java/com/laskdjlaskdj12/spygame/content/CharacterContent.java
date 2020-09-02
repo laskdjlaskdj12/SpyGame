@@ -3,7 +3,9 @@ package com.laskdjlaskdj12.spygame.content;
 import com.laskdjlaskdj12.spygame.content.character.BasicCharacter;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +28,26 @@ public class CharacterContent {
                     return basicCharacter;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public static void removeItem(ICharacter character, Material itemMaterial){
+        for (int i = 0; i < 10; i++){
+            ItemStack itemStack = character.getPlayer().getInventory().getItem(i);
+
+            if(itemStack.getType() == itemMaterial){
+                itemStack.setType(Material.AIR);
+            }
+        }
+    }
+
+    public static void addItem(ICharacter character, Material book) {
+        for (int i = 0; i < 10; i++){
+            ItemStack itemStack = character.getPlayer().getInventory().getItem(i);
+
+            if(itemStack.getType() == Material.AIR){
+                itemStack.setType(book);
+            }
+        }
     }
 
     /**

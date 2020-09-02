@@ -21,6 +21,7 @@ public class GameModeContent {
 
     //Todo: 리팩토링 할것
     private final ExperditionContent experditionContent;
+    private final GameRoleContent gameRoleContent;
     private List<ICharacter> characterList = new ArrayList<>();
     private List<Block> voteResultBlock = new ArrayList<>();
     private List<Block> activeVoteResultBlock = new ArrayList<>();
@@ -29,8 +30,9 @@ public class GameModeContent {
     private int loseCount = 0;
     private boolean collectVoteBlock = false;
 
-    public GameModeContent(ExperditionContent experditionContent) {
+    public GameModeContent(ExperditionContent experditionContent, GameRoleContent gameRoleContent) {
         this.experditionContent = experditionContent;
+        this.gameRoleContent = gameRoleContent;
     }
 
     public void saveCharacter(List<ICharacter> characters) {
@@ -84,6 +86,8 @@ public class GameModeContent {
     public ExperditionContent experditionContent() {
         return experditionContent;
     }
+
+    public GameRoleContent gameRoleContent() { return gameRoleContent;}
 
     @Nullable
     public ICharacter findCharacterByGameRole(GAME_ROLE gameRole) {

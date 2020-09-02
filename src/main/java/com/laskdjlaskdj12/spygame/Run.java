@@ -30,7 +30,9 @@ public class Run extends JavaPlugin {
         CharacterContent characterContent = new CharacterContent();
         MessageContent messageContent = new MessageContent(world);
         ExperditionContent experditionContent = new ExperditionContent();
-        GameModeContent gameModeContent = new GameModeContent(experditionContent);
+        GameRoleContent gameRoleContent = new GameRoleContent();
+        GameModeContent gameModeContent = new GameModeContent(experditionContent,
+                gameRoleContent);
 
         //Todo: 이벤트 핸들러 construct들에 컨텐츠 핸들러 factory를 dependency로 리팩토링
         //이벤트 등록
