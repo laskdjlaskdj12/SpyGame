@@ -5,6 +5,7 @@ import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.vote.IVoteResultHandler;
 import com.laskdjlaskdj12.spygame.content.vote.VoteContent;
 import com.laskdjlaskdj12.spygame.domain.VotingResult;
+import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -65,7 +66,18 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
 
         //Todo: 원정대장의 권한을 수요하는 부분은 GameModeContent로 넣을것
         Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑혔습니다.");
-        gameModeContent.giveExperditionLeadAuth(voteStarter, candidate);
+
+        //기존의 원정대장 선정
+        ICharacter leader = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXPEDITION_LEAD);
+
+        if(leader != null){
+            gameModeContent.gameRoleContent().transitionToExperditionLead(leader, candidate);
+            return;
+        } else{
+            gameModeContent.gameRoleContent().awardExperditionLead(candidate);
+        }
+
+        //원정대에 추가
         gameModeContent.experditionContent().addExperditioner(candidate);
     }
 }

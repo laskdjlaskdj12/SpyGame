@@ -195,6 +195,6 @@ public class PlayerHitEventHandler implements Listener {
         attacker.sendMessage(elfVictim.getPlayer().getDisplayName() + "님은 " + gameRole.nameKR + "입니다.");
 
         //호수의 여신에게 역할을 전달해주는 기능 추가
-        gameModeContent.gameRoleContent().transitionElf(elfAttacker, elfVictim);
+        gameModeContent.gameRoleContent().transitionToElf(elfAttacker, elfVictim);
     }
 }
