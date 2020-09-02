@@ -35,6 +35,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
     public static List<VoteInfo> voteResult = new ArrayList<>();
     public static BukkitTask taskID;
     public static int voterCount = 0;
+
     public ShowVoteResultCommand(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
         this.gameModeContent = gameModeContent;
         this.javaPlugin = javaPlugin;
@@ -46,7 +47,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         ExperditionContent experditionContent = gameModeContent.experditionContent();
         ExperditionInfo experditionInfo = experditionContent.getExperditionInfo();
 
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         voterCount = experditionInfo.getVoteInfoList().size();
         gameModeContent.loadVoteResultBlock(player.getWorld(), voterCount);
 
@@ -60,13 +61,13 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
             //투표 결과 한개씩 공개
             if (second == term) {
-                javaPlugin.getLogger().info( voteResult.size() + "개의 블록이 공개됩니다.");
+                javaPlugin.getLogger().info(voteResult.size() + "개의 블록이 공개됩니다.");
 
                 showResultBlock(voteInfoListIndex);
 
                 showNext();
 
-                if(isEnd()){
+                if (isEnd()) {
                     javaPlugin.getLogger().info("투표결과 공개를 끝냅니다.");
                     end();
                 }
@@ -74,7 +75,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
                 return;
             }
 
-            javaPlugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex  + "\n" + "second : " + second);
+            javaPlugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex + "\n" + "second : " + second);
             showRandomBlock(voteInfoListIndex, second);
             second += 1;
 
@@ -103,7 +104,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);
 
-        if(gameModeContent.getActiveVoteResultBlock().size() == 0){
+        if (gameModeContent.getActiveVoteResultBlock().size() == 0) {
             Bukkit.broadcastMessage(ChatColor.RED + "모두 투표를 하지 않아서 보여줄 블록드링 없습니다.");
         }
 
@@ -114,7 +115,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         block.setType(material);
     }
 
-    private boolean isEnd(){
+    private boolean isEnd() {
         javaPlugin.getLogger().info("ActiveVoteResultBlockSize : " + gameModeContent.getActiveVoteResultBlock().size());
         return gameModeContent.getActiveVoteResultBlock().size() == voteInfoListIndex;
     }
@@ -124,26 +125,32 @@ public class ShowVoteResultCommand implements CommandExecutor {
         voteResult.forEach(voteInfo -> System.out.println("isVoteAi : " + voteInfo.isAi()));
 
         //투표결과에 따라 원정결과 업데이트
-        VoteInfo nayVoteInfo = voteResult.stream().filter(voteInfo -> !voteInfo.isAi())
-                .findAny()
-                .orElse(null);
+        List<VoteInfo> nayVoteInfo = voteResult.stream()
+                .filter(voteInfo -> !voteInfo.isAi())
+                .collect(Collectors.toList());
 
-        if(nayVoteInfo != null){
+        //4회차인지 체크
+        if (gameModeContent.experditionCount() >= 4 && nayVoteInfo.size() >= 2) {
             Bukkit.broadcastMessage("원정이 실패했습니다.");
             gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
-        } else{
-            Bukkit.broadcastMessage("원정이 승리했습니다.");
-            gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+        } else {
+            if (nayVoteInfo.size() > 1) {
+                Bukkit.broadcastMessage("원정이 실패했습니다.");
+                gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+            } else {
+                Bukkit.broadcastMessage("원정이 승리했습니다.");
+                gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+            }
         }
 
         //만약 원정이 3승이거나 3패가 됬을경우 선의세력의 승리인지 악의세력의 승리인지 체크
-        if(gameModeContent.getWinCount() == 3){
+        if (gameModeContent.getWinCount() == 3) {
             //선의세력이 승리함
             Bukkit.broadcastMessage("선의세력이 원정에서 승리했습니다!");
 
             //멀린암살
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/멀린암살");
-        } else if(gameModeContent.getLoseCount() == 3){
+        } else if (gameModeContent.getLoseCount() == 3) {
             //패배
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/패배선언");
         }
@@ -151,7 +158,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
         resetVoteTimer();
     }
 
-    private void resetVoteTimer(){
+    private void resetVoteTimer() {
         second = 0;
         voteInfoListIndex = 0;
         taskID = null;
