@@ -145,12 +145,18 @@ public class PlayerHitEventHandler implements Listener {
         ICharacter victimCharacter = gameModeContent.findCharacterFromPlayer(victim);
 
         if (victimCharacter == null) {
-            Bukkit.broadcastMessage(ChatColor.RED + "[에러] 엑스칼리버를 가질수없는 사람이 가지고 있습니다.");
+            Bukkit.broadcastMessage(ChatColor.RED + "[에러] 게임에 참여하지 않는 사람이 엑스칼리버를 가질수 없습니다.");
             return;
         }
 
         if(gameModeContent.experditionContent().getExperditionInfo() == null){
             attacker.sendMessage(ChatColor.RED + "원정이 아직 시작이 안되서 엑스칼리버 검을 사용할수없습니다.");
+            return;
+        }
+
+        //받는 사람이 호수의 요정인지 확인
+        if(victimCharacter.getGameRole() == GAME_ROLE.LAKE_ELF){
+            attacker.sendMessage(ChatColor.RED + "호수의 요정은 원정대원이 될수가없습니다.");
             return;
         }
 
