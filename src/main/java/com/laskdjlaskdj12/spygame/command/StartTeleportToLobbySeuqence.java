@@ -55,9 +55,9 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
             Bukkit.broadcastMessage(TickUtil.tickToSecond(timerCount) + "초 남았습니다.");
 
             //엑스칼리버가 칼을 들고있는지 체크
-            ICharacter kingCharacter = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
-            if(kingCharacter == null){
-                Bukkit.broadcastMessage(ChatColor.RED + "왕 없이 게임을 해서 엑스칼리버를 사용할수없습니다.");
+            ICharacter excaliburOwner = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+            if(excaliburOwner == null){
+                Bukkit.broadcastMessage(ChatColor.RED + "엑스칼리버 소유자 없이 게임을 해서 엑스칼리버를 사용할수없습니다.");
                 Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
 
                 //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
@@ -65,7 +65,7 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
                 return;
             }
 
-            ItemStack handItem = kingCharacter
+            ItemStack handItem = excaliburOwner
                     .getPlayer()
                     .getInventory()
                     .getItemInMainHand();
