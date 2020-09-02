@@ -18,10 +18,10 @@ public class BlockConfig {
             DyeColor.RED};
 
     public static Cordinate[] VoteBlockCordinate = {
-        Cordinate.builder().X(155).Y(64).Z(154).build(),
-        Cordinate.builder().X(152).Y(64).Z(154).build(),
-        Cordinate.builder().X(149).Y(64).Z(154).build(),
-        Cordinate.builder().X(149).Y(64).Z(151).build(),
-        Cordinate.builder().X(149).Y(64).Z(148).build()
+        Cordinate.builder().X(-11).Y(82).Z(38).build(),
+        Cordinate.builder().X(-13).Y(82).Z(38).build(),
+        Cordinate.builder().X(-15).Y(82).Z(38).build(),
+        Cordinate.builder().X(-17).Y(82).Z(38).build(),
+        Cordinate.builder().X(-19).Y(82).Z(38).build()
     };
 }
