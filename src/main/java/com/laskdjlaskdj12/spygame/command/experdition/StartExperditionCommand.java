@@ -34,7 +34,7 @@ public class StartExperditionCommand implements CommandExecutor {
             return false;
         }
 
-        Bukkit.broadcastMessage("원정을 시작합니다.");
+        Bukkit.broadcastMessage("제" + gameModeContent.experditionCount() + "원정을 시작합니다.");
 
         //원정이 없다면 원정을 등록함
         experditionContent.start();
