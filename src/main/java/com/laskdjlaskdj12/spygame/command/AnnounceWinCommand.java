@@ -18,15 +18,7 @@ public class AnnounceWinCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        gameModeContent.characterList()
-                .forEach(iCharacter -> iCharacter
-                        .getPlayer()
-                        .sendTitle("선의 세력 " + ChatColor.GREEN + "승리",
-                                "",
-                                TickUtil.secondToTick(2),
-                                TickUtil.secondToTick(4),
-                                TickUtil.secondToTick(2)));
-        gameModeContent.clearGame();
+        gameModeContent.declareWin();
         return true;
     }
 }

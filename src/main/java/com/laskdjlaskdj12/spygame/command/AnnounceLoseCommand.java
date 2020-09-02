@@ -17,15 +17,7 @@ public class AnnounceLoseCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        gameModeContent.characterList()
-                .forEach(iCharacter -> iCharacter
-                        .getPlayer()
-                        .sendTitle(ChatColor.RED + "악의 세력 " + ChatColor.WHITE + "승리",
-                                "",
-                                TickUtil.secondToTick(2),
-                                TickUtil.secondToTick(4),
-                                TickUtil.secondToTick(2)));
-        gameModeContent.clearGame();
+        gameModeContent.declareLose();
         return false;
     }
 }

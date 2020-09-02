@@ -4,7 +4,9 @@ import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -108,7 +110,8 @@ public class GameModeContent {
             }
         }
 
-        return null;    }
+        return null;
+    }
 
     public void deActiveVoteBlockSet() {
         collectVoteBlock = false;
@@ -247,5 +250,50 @@ public class GameModeContent {
 
         //expedition clear
         experditionContent.init();
+    }
+
+    public void startKillMarline() {
+        //모든 사람들에게 인벤토리에 있는 아이템 제거
+        characterList
+                .stream()
+                .forEach(character -> character.getPlayer().getInventory().clear());
+
+        //어쌔신에게 다이아 칼을 줌
+        ICharacter assassine = findCharacterByRole(ROLE_TYPE.ASSASSINE);
+
+        if(assassine == null){
+            Bukkit.broadcastMessage(ChatColor.RED + "어쌔신을 찾을수없습니다!! 혹시 어쌔신분이 접속했는지 체크 해주세요");
+            return;
+        }
+
+        assassine.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+
+        characterList
+                .stream()
+                .forEach(character -> character.getPlayer().sendTitle(ChatColor.RED + "어쌔신의 멀린 지목시간이 왔습니다.", "", 20, 40, 20));
+    }
+
+    public void declareWin(){
+        characterList
+                .forEach(iCharacter -> iCharacter
+                        .getPlayer()
+                        .sendTitle("선의 세력 " + ChatColor.GREEN + "승리",
+                                "",
+                                TickUtil.secondToTick(2),
+                                TickUtil.secondToTick(4),
+                                TickUtil.secondToTick(2)));
+        clearGame();
+    }
+
+    public void declareLose(){
+        characterList
+                .forEach(iCharacter -> iCharacter
+                        .getPlayer()
+                        .sendTitle(ChatColor.RED + "악의 세력 " + ChatColor.WHITE + "승리",
+                                "",
+                                TickUtil.secondToTick(2),
+                                TickUtil.secondToTick(4),
+                                TickUtil.secondToTick(2)));
+        clearGame();
     }
 }
