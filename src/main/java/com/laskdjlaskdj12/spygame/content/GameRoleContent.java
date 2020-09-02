@@ -14,13 +14,17 @@ public class GameRoleContent {
         elfVictim.setGameRole(GAME_ROLE.LAKE_ELF);
     }
 
-    public void transitionToExperditionLead(ICharacter leader, ICharacter victim) {
+    public void transitionToExperditionLead(ICharacter leader, ICharacter victim, boolean isExcaliverExsist) {
         leader.setGameRole(GAME_ROLE.NONE);
         CharacterContent.removeItem(leader, Material.DIAMOND_SWORD);
         CharacterContent.removeItem(leader, Material.DIAMOND_PICKAXE);
 
         victim.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
-        CharacterContent.addItem(victim, Material.DIAMOND_SWORD);
+        if (isExcaliverExsist) {
+            CharacterContent.addItem(victim, Material.DIAMOND_SWORD);
+        } else {
+            CharacterContent.addItem(victim, Material.AIR);
+        }
         CharacterContent.addItem(victim, Material.DIAMOND_PICKAXE);
     }
 

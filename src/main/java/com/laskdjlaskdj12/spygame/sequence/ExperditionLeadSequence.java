@@ -71,13 +71,9 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
         ICharacter leader = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXPEDITION_LEAD);
 
         if(leader != null){
-            gameModeContent.gameRoleContent().transitionToExperditionLead(leader, candidate);
-            return;
+            gameModeContent.changeExperditionlead(leader, candidate);
         } else{
-            gameModeContent.gameRoleContent().awardExperditionLead(candidate);
+            gameModeContent.awardExperditionLead(candidate);
         }
-
-        //원정대에 추가
-        gameModeContent.experditionContent().addExperditioner(candidate);
     }
 }

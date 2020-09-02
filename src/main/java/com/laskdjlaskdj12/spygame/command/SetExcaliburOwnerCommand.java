@@ -3,6 +3,7 @@ package com.laskdjlaskdj12.spygame.command;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +32,15 @@ public class SetExcaliburOwnerCommand implements CommandExecutor {
             return true;
         }
 
-        kingCharacter.setGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+        Bukkit.broadcastMessage("강제로 엑스칼리버 제작자를 옮깁니다.");
+
+        ICharacter excaliverOwner = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+
+        if(excaliverOwner == null) {
+            gameModeContent.gameRoleContent().awardExperditionLead(kingCharacter);
+        } else{
+            gameModeContent.gameRoleContent().transitionToExperditionLead(excaliverOwner, kingCharacter, gameModeContent.isExcaliberExsist());
+        }
         return true;
     }
 }

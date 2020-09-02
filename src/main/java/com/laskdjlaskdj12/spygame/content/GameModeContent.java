@@ -208,8 +208,18 @@ public class GameModeContent {
         this.experditionContent.getExperditionInfo().setMaxExperditionMembersCount(pickMemberCount);
     }
 
-    public void clearGame(){
+    public void changeExperditionlead(ICharacter leader, ICharacter candidate){
+        gameRoleContent.transitionToExperditionLead(leader, candidate, isExcaliberExsist());
+        experditionContent.removeExperditioner(leader);
+        experditionContent.removeExperditioner(candidate);
+    }
 
+    public void awardExperditionLead(ICharacter candidate) {
+        gameRoleContent.awardExperditionLead(candidate);
+        experditionContent.addExperditioner(candidate);
+    }
+
+    public void clearGame(){
         //투표블록 전부 데이터 초기화
         if(!this.voteResultBlock.isEmpty()){
             this.voteResultBlock.forEach(block -> block.setType(Material.AIR));

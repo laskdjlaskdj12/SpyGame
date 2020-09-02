@@ -8,10 +8,8 @@ import com.laskdjlaskdj12.spygame.exception.ExperditionNotStart;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
-import java.nio.channels.FileChannel;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ExperditionContent {
@@ -77,6 +75,17 @@ public class ExperditionContent {
 
         experditionInfo.getApplyCharacters().add(character);
         experditionInfo.setMaxExperditionMembersCount(roundByMaxMemberCount());
+        return true;
+    }
+
+    public boolean removeExperditioner(ICharacter character){
+        if (findExpeditionMember(character) == null) {
+            return true;
+        }
+
+        experditionInfo.getApplyCharacters().remove(character);
+        experditionInfo.setMaxExperditionMembersCount(roundByMaxMemberCount());
+
         return true;
     }
 
