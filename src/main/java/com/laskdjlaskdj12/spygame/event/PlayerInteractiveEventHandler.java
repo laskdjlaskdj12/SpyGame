@@ -1,6 +1,8 @@
 package com.laskdjlaskdj12.spygame.event;
 
+import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
+import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,13 +14,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractiveEventHandler implements Listener {
 
+    private final GameModeContent gameModeContent;
     private final ExperditionContent experditionContent;
 
-    public PlayerInteractiveEventHandler(ExperditionContent experditionContent) {
+    public PlayerInteractiveEventHandler(GameModeContent gameModeContent,
+                                         ExperditionContent experditionContent) {
+        this.gameModeContent = gameModeContent;
         this.experditionContent = experditionContent;
     }
 
@@ -91,6 +95,7 @@ public class PlayerInteractiveEventHandler implements Listener {
         server.broadcastMessage(ChatColor.YELLOW + displayName + ChatColor.WHITE + "님이 " + ai + "을 하셨습니다.");
 
         //플레이어의 황금칼을 뺏음
-        player.getInventory().setItem(0, new ItemStack(Material.AIR));
+        ICharacter character = gameModeContent.findCharacterFromPlayer(player);
+        CharacterContent.removeItem(character, Material.GOLD_SWORD);
     }
 }
