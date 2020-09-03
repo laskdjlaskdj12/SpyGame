@@ -72,10 +72,14 @@ public class PickPlayerVoteContent extends AVoteContent {
                 .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(Material.WHITE_WOOL))
                 .collect(Collectors.toList());
 
+        removeVoteItem(characterList);
+        return votingTotal(voteResult);
+    }
+
+    private void removeVoteItem(List<ICharacter> characterList) {
         characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
         characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(1, new ItemStack(Material.AIR)));
 
-        characterList.forEach(iCharacter -> moveItemToLeftSlot(iCharacter));
-        return votingTotal(voteResult);
+        characterList.forEach(this::moveItemToLeftSlot);
     }
 }

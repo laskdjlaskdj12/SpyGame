@@ -5,11 +5,9 @@ import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,10 +40,10 @@ public class ChooseLakeElfSequence implements CommandExecutor {
         Bukkit.broadcastMessage("원정대장을 제외한 모든 인원중에 호수의 요정을 뽑습니다.");
 
         //기존의 호수의 요정을 제외함
-        ICharacter lakeElf = gameModeContent.findCharacterByGameRole(GAME_ROLE.LAKE_ELF);
+        ICharacter lakeElf = gameModeContent.findLakeElfCharacter();
+
         if(lakeElf != null) {
-            lakeElf.getPlayer().getInventory().clear();
-            lakeElf.setGameRole(GAME_ROLE.NONE);
+            gameModeContent.removeLakeElfEffect(lakeElf);
         }
 
         List<ICharacter> characterList = gameModeContent.characterList()
@@ -56,8 +54,7 @@ public class ChooseLakeElfSequence implements CommandExecutor {
         Collections.shuffle(characterList);
 
         lakeElf = characterList.get(0);
-        lakeElf.setGameRole(GAME_ROLE.LAKE_ELF);
-        lakeElf.getPlayer().getInventory().addItem(new ItemStack(Material.BOOK));
+        gameModeContent.makeLakeElf(lakeElf);
 
         Bukkit.broadcastMessage(new StringBuilder().append("[")
                 .append(ChatColor.YELLOW + lakeElf.getPlayer().getDisplayName())

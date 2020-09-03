@@ -31,7 +31,8 @@ public class SetExperditionLeadCommand implements CommandExecutor {
             return true;
         }
 
-        experditionLead.setGameRole(GAME_ROLE.EXPEDITION_LEAD);
+        gameModeContent.awardExperditionLead(experditionLead);
+        gameModeContent.experditionContent().addExperditioner(experditionLead);
         return true;
     }
 }

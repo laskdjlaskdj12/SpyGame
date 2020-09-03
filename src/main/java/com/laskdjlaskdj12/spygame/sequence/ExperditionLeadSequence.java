@@ -70,8 +70,12 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
             return;
         }
 
-        //Todo: 원정대장의 권한을 수요하는 부분은 GameModeContent로 넣을것
+        //Todo: 원정대장의 권한을 수여하는 부분은 GameModeContent로 넣을것
         Bukkit.broadcastMessage(ChatColor.GREEN + "찬성 : " + ChatColor.WHITE + votingResult.getAiCount() + ChatColor.GREEN + " 반대 : " + ChatColor.WHITE + votingResult.getNayCount() + "로 " + voteStarter.getDisplayName() + "님이 원정대장으로 뽑혔습니다.");
+
+        if(candidate.getGameRole() == GAME_ROLE.EXCALIBUR_OWNER){
+            gameModeContent.removeExcalibur(candidate);
+        }
 
         //기존의 원정대장 찾기
         ICharacter leader = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXPEDITION_LEAD);

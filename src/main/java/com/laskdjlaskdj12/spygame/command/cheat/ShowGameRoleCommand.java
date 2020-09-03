@@ -19,17 +19,28 @@ public class ShowGameRoleCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         List<ICharacter> iCharacterList = gameModeContent.characterList();
 
-        if(iCharacterList.isEmpty()){
+        if (iCharacterList.isEmpty()) {
             sender.sendMessage("게임 시작한 캐릭터들이 없습니다.");
             return true;
         }
 
-        for(ICharacter iCharacter : iCharacterList){
-            if(iCharacter.getGameRole() == null){
+        for (ICharacter iCharacter : iCharacterList) {
+            StringBuilder logger = new StringBuilder();
+
+            if (iCharacter.getGameRole() == null) {
                 continue;
             }
 
-            sender.sendMessage(iCharacter.getPlayer().getDisplayName() + " : "  + iCharacter.getGameRole().getNameKR());
+            logger.append(iCharacter.getPlayer().getDisplayName())
+                    .append(" : ")
+                    .append(iCharacter.getGameRole().getNameKR());
+
+            if (iCharacter.isLakeElf()) {
+                logger.append(" -> ")
+                        .append("호수의 요정");
+            }
+
+            sender.sendMessage(logger.toString());
         }
         return true;
     }

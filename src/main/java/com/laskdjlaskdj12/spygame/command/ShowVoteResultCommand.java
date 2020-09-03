@@ -150,10 +150,9 @@ public class ShowVoteResultCommand implements CommandExecutor {
         //만약 원정이 3승이거나 3패가 됬을경우 선의세력의 승리인지 악의세력의 승리인지 체크
         if (gameModeContent.getWinCount() == 3) {
             //선의세력이 승리함
-            Bukkit.broadcastMessage("선의세력이 원정들이 성공했습니다!");
+            Bukkit.broadcastMessage("선의세력이 원정에 성공했습니다!");
 
             //멀린암살
-            gameModeContent.startKillMarline();
             gameModeContent.startKillMarline();
         } else if (gameModeContent.getLoseCount() == 3) {
             //패배

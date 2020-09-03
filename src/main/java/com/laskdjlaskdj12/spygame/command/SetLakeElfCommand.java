@@ -2,7 +2,6 @@ package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
-import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +30,15 @@ public class SetLakeElfCommand implements CommandExecutor {
             return true;
         }
 
-        elfCharacter.setGameRole(GAME_ROLE.LAKE_ELF);
+        //기존에 호수의 요정이 이미 있는지 체크
+        ICharacter beforeLakeElf = gameModeContent.findLakeElfCharacter();
+
+        if(beforeLakeElf != null) {
+            gameModeContent.changeLakeElf(beforeLakeElf, elfCharacter);
+            return true;
+        }
+
+        gameModeContent.makeLakeElf(elfCharacter);
         return true;
     }
 }

@@ -1,5 +1,6 @@
 package com.laskdjlaskdj12.spygame.content.character;
 
+import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.lifecycle.ILifecycle;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
@@ -10,6 +11,7 @@ import com.laskdjlaskdj12.spygame.status.ROLE_TYPE;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.ChatColor;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class BasicCharacter implements ICharacter {
     private Player player;
     private ILifecycle lifeCycle;
     private GAME_ROLE gameRole = GAME_ROLE.NONE;
+    private boolean isLakeElf = false;
 
     //Todo: 라이프 사이클 이 언제 필요한지 체크하고 만약 필요없으면 바로 지우기 (리팩토링 필수)
     @Override
@@ -54,6 +57,17 @@ public class BasicCharacter implements ICharacter {
     }
 
     @Override
+    public void setLakeElf(boolean isLakeElf){
+        this.isLakeElf = isLakeElf;
+
+        if(!isLakeElf){
+            CharacterContent.removeItem(this, Material.BOOK);
+        } else {
+            CharacterContent.addItem(this, Material.BOOK);
+        }
+    }
+
+    @Override
     public IRole getRole() {
         return role;
     }
@@ -67,6 +81,9 @@ public class BasicCharacter implements ICharacter {
     public GAME_ROLE getGameRole() {
         return this.gameRole;
     }
+
+    @Override
+    public boolean isLakeElf(){ return this.isLakeElf;}
 
     //Todo: state 패턴으로 리팩토링 할것
     public void initCharacter(GameModeContent gameModeContent) {

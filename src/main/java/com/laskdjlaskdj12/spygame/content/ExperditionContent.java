@@ -17,10 +17,13 @@ public class ExperditionContent {
     private ExperditionInfo experditionInfo;
     private int experditionRoundCount = 0;
     private boolean isLakeElfAvalityAvailable = true;
+    private boolean isHorseSequence = false;
+
+    public boolean isHorseSequence(){ return isHorseSequence;}
+    public void setHorseSequence(boolean isHorseSequence){ this.isHorseSequence = isHorseSequence;}
     public boolean isExsist() {
         return experditionInfo != null;
     }
-
     public ExperditionInfo getExpedition() {
         return experditionInfo;
     }
@@ -32,6 +35,8 @@ public class ExperditionContent {
     public void init() {
         this.experditionRoundCount = 0;
         this.experditionInfo = new ExperditionInfo();
+        this.isLakeElfAvalityAvailable = true;
+        this.isHorseSequence = false;
     }
 
     public void start() {

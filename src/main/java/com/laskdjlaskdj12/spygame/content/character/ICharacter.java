@@ -19,11 +19,15 @@ public interface ICharacter {
 
     void setGameRole(GAME_ROLE gameRole);
 
+    void setLakeElf(boolean b);
+
     IRole getRole();
 
     Player getPlayer();
 
     GAME_ROLE getGameRole();
+
+    boolean isLakeElf();
 
     void initCharacter(GameModeContent gameModeContent);
 }

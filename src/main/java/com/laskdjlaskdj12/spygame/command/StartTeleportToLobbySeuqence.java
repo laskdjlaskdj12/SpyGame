@@ -8,11 +8,9 @@ import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -46,7 +44,9 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
         gameModeContent.characterList().forEach( iCharacter ->
                 CharacterContent.removeItem(iCharacter, Material.GOLDEN_SWORD)
         );
+
         bukkitTask = scheduler.runTaskTimer(plugin, () -> {
+            gameModeContent.experditionContent().setHorseSequence(true);
             try {
                 if (timerCount == 0) {
                     timerCount = TickUtil.secondToTick(10);
@@ -54,13 +54,14 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
 
                     //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
                     Bukkit.broadcastMessage("메인장소로 다들 티피를 시킵니다.");
+                    gameModeContent.experditionContent().setHorseSequence(false);
                     return;
                 }
 
                 Bukkit.broadcastMessage(TickUtil.tickToSecond(timerCount) + "초 남았습니다.");
 
                 //엑스칼리버가 칼을 들고있는지 체크
-                ICharacter excaliburOwner = gameModeContent.findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+                ICharacter excaliburOwner = gameModeContent.findCharacterByGameRoleInExperditionaCharacter(GAME_ROLE.EXCALIBUR_OWNER);
                 if (excaliburOwner == null) {
                     if(timerCount == TickUtil.secondToTick(10)){
                         Bukkit.broadcastMessage(ChatColor.RED + "엑스칼리버 소유자 없이 게임을 해서 엑스칼리버를 사용할수없습니다.");

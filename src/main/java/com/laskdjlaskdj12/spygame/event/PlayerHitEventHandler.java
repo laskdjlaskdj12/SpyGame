@@ -113,10 +113,10 @@ public class PlayerHitEventHandler implements Listener {
 
         if(attackerCharacter.getRole().name().equals("Assassine") && victimCharacter.getRole().name().equals("Marline")){
             Bukkit.broadcastMessage("암살자가 멀린을 처리했습니다.!!");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/패배선언");
+            gameModeContent.declareLose();
         }else{
             Bukkit.broadcastMessage("암살자가 멀린이 아닌 " + victimCharacter.getRole().KRName() + "을 지목했습니다!!.");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/승리선언");
+            gameModeContent.declareWin();
         }
     }
 
@@ -158,6 +158,11 @@ public class PlayerHitEventHandler implements Listener {
 
         if(gameModeContent.experditionContent().getExperditionInfo() == null){
             attacker.sendMessage(ChatColor.RED + "원정이 아직 시작이 안되서 엑스칼리버 검을 사용할수없습니다.");
+            return;
+        }
+
+        if(!gameModeContent.experditionContent().isHorseSequence()){
+            Bukkit.broadcastMessage("마차 안에서만 엑스칼리버를 사용할수있습니다.");
             return;
         }
 
@@ -209,7 +214,13 @@ public class PlayerHitEventHandler implements Listener {
         attacker.sendMessage(elfVictim.getPlayer().getDisplayName() + "님은 " + gameRole.factionName + "입니다.");
 
         //호수의 여신에게 역할을 전달해주는 기능 추가
-        gameModeContent.gameRoleContent().transitionToElf(elfAttacker, elfVictim);
+        if(elfAttacker == null){
+            gameModeContent.makeLakeElf(elfVictim);
+            return;
+        } else {
+            gameModeContent.changeLakeElf(elfAttacker, elfVictim);
+        }
+
         gameModeContent.experditionContent().useLakeElfAvality();
     }
 }

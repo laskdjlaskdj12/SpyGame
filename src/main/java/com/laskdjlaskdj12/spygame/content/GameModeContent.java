@@ -26,7 +26,7 @@ public class GameModeContent {
     private final GameRoleContent gameRoleContent;
     private List<ICharacter> characterList = new ArrayList<>();
     private List<Block> voteResultBlock = new ArrayList<>();
-    private List<Block> activeVoteResultBlock = new ArrayList<>();
+    private final List<Block> activeVoteResultBlock = new ArrayList<>();
     private boolean excaliberExsist = true;
     private int winCount = 0;
     private int loseCount = 0;
@@ -221,6 +221,11 @@ public class GameModeContent {
         experditionContent.addExperditioner(candidate);
     }
 
+    public void removeExcalibur(ICharacter iCharacter){
+        iCharacter.setGameRole(GAME_ROLE.NONE);
+        CharacterContent.removeItem(iCharacter, Material.DIAMOND_SWORD);
+    }
+
     public void awardExcalibur(ICharacter awardedOwner){
         ICharacter beforeOwner = findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
 
@@ -233,6 +238,10 @@ public class GameModeContent {
     }
 
     public void clearGame(){
+
+        //아이템들 모두 초기화
+        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().clear());
+
         //투표블록 전부 데이터 초기화
         if(!this.voteResultBlock.isEmpty()){
             this.voteResultBlock.forEach(block -> block.setType(Material.AIR));
@@ -258,6 +267,19 @@ public class GameModeContent {
             loseCount = 0;
         }
 
+        if(collectVoteBlock){
+            collectVoteBlock = false;
+        }
+
+        characterList.clear();
+        voteResultBlock.clear();
+        activeVoteResultBlock.clear();
+        excaliberExsist = true;
+        winCount = 0;
+        loseCount = 0;
+        collectVoteBlock = false;
+        isDebugMod = true;
+
         //expedition clear
         experditionContent.init();
     }
@@ -276,11 +298,11 @@ public class GameModeContent {
             return;
         }
 
-        assassine.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+        CharacterContent.addItem(assassine, Material.IRON_SWORD);
 
         characterList
                 .stream()
-                .forEach(character -> character.getPlayer().sendTitle(ChatColor.RED + "어쌔신의 멀린 지목시간이 왔습니다.", "", 20, 40, 20));
+                .forEach(character -> character.getPlayer().sendTitle(ChatColor.RED + "어쌔신이 멀린을 지목시간이 왔습니다.", "", 20, 40, 20));
     }
 
     public void declareWin(){
@@ -333,5 +355,35 @@ public class GameModeContent {
 
     public boolean isDebugMod(){
         return isDebugMod;
+    }
+
+    public ICharacter findLakeElfCharacter(){
+        return characterList.stream().filter(ICharacter::isLakeElf)
+                .findAny()
+                .orElse(null);
+    }
+
+    public void makeLakeElf(ICharacter character) {
+        character.setLakeElf(true);
+    }
+
+    public void changeLakeElf(ICharacter beforeLakeElf, ICharacter currentLakeElf) {
+        beforeLakeElf.setLakeElf(false);
+        currentLakeElf.setLakeElf(true);
+    }
+
+    public void removeLakeElfEffect(ICharacter lakeElf) {
+        lakeElf.setLakeElf(false);
+    }
+
+    public ICharacter findCharacterByGameRoleInExperditionaCharacter(GAME_ROLE gameRole) {
+        if (!experditionContent.isExsist()){
+            return null;
+        }
+
+        return experditionContent.applyExperditioner()
+                .stream().filter(iCharacter -> iCharacter.getGameRole() == GAME_ROLE.EXCALIBUR_OWNER)
+                .findAny()
+                .orElse(null);
     }
 }

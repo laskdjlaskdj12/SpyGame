@@ -55,6 +55,13 @@ public abstract class AVoteContent {
         character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(Material.BLACK_WOOL)));
     }
 
+    protected void removeVoteItem(List<ICharacter> characterList) {
+        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
+        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(1, new ItemStack(Material.AIR)));
+
+        characterList.forEach(this::moveItemToLeftSlot);
+    }
+
     protected VotingResult votingTotal(List<Boolean> voteResult) {
         int aiCount = 0;
         int nayCount = 0;
@@ -80,19 +87,19 @@ public abstract class AVoteContent {
         ItemStack zeroInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(0);
         ItemStack oneInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(1);
 
-        iCharacter.getPlayer().getInventory().setItem(2, zeroInventorySlotItem);
-        iCharacter.getPlayer().getInventory().setItem(3, oneInventorySlotItem);
+        iCharacter.getPlayer().getInventory().setItem(6, zeroInventorySlotItem);
+        iCharacter.getPlayer().getInventory().setItem(7, oneInventorySlotItem);
     }
 
     protected void moveItemToLeftSlot(ICharacter iCharacter) {
-        ItemStack zeroInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(2);
-        ItemStack oneInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(3);
+        ItemStack zeroInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(6);
+        ItemStack oneInventorySlotItem = iCharacter.getPlayer().getInventory().getItem(7);
 
         iCharacter.getPlayer().getInventory().setItem(0, zeroInventorySlotItem);
         iCharacter.getPlayer().getInventory().setItem(1, oneInventorySlotItem);
 
-        iCharacter.getPlayer().getInventory().setItem(2, new ItemStack(Material.AIR));
-        iCharacter.getPlayer().getInventory().setItem(3, new ItemStack(Material.AIR));
+        iCharacter.getPlayer().getInventory().setItem(6, new ItemStack(Material.AIR));
+        iCharacter.getPlayer().getInventory().setItem(7, new ItemStack(Material.AIR));
     }
 
     private ItemStack makeCustomItem(String name, Material blockMaterial) {

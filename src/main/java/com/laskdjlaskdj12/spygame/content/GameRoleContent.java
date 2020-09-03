@@ -5,15 +5,6 @@ import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
 import org.bukkit.Material;
 
 public class GameRoleContent {
-
-    public void transitionToElf(ICharacter elfAttacker, ICharacter elfVictim) {
-        elfVictim.setGameRole(GAME_ROLE.NONE);
-        CharacterContent.removeItem(elfAttacker, Material.BOOK);
-
-        CharacterContent.addItem(elfVictim, Material.BOOK);
-        elfVictim.setGameRole(GAME_ROLE.LAKE_ELF);
-    }
-
     public void transitionToExperditionLead(ICharacter leader, ICharacter victim, boolean isExcaliverExsist) {
         leader.setGameRole(GAME_ROLE.NONE);
         CharacterContent.removeItem(leader, Material.DIAMOND_AXE);
