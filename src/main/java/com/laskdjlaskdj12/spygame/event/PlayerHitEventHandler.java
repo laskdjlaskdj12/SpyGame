@@ -161,12 +161,6 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
-        //받는 사람이 호수의 요정인지 확인
-        if(victimCharacter.getGameRole() == GAME_ROLE.LAKE_ELF){
-            attacker.sendMessage(ChatColor.RED + "호수의 요정에게는 엑스칼리버를 사용할수없습니다.");
-            return;
-        }
-
         if(attackerCharacter == null){
             Bukkit.broadcastMessage("게임참여 유저가 아닌 사람이 사용할수가 없습니다.");
             return;
