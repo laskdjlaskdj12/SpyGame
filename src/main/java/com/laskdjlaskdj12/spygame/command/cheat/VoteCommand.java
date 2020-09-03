@@ -1,4 +1,4 @@
-package com.laskdjlaskdj12.spygame.command;
+package com.laskdjlaskdj12.spygame.command.cheat;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.vote.IVoteResultHandler;

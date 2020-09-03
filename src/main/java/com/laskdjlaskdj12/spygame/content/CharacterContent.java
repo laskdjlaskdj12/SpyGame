@@ -3,6 +3,7 @@ package com.laskdjlaskdj12.spygame.content;
 import com.laskdjlaskdj12.spygame.content.character.BasicCharacter;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,28 +31,43 @@ public class CharacterContent {
                 .collect(Collectors.toList());
     }
 
-    public static void removeItem(ICharacter character, Material itemMaterial){
-        for (int i = 0; i < 10; i++){
-            ItemStack itemStack = character.getPlayer().getInventory().getItem(i);
+    public static void removeItem(Player player, Material itemMaterial) {
+        for (int i = 0; i < 35; i++) {
+            ItemStack itemStack = player.getInventory().getItem(i);
 
-            if(itemStack.getType() == itemMaterial){
-                itemStack.setType(Material.AIR);
+            if (itemStack == null) {
+                continue;
+            }
+
+            Bukkit.broadcastMessage("찾은 아이템 : " + itemStack.getType().name());
+            if (itemStack.getType() == itemMaterial) {
+                player.getInventory().removeItem(itemStack);
             }
         }
     }
 
-    public static void addItem(ICharacter character, Material book) {
-        for (int i = 0; i < 10; i++){
-            ItemStack itemStack = character.getPlayer().getInventory().getItem(i);
+    public static void removeItem(ICharacter character, Material itemMaterial) {
+        for (int i = 0; i < 35; i++) {
+            Player player = character.getPlayer();
+            ItemStack itemStack = player.getInventory().getItem(i);
 
-            if(itemStack.getType() == Material.AIR){
-                itemStack.setType(book);
+            if (itemStack == null) {
+                continue;
+            }
+
+            if (itemStack.getType() == itemMaterial) {
+                player.getInventory().removeItem(itemStack);
             }
         }
+    }
+
+    public static void addItem(ICharacter character, Material item) {
+        character.getPlayer().getInventory().addItem(new ItemStack(item));
     }
 
     /**
      * Todo: 디버그용이므로 반드시 제거를 해야할것
+     *
      * @param sender
      */
     public ICharacter createCharacterDebug(Player sender) {

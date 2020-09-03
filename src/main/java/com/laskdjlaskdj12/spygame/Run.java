@@ -22,6 +22,8 @@ public class Run extends JavaPlugin {
         getLogger().info("Avalon By Minecraft");
         getLogger().info("Version: 0.1");
         getLogger().info("개발자: 라스크");
+        getLogger().info("With: 도리, 푸탱, 겜닭, 체리, 실피아, 시윤, 트리비, 판다, 개인지도, 맥남, 김기랑");
+        getLogger().info("Message : 가이코님 사장님 나빠요 이사람아 이 코드만 5천줄이야");
         getLogger().info("===========================================================");
 
         World world = getServer().getWorlds().get(0);
@@ -55,6 +57,7 @@ public class Run extends JavaPlugin {
         getCommand("승리선언").setExecutor(new AnnounceWinCommand(gameModeContent));
         getCommand("패배선언").setExecutor(new AnnounceLoseCommand(gameModeContent));
         getCommand("라운드별원정대원선발").setExecutor(new ChooseExpeditionMemberSequenceCommand(gameModeContent, messageContent));
+        getCommand("디버그모드").setExecutor(new ActiveDebugModeCommand(gameModeContent));
 
         //원정 커맨드
         getCommand("엑스칼리버지정").setExecutor(new SetExcaliburOwnerCommand(gameModeContent));
@@ -75,6 +78,7 @@ public class Run extends JavaPlugin {
         getCommand("원정역할보기").setExecutor(new ShowGameRoleCommand(gameModeContent));
         getCommand("지정캐릭터추가").setExecutor(new ForceCreatePacificCharacterCommand(experditionContent, characterContent, gameModeContent));
         getCommand("지정캐릭터게임롤추가").setExecutor(new ForceCreateExpeditionRoleCommand(gameModeContent));
+        getCommand("삭제").setExecutor(new RemoveItemTest());
     }
 
     @Override

@@ -51,8 +51,8 @@ public abstract class AVoteContent {
         //기존 블록들을 아이템 슬롯 3번으로 옮김
         moveItemToRightSlot(character);
 
-        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE)));
-        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(DyeColor.BLACK)));
+        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLColorToMaterial(Material.WHITE_WOOL)));
+        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(Material.BLACK_WOOL)));
     }
 
     protected VotingResult votingTotal(List<Boolean> voteResult) {

@@ -7,6 +7,7 @@ import com.laskdjlaskdj12.spygame.content.RoleContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
 import com.laskdjlaskdj12.spygame.status.LIFE_STATUS;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StartCommand implements CommandExecutor {
 
@@ -42,15 +44,14 @@ public class StartCommand implements CommandExecutor {
             1. 참여하는 사람들을 전부 역활을 할당 받는다.
             2. 각 역활마다 필요한 이펙트와 상황들을 넣는다.
          */
-
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("플레이어만 커맨드를 활성화할수있습니다.");
-            return true;
-        }
-
-        Player player = (Player)sender;
-        World world = player.getWorld();
+        World world = Bukkit.getServer().getWorlds().get(0);
         List<Player> players = world.getPlayers();
+
+        if(!gameModeContent.isDebugMod()){
+            players = players.stream()
+                    .filter(player -> !player.getDisplayName().equals("kuraje"))
+                    .collect(Collectors.toList());
+        }
 
         //player가 이미 있는지 체크
         if (players.size() > 10 || players.size() < 5) {

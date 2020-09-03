@@ -17,11 +17,26 @@ public class BlockConfig {
             DyeColor.YELLOW,
             DyeColor.RED};
 
+    public static Material[] MATERIAL_WOOL_COLOR_LIST = {
+            Material.WHITE_WOOL,
+            Material.BLACK_WOOL,
+            Material.BLUE_WOOL,
+            Material.BROWN_WOOL,
+            Material.CYAN_WOOL,
+            Material.LIGHT_BLUE_WOOL,
+            Material.YELLOW_WOOL,
+            Material.RED_WOOL};
+
     public static Cordinate[] VoteBlockCordinate = {
-        Cordinate.builder().X(-11).Y(82).Z(38).build(),
-        Cordinate.builder().X(-13).Y(82).Z(38).build(),
-        Cordinate.builder().X(-15).Y(82).Z(38).build(),
-        Cordinate.builder().X(-17).Y(82).Z(38).build(),
-        Cordinate.builder().X(-19).Y(82).Z(38).build()
+//        Cordinate.builder().X(-11).Y(82).Z(38).build(),
+//        Cordinate.builder().X(-13).Y(82).Z(38).build(),
+//        Cordinate.builder().X(-15).Y(82).Z(38).build(),
+//        Cordinate.builder().X(-17).Y(82).Z(38).build(),
+//        Cordinate.builder().X(-19).Y(82).Z(38).build()
+            Cordinate.builder().X(155).Y(64).Z(154).build(),
+            Cordinate.builder().X(152).Y(64).Z(154).build(),
+            Cordinate.builder().X(149).Y(64).Z(154).build(),
+            Cordinate.builder().X(149).Y(64).Z(151).build(),
+            Cordinate.builder().X(149).Y(64).Z(148).build()
     };
 }

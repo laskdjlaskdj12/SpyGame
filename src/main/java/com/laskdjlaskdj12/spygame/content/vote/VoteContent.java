@@ -42,20 +42,26 @@ public class VoteContent extends AVoteContent {
         BukkitScheduler scheduler = voteStarter.getServer().getScheduler();
 
         bukkitTask = scheduler.runTaskTimer(plugin, () -> {
-            if (VoteCountTime == 0) {
-                VoteCountTime = TickUtil.secondToTick(3);
-                Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
-                VotingResult votingResult = collectVoteResult(voterList);
+            try {
+                if (VoteCountTime == 0) {
+                    VoteCountTime = TickUtil.secondToTick(3);
+                    Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
+                    VotingResult votingResult = collectVoteResult(voterList);
 
-                if(iVoteResultHandler != null){
-                    iVoteResultHandler.result(votingResult, voteStarter);
+                    if (iVoteResultHandler != null) {
+                        iVoteResultHandler.result(votingResult, voteStarter);
+                    }
+                    return;
                 }
-                return;
+
+                Bukkit.broadcastMessage(TickUtil.tickToSecond(VoteCountTime) + "초 남았습니다.");
+
+                VoteCountTime -= TickUtil.secondToTick(1);
+            }catch(Exception e){
+                Bukkit.broadcastMessage(ChatColor.RED + "에러가 발생했습니다. \n");
+                e.printStackTrace();
+                Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
             }
-
-            Bukkit.broadcastMessage(TickUtil.tickToSecond(VoteCountTime) + "초 남았습니다.");
-
-            VoteCountTime -= TickUtil.secondToTick(1);;
         }, 0, 20L);
     }
 
@@ -63,7 +69,7 @@ public class VoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE))
+                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(Material.WHITE_WOOL))
                 .collect(Collectors.toList());
 
         characterList.forEach(iCharacter -> moveItemToLeftSlot(iCharacter));

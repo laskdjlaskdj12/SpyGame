@@ -3,7 +3,7 @@ package com.laskdjlaskdj12.spygame.status;
 import javax.annotation.Nullable;
 
 public enum GAME_ROLE {
-    NONE("Cervent", "신하"),
+    NONE("None", "원정대원"),
     EXCALIBUR_OWNER("Excalibur", "엑스칼리버"),
     LAKE_ELF("LakeElf", "호수의 요정"),
     EXPEDITION_LEAD("ExpeditionLead", "원정대장");

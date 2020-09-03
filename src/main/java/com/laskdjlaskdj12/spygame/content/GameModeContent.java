@@ -31,6 +31,7 @@ public class GameModeContent {
     private int winCount = 0;
     private int loseCount = 0;
     private boolean collectVoteBlock = false;
+    private boolean isDebugMod = true;
 
     public GameModeContent(ExperditionContent experditionContent, GameRoleContent gameRoleContent) {
         this.experditionContent = experditionContent;
@@ -213,13 +214,22 @@ public class GameModeContent {
 
     public void changeExperditionlead(ICharacter leader, ICharacter candidate){
         gameRoleContent.transitionToExperditionLead(leader, candidate, isExcaliberExsist());
-        experditionContent.removeExperditioner(leader);
-        experditionContent.removeExperditioner(candidate);
     }
 
     public void awardExperditionLead(ICharacter candidate) {
         gameRoleContent.awardExperditionLead(candidate);
         experditionContent.addExperditioner(candidate);
+    }
+
+    public void awardExcalibur(ICharacter awardedOwner){
+        ICharacter beforeOwner = findCharacterByGameRole(GAME_ROLE.EXCALIBUR_OWNER);
+
+        if(beforeOwner == null){
+            gameRoleContent.awardExcaliburOwner(awardedOwner);
+            return;
+        }
+
+        gameRoleContent.transitionToExcaliburOwner(beforeOwner, awardedOwner);
     }
 
     public void clearGame(){
@@ -295,5 +305,33 @@ public class GameModeContent {
                                 TickUtil.secondToTick(4),
                                 TickUtil.secondToTick(2)));
         clearGame();
+    }
+
+    public void useExcaliber(ICharacter attacker, ICharacter victim) {
+        experditionContent.changeVote(victim);
+
+        //엑스칼리버 무력화
+        disableExcalibur(attacker);
+    }
+
+    private void disableExcalibur(ICharacter atatcker){
+        excaliberExsist = false;
+        gameRoleContent.removeExcaliburOwner(atatcker);
+    }
+
+    public void awardExperditionLeadWithoutExcalivur(ICharacter candidate) {
+        gameRoleContent.awardExperditionLeadWithoutExcalivur(candidate);
+    }
+
+    public void activeReleaseMode(){
+        isDebugMod = false;
+    }
+
+    public void activeDebugMode(){
+        isDebugMod = true;
+    }
+
+    public boolean isDebugMod(){
+        return isDebugMod;
     }
 }

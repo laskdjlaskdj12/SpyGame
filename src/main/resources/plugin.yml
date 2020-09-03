@@ -4,7 +4,6 @@ version: 0.0.1
 description: Spy game for Streamer
 author: laskdjlaskdj12
 api-version: 1.13
-
 commands:
   start:
     description: "랜덤으로 사람들을 뽑아서 게임을 시작합니다."
@@ -97,5 +96,11 @@ commands:
     description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
     usage: /<command>
   지정캐릭터게임롤추가:
+    description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
+    usage: /<command>
+  삭제:
+    description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
+    usage: /<command>
+  디버그모드:
     description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
     usage: /<command>

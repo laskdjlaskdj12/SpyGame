@@ -35,11 +35,11 @@ public class PlayerInteractiveEventHandler implements Listener {
             return;
         }
 
-        if(event.getItem().getType() == Material.WOOD_AXE){
+        if(event.getItem().getType() == Material.WOODEN_AXE){
             showBlockData(event);
         }
 
-        else if (event.getItem().getType() == Material.GOLD_SWORD &&
+        else if (event.getItem().getType() == Material.GOLDEN_SWORD &&
                 event.getAction() == Action.LEFT_CLICK_BLOCK &&
                 event.hasBlock() &&
                 event.getClickedBlock().getType() == Material.GOLD_BLOCK) {
@@ -63,9 +63,6 @@ public class PlayerInteractiveEventHandler implements Listener {
         //Todo: 백엔드에 데이터 전송하는 기능 추가
 
         Player player = event.getPlayer();
-        World world = player.getWorld();
-
-        world.strikeLightning(player.getLocation());
 
         //0. 현재 진행중인 expedition들을 갖고옴
         if (!experditionContent.isExsist()) {
@@ -96,6 +93,6 @@ public class PlayerInteractiveEventHandler implements Listener {
 
         //플레이어의 황금칼을 뺏음
         ICharacter character = gameModeContent.findCharacterFromPlayer(player);
-        CharacterContent.removeItem(character, Material.GOLD_SWORD);
+        CharacterContent.removeItem(character, Material.GOLDEN_SWORD);
     }
 }

@@ -1,6 +1,6 @@
 package com.laskdjlaskdj12.spygame.event;
 
-import com.laskdjlaskdj12.spygame.content.ExperditionContent;
+import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.MessageContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
@@ -40,7 +40,7 @@ public class PlayerHitEventHandler implements Listener {
             if (attacker.getInventory().getItemInMainHand().getType() == Material.BOOK) {
                 activeLakeElf(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_SWORD) {
-                activeExcalibur(attacker, victim);
+                useExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.DIAMOND_AXE) {
                 givePlayerExcalibur(attacker, victim);
             } else if (attacker.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD) {
@@ -129,20 +129,27 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
+        //엑스칼리버가 이미 잇는지 확인
+        if (!gameModeContent.isExcaliberExsist()) {
+            Bukkit.broadcastMessage(attacker.getDisplayName() + " 님이 " + victim.getDisplayName() + " 님에게 엑스칼리버를 수여하였습니다.");
+            return;
+        }
+
         Bukkit.broadcastMessage(attacker.getDisplayName() + " 님이 " + victim.getDisplayName() + " 님에게 엑스칼리버를 수여하였습니다.");
         gameModeContent.setExcaliberExsist(true);
 
         //플레이어에게 엑스칼리버를 수여함
-        excaliberCharacter.setGameRole(GAME_ROLE.EXCALIBUR_OWNER);
-        excaliberCharacter.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_SWORD));
+        gameModeContent.awardExcalibur(excaliberCharacter);
 
-        //원정대장에게 엑스칼리버를 하사하는 도끼 제거
-        attacker.getInventory().setItem(0, new ItemStack(Material.AIR));
+        //도끼 제거
+        ICharacter owner = gameModeContent.findCharacterFromPlayer(attacker);
+        CharacterContent.removeItem(owner, Material.DIAMOND_AXE);
     }
 
-    private void activeExcalibur(Player attacker, Player victim) {
+    private void useExcalibur(Player attacker, Player victim) {
         //공격당한 사람들의 투표결과를 변경
         ICharacter victimCharacter = gameModeContent.findCharacterFromPlayer(victim);
+        ICharacter attackerCharacter = gameModeContent.findCharacterFromPlayer(attacker);
 
         if (victimCharacter == null) {
             Bukkit.broadcastMessage(ChatColor.RED + "[에러] 게임에 참여하지 않는 사람이 엑스칼리버를 가질수 없습니다.");
@@ -156,19 +163,22 @@ public class PlayerHitEventHandler implements Listener {
 
         //받는 사람이 호수의 요정인지 확인
         if(victimCharacter.getGameRole() == GAME_ROLE.LAKE_ELF){
-            attacker.sendMessage(ChatColor.RED + "호수의 요정은 원정대원이 될수가없습니다.");
+            attacker.sendMessage(ChatColor.RED + "호수의 요정에게는 엑스칼리버를 사용할수없습니다.");
             return;
         }
 
-        ExperditionContent experditionContent = gameModeContent.experditionContent();
+        if(attackerCharacter == null){
+            Bukkit.broadcastMessage("게임참여 유저가 아닌 사람이 사용할수가 없습니다.");
+            return;
+        }
 
-        experditionContent.changeVote(victimCharacter);
+        if(attackerCharacter.getGameRole() != GAME_ROLE.EXCALIBUR_OWNER){
+            attacker.sendMessage(ChatColor.RED + "엑스칼리버 사용권한이 없는 사람이 엑스칼리버를 사용할수없습니다.");
+            return;
+        }
 
         //공격자의 엑스칼리버를 제거
-        attacker.getInventory().getItemInMainHand().setType(Material.AIR);
-
-        //엑스칼리버를 사용한 흔적 남김
-        gameModeContent.setExcaliberExsist(false);
+        gameModeContent.useExcaliber(attackerCharacter, victimCharacter);
 
         Bukkit.broadcastMessage(attacker.getDisplayName() + "님이 " + victim.getDisplayName() + "님에게 엑스칼리버를 사용했습니다.");
     }
@@ -184,6 +194,11 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
+        if(!gameModeContent.experditionContent().isLakeElfAvalityAvailable()){
+            attacker.sendMessage("호수의 여신 능력은 이미 사용됬어서 다음라운드에 사용이 가능합니다.");
+            return;
+        }
+
         ICharacter elfAttacker = gameModeContent.findCharacterFromPlayer(attacker);
         ICharacter elfVictim = gameModeContent.findCharacterFromPlayer(victim);
         if (elfVictim == null) {
@@ -191,10 +206,16 @@ public class PlayerHitEventHandler implements Listener {
             return;
         }
 
+        if(elfVictim.getGameRole() == GAME_ROLE.EXCALIBUR_OWNER){
+            attacker.sendMessage("엑스칼리버 소유자에게 호수의 요정을 사용할수가 없습니다.");
+            return;
+        }
+
         ROLE_TYPE gameRole = elfVictim.getRole().roleType();
-        attacker.sendMessage(elfVictim.getPlayer().getDisplayName() + "님은 " + gameRole.nameKR + "입니다.");
+        attacker.sendMessage(elfVictim.getPlayer().getDisplayName() + "님은 " + gameRole.factionName + "입니다.");
 
         //호수의 여신에게 역할을 전달해주는 기능 추가
         gameModeContent.gameRoleContent().transitionToElf(elfAttacker, elfVictim);
+        gameModeContent.experditionContent().useLakeElfAvality();
     }
 }

@@ -16,7 +16,7 @@ public class ExperditionContent {
 
     private ExperditionInfo experditionInfo;
     private int experditionRoundCount = 0;
-
+    private boolean isLakeElfAvalityAvailable = true;
     public boolean isExsist() {
         return experditionInfo != null;
     }
@@ -35,6 +35,7 @@ public class ExperditionContent {
     }
 
     public void start() {
+        isLakeElfAvalityAvailable = true;
         this.experditionRoundCount += 1;
         this.experditionInfo = new ExperditionInfo();
         this.experditionInfo.setMaxExperditionMembersCount(ExpeditionConfig.roundByExperditionMemberCount.get(experditionRoundCount - 1));
@@ -124,9 +125,11 @@ public class ExperditionContent {
                 .orElse(null);
 
         if (characterVote == null) {
+            System.out.println("투표한 캐릭터를 찾을수없습니다.");
             return false;
         }
 
+        System.out.println("투표한 캐릭터 : " + characterVote.getVoteingCharacter().getPlayer().getDisplayName() + " 가 변됭되었습니다.");
         characterVote.setAi(!characterVote.isAi());
         return true;
     }
@@ -199,5 +202,16 @@ public class ExperditionContent {
 
     public int getMissingVoterCount() {
         return experditionInfo.getMaxExperditionMembersCount() - experditionInfo.getVoteInfoList().size();
+    }
+
+    public boolean isLakeElfAvalityAvailable() {
+        return isLakeElfAvalityAvailable;
+    }
+
+    public void useLakeElfAvality(){
+        if (!isLakeElfAvalityAvailable){
+            return;
+        }
+        isLakeElfAvalityAvailable = false;
     }
 }

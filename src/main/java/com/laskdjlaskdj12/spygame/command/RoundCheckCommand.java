@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -20,7 +21,7 @@ public class RoundCheckCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        World world = ((Player) sender).getWorld();
+        World world = Bukkit.getServer().getWorlds().get(0);
 
         world.getPlayers().stream()
                 .forEach(this::showTitle);

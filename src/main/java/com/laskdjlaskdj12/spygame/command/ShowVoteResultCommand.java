@@ -9,6 +9,7 @@ import com.laskdjlaskdj12.spygame.domain.VoteInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,9 +48,9 @@ public class ShowVoteResultCommand implements CommandExecutor {
         ExperditionContent experditionContent = gameModeContent.experditionContent();
         ExperditionInfo experditionInfo = experditionContent.getExperditionInfo();
 
-        Player player = (Player) sender;
+        World world = Bukkit.getServer().getWorlds().get(0);
         voterCount = experditionInfo.getVoteInfoList().size();
-        gameModeContent.loadVoteResultBlock(player.getWorld(), voterCount);
+        gameModeContent.loadVoteResultBlock(world, voterCount);
 
         if (experditionInfo == null) {
             sender.sendMessage("투표가 완료되지 않아서 개표 진행이 불가능합니다.");
@@ -58,27 +59,25 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
         voteResult = gameModeContent.experditionContent().sortVoteList();
         taskID = Bukkit.getScheduler().runTaskTimer(javaPlugin, () -> {
+                //투표 결과 한개씩 공개
+                if (second == term) {
+                    javaPlugin.getLogger().info(voteResult.size() + "개의 블록이 공개됩니다.");
 
-            //투표 결과 한개씩 공개
-            if (second == term) {
-                javaPlugin.getLogger().info(voteResult.size() + "개의 블록이 공개됩니다.");
+                    showResultBlock(voteInfoListIndex);
 
-                showResultBlock(voteInfoListIndex);
+                    showNext();
 
-                showNext();
+                    if (isEnd()) {
+                        javaPlugin.getLogger().info("투표결과 공개를 끝냅니다.");
+                        end();
+                    }
 
-                if (isEnd()) {
-                    javaPlugin.getLogger().info("투표결과 공개를 끝냅니다.");
-                    end();
+                    return;
                 }
 
-                return;
-            }
-
-            javaPlugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex + "\n" + "second : " + second);
-            showRandomBlock(voteInfoListIndex, second);
-            second += 1;
-
+                javaPlugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex + "\n" + "second : " + second);
+                showRandomBlock(voteInfoListIndex, second);
+                second += 1;
         }, 0, 20);
 
 
@@ -99,7 +98,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
     private void showRandomBlock(int showVoteInfoListIndex, int second) {
         //보여주는 블록 인덱스
-        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
+        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.MATERIAL_WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
 
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);
@@ -130,11 +129,16 @@ public class ShowVoteResultCommand implements CommandExecutor {
                 .collect(Collectors.toList());
 
         //4회차인지 체크
-        if (gameModeContent.experditionCount() >= 4 && nayVoteInfo.size() >= 2) {
-            Bukkit.broadcastMessage("원정이 실패했습니다.");
-            gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+        if (gameModeContent.experditionCount() >= 4) {
+            if (nayVoteInfo.size() >= 2) {
+                Bukkit.broadcastMessage("원정이 실패했습니다.");
+                gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+            } else{
+                Bukkit.broadcastMessage("원정이 승리했습니다.");
+                gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+            }
         } else {
-            if (nayVoteInfo.size() > 1) {
+            if (nayVoteInfo.size() >= 1) {
                 Bukkit.broadcastMessage("원정이 실패했습니다.");
                 gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
             } else {
