@@ -1,5 +1,6 @@
 package com.laskdjlaskdj12.spygame.content;
 
+import com.laskdjlaskdj12.spygame.config.Admin;
 import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.status.GAME_ROLE;
@@ -385,5 +386,13 @@ public class GameModeContent {
                 .stream().filter(iCharacter -> iCharacter.getGameRole() == GAME_ROLE.EXCALIBUR_OWNER)
                 .findAny()
                 .orElse(null);
+    }
+
+    public boolean isAdmin(Player player) {
+        String result = Arrays.stream(Admin.ADMIN_LIST).filter(s -> player.getDisplayName().equals(s))
+                .findAny()
+                .orElse(null);
+
+        return result != null;
     }
 }

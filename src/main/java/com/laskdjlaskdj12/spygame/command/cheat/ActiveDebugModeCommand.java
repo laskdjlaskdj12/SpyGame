@@ -18,7 +18,7 @@ public class ActiveDebugModeCommand implements CommandExecutor {
 
         if(gameModeContent.isDebugMod()){
             Bukkit.broadcastMessage("릴리즈 모드로 변경!");
-            Bukkit.broadcastMessage("라스크님을 운영진으로 변경합니다.");
+            Bukkit.broadcastMessage("운영진이 포함이 안되도록 변경했습니다..");
             gameModeContent.activeReleaseMode();
             return true;
         }

@@ -49,7 +49,7 @@ public class StartCommand implements CommandExecutor {
 
         if(!gameModeContent.isDebugMod()){
             players = players.stream()
-                    .filter(player -> !player.getDisplayName().equals("kuraje"))
+                    .filter(gameModeContent::isAdmin)
                     .collect(Collectors.toList());
         }
 
