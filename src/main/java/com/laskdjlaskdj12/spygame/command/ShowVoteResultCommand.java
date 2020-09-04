@@ -97,7 +97,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
     private void showRandomBlock(int showVoteInfoListIndex, int second) {
         //보여주는 블록 인덱스
-        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.MATERIAL_WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
+        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
 
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);

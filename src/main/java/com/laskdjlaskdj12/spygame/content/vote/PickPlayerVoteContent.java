@@ -69,7 +69,7 @@ public class PickPlayerVoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(Material.WHITE_WOOL))
+                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE))
                 .collect(Collectors.toList());
 
         removeVoteItem(characterList);

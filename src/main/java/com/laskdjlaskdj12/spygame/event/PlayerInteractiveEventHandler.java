@@ -35,11 +35,11 @@ public class PlayerInteractiveEventHandler implements Listener {
             return;
         }
 
-        if(event.getItem().getType() == Material.WOODEN_AXE){
+        if(event.getItem().getType() == Material.WOOD_AXE){
             showBlockData(event);
         }
 
-        else if (event.getItem().getType() == Material.GOLDEN_SWORD &&
+        else if (event.getItem().getType() == Material.GOLD_SWORD &&
                 event.getAction() == Action.LEFT_CLICK_BLOCK &&
                 event.hasBlock() &&
                 event.getClickedBlock().getType() == Material.GOLD_BLOCK) {
@@ -88,6 +88,6 @@ public class PlayerInteractiveEventHandler implements Listener {
 
         //플레이어의 황금칼을 뺏음
         ICharacter character = gameModeContent.findCharacterFromPlayer(player);
-        CharacterContent.removeItem(character, Material.GOLDEN_SWORD);
+        CharacterContent.removeItem(character, Material.GOLD_SWORD);
     }
 }

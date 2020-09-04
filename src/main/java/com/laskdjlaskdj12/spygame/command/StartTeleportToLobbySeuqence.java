@@ -44,7 +44,7 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 
         gameModeContent.characterList().forEach( iCharacter ->
-                CharacterContent.removeItem(iCharacter, Material.GOLDEN_SWORD)
+                CharacterContent.removeItem(iCharacter, Material.GOLD_SWORD)
         );
 
         bukkitTask = scheduler.runTaskTimer(plugin, () -> {

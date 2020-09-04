@@ -4,6 +4,7 @@ import com.laskdjlaskdj12.spygame.content.BlockContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.domain.VotingResult;
 import com.laskdjlaskdj12.spygame.util.TickUtil;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -50,8 +51,8 @@ public abstract class AVoteContent {
         //기존 블록들을 아이템 슬롯 3번으로 옮김
         moveItemToUpper(character);
 
-        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLColorToMaterial(Material.WHITE_WOOL)));
-        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(Material.BLACK_WOOL)));
+        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE)));
+        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(DyeColor.BLACK)));
     }
 
     protected void removeVoteItem(List<ICharacter> characterList) {

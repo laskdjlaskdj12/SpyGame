@@ -13,7 +13,7 @@ public class RemoveItemTest implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         Bukkit.broadcastMessage("황금검을 삭제했습니다.");
-        CharacterContent.removeItem(player, Material.GOLDEN_SWORD);
+        CharacterContent.removeItem(player, Material.GOLD_SWORD);
         return true;
     }
 }
