@@ -86,11 +86,6 @@ public class PlayerInteractiveEventHandler implements Listener {
         //3. 블록을 다이아몬드 색으로 변경
         touchedBlock.setType(Material.DIAMOND_BLOCK);
 
-        //4. 유저에게 찬성했다는 투표 알림 메세지 보냄
-        String displayName = event.getPlayer().getDisplayName();
-        String ai = ChatColor.GREEN + "찬성" + ChatColor.WHITE;
-        server.broadcastMessage(ChatColor.YELLOW + displayName + ChatColor.WHITE + "님이 " + ai + "을 하셨습니다.");
-
         //플레이어의 황금칼을 뺏음
         ICharacter character = gameModeContent.findCharacterFromPlayer(player);
         CharacterContent.removeItem(character, Material.GOLDEN_SWORD);

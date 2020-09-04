@@ -14,7 +14,6 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -147,6 +146,8 @@ public class ShowVoteResultCommand implements CommandExecutor {
             }
         }
 
+        resetVoteTimer();
+
         //만약 원정이 3승이거나 3패가 됬을경우 선의세력의 승리인지 악의세력의 승리인지 체크
         if (gameModeContent.getWinCount() == 3) {
             //선의세력이 승리함
@@ -157,9 +158,11 @@ public class ShowVoteResultCommand implements CommandExecutor {
         } else if (gameModeContent.getLoseCount() == 3) {
             //패배
             gameModeContent.declareLose();
+        } else{
+            // 원정이 끝났으므로 기존 원정 종료 및 새원정 시작
+            gameModeContent.experditionContent().stop();
+            gameModeContent.experditionContent().start();
         }
-
-        resetVoteTimer();
     }
 
     private void resetVoteTimer() {

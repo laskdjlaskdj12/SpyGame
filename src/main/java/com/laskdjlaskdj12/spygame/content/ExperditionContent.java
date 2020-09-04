@@ -5,6 +5,8 @@ import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.domain.ExperditionInfo;
 import com.laskdjlaskdj12.spygame.domain.VoteInfo;
 import com.laskdjlaskdj12.spygame.exception.ExperditionNotStart;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -34,7 +36,7 @@ public class ExperditionContent {
 
     public void init() {
         this.experditionRoundCount = 0;
-        this.experditionInfo = new ExperditionInfo();
+        this.experditionInfo = null;
         this.isLakeElfAvalityAvailable = true;
         this.isHorseSequence = false;
     }
@@ -44,9 +46,12 @@ public class ExperditionContent {
         this.experditionRoundCount += 1;
         this.experditionInfo = new ExperditionInfo();
         this.experditionInfo.setMaxExperditionMembersCount(ExpeditionConfig.roundByExperditionMemberCount.get(experditionRoundCount - 1));
+        Bukkit.broadcastMessage("제" + experditionRoundCount+ " 번째 원정을 시작합니다.");
     }
 
     public void stop() {
+        Bukkit.broadcastMessage("제" + experditionRoundCount + " 번째 원정을 끝냅니다.");
+
         if (this.experditionRoundCount == 5) {
 
             // 6번 experdition으로 알려주고
@@ -218,5 +223,13 @@ public class ExperditionContent {
             return;
         }
         isLakeElfAvalityAvailable = false;
+    }
+
+    public void teleportExperditionMembers(Location to) {
+        if(experditionInfo.getApplyCharacters() == null){
+            return;
+        }
+
+        experditionInfo.getApplyCharacters().forEach(iCharacter -> CharacterContent.teleportPlayer(iCharacter, to));
     }
 }

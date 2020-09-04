@@ -4,6 +4,7 @@ import com.laskdjlaskdj12.spygame.content.character.BasicCharacter;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CharacterContent {
+    public static void teleportPlayer(ICharacter iCharacter, Location to) {
+        to.setWorld(iCharacter.getPlayer().getWorld());
+        iCharacter.getPlayer().teleport(to);
+    }
     /*
         램덤으로 만든 Role와 유저와 플레이어에게 접목 시킴
      */

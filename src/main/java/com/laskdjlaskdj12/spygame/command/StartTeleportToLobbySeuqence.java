@@ -1,5 +1,6 @@
 package com.laskdjlaskdj12.spygame.command;
 
+import com.laskdjlaskdj12.spygame.config.ExpeditionConfig;
 import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
@@ -21,11 +22,13 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
 
     private final GameModeContent gameModeContent;
     private final JavaPlugin plugin;
+    private final ShowVoteResultCommand showVoteResultCommand;
 
     public StartTeleportToLobbySeuqence(GameModeContent gameModeContent,
-                                        JavaPlugin plugin) {
+                                        JavaPlugin plugin, ShowVoteResultCommand showVoteResultCommand) {
         this.gameModeContent = gameModeContent;
         this.plugin = plugin;
+        this.showVoteResultCommand = showVoteResultCommand;
     }
 
     public static BukkitTask bukkitTask;
@@ -33,7 +36,6 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
 
         //투표결과 안된 사람들 모두 반대로 처리
         gameModeContent.experditionContent().collectMissingVote();
@@ -52,9 +54,12 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
                     timerCount = TickUtil.secondToTick(10);
                     Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
 
-                    //Todo: 참가자들을 전부 메인 장소로 TP하는 코드 추가
                     Bukkit.broadcastMessage("메인장소로 다들 티피를 시킵니다.");
+                    gameModeContent.experditionContent().teleportExperditionMembers(ExpeditionConfig.counsilLocation);
                     gameModeContent.experditionContent().setHorseSequence(false);
+
+                    // 투표결과 공개
+                    showVoteResultCommand.onCommand(sender, command, label, args);
                     return;
                 }
 

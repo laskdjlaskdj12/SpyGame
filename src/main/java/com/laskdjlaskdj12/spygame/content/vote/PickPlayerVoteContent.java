@@ -75,11 +75,4 @@ public class PickPlayerVoteContent extends AVoteContent {
         removeVoteItem(characterList);
         return votingTotal(voteResult);
     }
-
-    private void removeVoteItem(List<ICharacter> characterList) {
-        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(0, new ItemStack(Material.AIR)));
-        characterList.forEach(iCharacter -> iCharacter.getPlayer().getInventory().setItem(1, new ItemStack(Material.AIR)));
-
-        characterList.forEach(this::moveItemToLeftSlot);
-    }
 }

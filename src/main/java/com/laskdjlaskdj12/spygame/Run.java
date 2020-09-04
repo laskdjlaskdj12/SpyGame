@@ -36,6 +36,8 @@ public class Run extends JavaPlugin {
         GameModeContent gameModeContent = new GameModeContent(experditionContent,
                 gameRoleContent);
 
+        ShowVoteResultCommand showVoteResultCommand = new ShowVoteResultCommand(gameModeContent, this);
+
         //Todo: 이벤트 핸들러 construct들에 컨텐츠 핸들러 factory를 dependency로 리팩토링
         //이벤트 등록
         getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
@@ -49,7 +51,7 @@ public class Run extends JavaPlugin {
         getCommand("원정").setExecutor(new StartExperditionCommand(gameModeContent, experditionContent, characterContent, this));
         getCommand("원정종료").setExecutor(new StopExperditionCommand(gameModeContent, experditionContent, characterContent, this));
         getCommand("원정대원추가").setExecutor(new AddExperditionerCommand(characterContent, gameModeContent, experditionContent));
-        getCommand("투표결과공개").setExecutor(new ShowVoteResultCommand(gameModeContent, this));
+        getCommand("투표결과공개").setExecutor(showVoteResultCommand);
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
         getCommand("라운드체크").setExecutor(new RoundCheckCommand(gameModeContent));
         getCommand("멀린암살").setExecutor(new AssinssineKillMarlineCommand(gameModeContent));
@@ -57,7 +59,6 @@ public class Run extends JavaPlugin {
         getCommand("승리선언").setExecutor(new AnnounceWinCommand(gameModeContent));
         getCommand("패배선언").setExecutor(new AnnounceLoseCommand(gameModeContent));
         getCommand("라운드별원정대원선발").setExecutor(new ChooseExpeditionMemberSequenceCommand(gameModeContent, messageContent));
-        getCommand("디버그모드").setExecutor(new ActiveDebugModeCommand(gameModeContent));
 
         //원정 커맨드
         getCommand("엑스칼리버지정").setExecutor(new SetExcaliburOwnerCommand(gameModeContent));
@@ -67,7 +68,7 @@ public class Run extends JavaPlugin {
         //시퀸스커맨드
         getCommand("원정대장선정").setExecutor(new ExperditionLeadSequence(gameModeContent, this));
         getCommand("호수의요정선정").setExecutor(new ChooseLakeElfSequence(gameModeContent));
-        getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbySeuqence(gameModeContent, this));
+        getCommand("마차시퀸스").setExecutor(new StartTeleportToLobbySeuqence(gameModeContent, this, showVoteResultCommand));
 
         //Todo: 디버깅용으로 제거해야함
         getCommand("캐릭터정보").setExecutor(new ShowCharacterCommand(gameModeContent));
@@ -80,7 +81,7 @@ public class Run extends JavaPlugin {
         getCommand("지정캐릭터게임롤추가").setExecutor(new ForceCreateExpeditionRoleCommand(gameModeContent));
         getCommand("삭제").setExecutor(new RemoveItemTest());
         getCommand("디버그모드").setExecutor(new ActiveDebugModeCommand(gameModeContent));
-
+        getCommand("템이동").setExecutor(new ItemMoveCommand(gameModeContent));
     }
 
     @Override
