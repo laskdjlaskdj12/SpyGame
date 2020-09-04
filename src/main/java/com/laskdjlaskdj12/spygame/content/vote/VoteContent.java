@@ -68,7 +68,7 @@ public class VoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(DyeColor.BLACK))
+                .map(character -> BlockContent.isAiBlock(character.getPlayer().getInventory().getItemInMainHand()))
                 .collect(Collectors.toList());
 
         characterList.forEach(this::moveItemToDown);

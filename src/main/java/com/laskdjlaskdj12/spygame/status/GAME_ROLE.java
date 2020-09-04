@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 public enum GAME_ROLE {
     NONE("None", "원정대원"),
-    EXCALIBUR_OWNER("Excalibur", "엑스칼리버"),
+    EXCALIBUR_OWNER("Excalibur", "엑스칼리버 소유자"),
     EXPEDITION_LEAD("ExpeditionLead", "원정대장");
 
     private String name;

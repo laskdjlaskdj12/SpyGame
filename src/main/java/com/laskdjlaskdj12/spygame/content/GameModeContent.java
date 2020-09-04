@@ -34,6 +34,10 @@ public class GameModeContent {
     private boolean collectVoteBlock = false;
     private boolean isDebugMod = true;
 
+    public void setCharacterList(List<ICharacter> characterList) {
+        this.characterList = characterList;
+    }
+
     public GameModeContent(ExperditionContent experditionContent, GameRoleContent gameRoleContent) {
         this.experditionContent = experditionContent;
         this.gameRoleContent = gameRoleContent;
@@ -64,7 +68,7 @@ public class GameModeContent {
     @Nullable
     public ICharacter findCharacterFromPlayer(Player player) {
         return characterList.stream().filter(character -> character.getPlayer() == player)
-                .findFirst()
+                .findAny()
                 .orElse(null);
     }
 

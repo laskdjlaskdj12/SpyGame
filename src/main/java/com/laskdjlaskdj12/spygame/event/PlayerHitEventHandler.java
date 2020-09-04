@@ -92,9 +92,11 @@ public class PlayerHitEventHandler implements Listener {
             String subTitle  = vicitim.getDisplayName() + "님이 원정대원으로 선발되셨습니다.";
             messageContent.sendTitleToAll(title, subTitle);
 
+            //만약 원정대원이 전부 찼다면 지팡이 사라지게 만듬
             if(gameModeContent.experditionContent().roundByMaxMemberCount() == gameModeContent.experditionContent().applyExperditionMemberCount()){
-                attacker.getInventory().setItem(0, new ItemStack(Material.AIR));
-                attacker.getInventory().setItem(1, new ItemStack(Material.AIR));
+                ICharacter attackerCharacter = gameModeContent.findCharacterFromPlayer(attacker);
+                CharacterContent.removeItem(attackerCharacter, Material.DIAMOND_PICKAXE);
+                CharacterContent.removeItem(attackerCharacter, Material.DIAMOND_AXE);
             }
 
         }catch(AvalonGameError e){

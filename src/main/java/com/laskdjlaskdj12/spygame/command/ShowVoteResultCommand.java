@@ -2,10 +2,12 @@ package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.config.BlockConfig;
 import com.laskdjlaskdj12.spygame.content.BlockContent;
+import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.domain.ExperditionInfo;
 import com.laskdjlaskdj12.spygame.domain.VoteInfo;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,7 +30,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
     //Todo: 리팩토링 할것
     private final GameModeContent gameModeContent;
-    private final JavaPlugin javaPlugin;
+    private final JavaPlugin plugin;
     public static int second = 0;
     public static int term = 3;
     public static int voteInfoListIndex = 0;
@@ -36,9 +38,62 @@ public class ShowVoteResultCommand implements CommandExecutor {
     public static BukkitTask taskID;
     public static int voterCount = 0;
 
-    public ShowVoteResultCommand(GameModeContent gameModeContent, JavaPlugin javaPlugin) {
+    public static BukkitTask waitTimerTask;
+    public static int waitTimerCount = TickUtil.secondToTick(5);
+
+    public static BukkitTask showWinGoodSideWaitTimerTask;
+    public static int showWinGoodSideWaitTimerCount = TickUtil.secondToTick(5);
+
+    public ShowVoteResultCommand(GameModeContent gameModeContent, JavaPlugin plugin) {
         this.gameModeContent = gameModeContent;
-        this.javaPlugin = javaPlugin;
+        this.plugin = plugin;
+    }
+
+    private void showWinGoodSide(int timerCount) {
+        showWinGoodSideWaitTimerCount = TickUtil.secondToTick(timerCount);
+        showWinGoodSideWaitTimerTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            if(showWinGoodSideWaitTimerCount == 0){
+                showWinGoodSideWaitTimerCount = TickUtil.secondToTick(5);
+                Bukkit.getScheduler().cancelTask(showWinGoodSideWaitTimerTask.getTaskId());
+
+                //투표결과 공개
+                CharacterContent.showTitle(gameModeContent.characterList(), "선 세력이 원정에 성공.", "");
+
+                //멀린암살 시퀸스로 바꾸기
+                gameModeContent.startKillMarline();
+                return;
+            }
+
+            showWinGoodSideWaitTimerCount -= TickUtil.secondToTick(1);
+        }, 0, 20L);
+    }
+
+    private void nextShowTitleSleep(int timerCount) {
+        waitTimerCount = TickUtil.secondToTick(timerCount);
+        waitTimerTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            if(waitTimerCount == 0){
+                waitTimerCount = TickUtil.secondToTick(5);
+                Bukkit.getScheduler().cancelTask(waitTimerTask.getTaskId());
+
+                //만약 원정이 3승이거나 3패가 됬을경우 선의세력의 승리인지 악의세력의 승리인지 체크
+                if (gameModeContent.getWinCount() == 3) {
+                    //선의세력이 승리함
+                    showWinGoodSide(5);
+                } else if (gameModeContent.getLoseCount() == 3) {
+                    //패배
+                    gameModeContent.declareLose();
+                } else{
+                    // 원정이 끝났으므로 기존 원정 종료 및 새원정 시작
+                    gameModeContent.experditionContent().stop();
+                    gameModeContent.experditionContent().start();
+                    CharacterContent.showTitle(gameModeContent.characterList(), "제 " + gameModeContent.experditionCount() + ChatColor.YELLOW + " 원정", "");
+                }
+
+                return;
+            }
+
+            waitTimerCount -= TickUtil.secondToTick(1);
+        }, 0, 20L);
     }
 
     @Override
@@ -57,24 +112,24 @@ public class ShowVoteResultCommand implements CommandExecutor {
         }
 
         voteResult = gameModeContent.experditionContent().sortVoteList();
-        taskID = Bukkit.getScheduler().runTaskTimer(javaPlugin, () -> {
+        taskID = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
                 //투표 결과 한개씩 공개
                 if (second == term) {
-                    javaPlugin.getLogger().info(voteResult.size() + "개의 블록이 공개됩니다.");
+                    plugin.getLogger().info(voteResult.size() + "개의 블록이 공개됩니다.");
 
                     showResultBlock(voteInfoListIndex);
 
                     showNext();
 
                     if (isEnd()) {
-                        javaPlugin.getLogger().info("투표결과 공개를 끝냅니다.");
+                        plugin.getLogger().info("투표결과 공개를 끝냅니다.");
                         end();
                     }
 
                     return;
                 }
 
-                javaPlugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex + "\n" + "second : " + second);
+                plugin.getLogger().info("voteInfoListIndex : " + voteInfoListIndex + "\n" + "second : " + second);
                 showRandomBlock(voteInfoListIndex, second);
                 second += 1;
         }, 0, 20);
@@ -97,7 +152,7 @@ public class ShowVoteResultCommand implements CommandExecutor {
 
     private void showRandomBlock(int showVoteInfoListIndex, int second) {
         //보여주는 블록 인덱스
-        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.WOOL_COLOR_LIST).map(BlockContent::makeWOOLColor).collect(Collectors.toList());
+        List<ItemStack> voteListBlock = Arrays.stream(BlockConfig.WOOL_COLOR_LIST).map(BlockContent::makeWOOLItemByColor).collect(Collectors.toList());
 
         //쇼로 보여줄 블록들을 섞어놓기
         Collections.shuffle(voteListBlock);
@@ -107,14 +162,12 @@ public class ShowVoteResultCommand implements CommandExecutor {
         }
 
         Block block = gameModeContent.getActiveVoteResultBlock().get(showVoteInfoListIndex);
-        Material material = voteListBlock.get(second).getType();
-
-        //블록들을 변경하기
-        block.setType(material);
+        block.setType(voteListBlock.get(second).getType());
+        block.setData((byte) voteListBlock.get(second).getDurability());
     }
 
     private boolean isEnd() {
-        javaPlugin.getLogger().info("ActiveVoteResultBlockSize : " + gameModeContent.getActiveVoteResultBlock().size());
+        plugin.getLogger().info("ActiveVoteResultBlockSize : " + gameModeContent.getActiveVoteResultBlock().size());
         return gameModeContent.getActiveVoteResultBlock().size() == voteInfoListIndex;
     }
 
@@ -130,39 +183,25 @@ public class ShowVoteResultCommand implements CommandExecutor {
         //4회차인지 체크
         if (gameModeContent.experditionCount() >= 4) {
             if (nayVoteInfo.size() >= 2) {
-                Bukkit.broadcastMessage("원정이 실패했습니다.");
                 gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+                CharacterContent.showTitle(gameModeContent.characterList(), "원정에 실패했습니다.", "");
             } else{
-                Bukkit.broadcastMessage("원정이 승리했습니다.");
                 gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+                CharacterContent.showTitle(gameModeContent.characterList(), "원정에 성공했습니다.", "");
             }
         } else {
             if (nayVoteInfo.size() >= 1) {
-                Bukkit.broadcastMessage("원정이 실패했습니다.");
                 gameModeContent.setLoseCount(gameModeContent.getLoseCount() + 1);
+                CharacterContent.showTitle(gameModeContent.characterList(), "원정에 실패했습니다.", "");
             } else {
-                Bukkit.broadcastMessage("원정이 승리했습니다.");
                 gameModeContent.setWinCount(gameModeContent.getWinCount() + 1);
+                CharacterContent.showTitle(gameModeContent.characterList(), "원정에 성공했습니다.", "");
             }
         }
 
         resetVoteTimer();
 
-        //만약 원정이 3승이거나 3패가 됬을경우 선의세력의 승리인지 악의세력의 승리인지 체크
-        if (gameModeContent.getWinCount() == 3) {
-            //선의세력이 승리함
-            Bukkit.broadcastMessage("선의세력이 원정에 성공했습니다!");
-
-            //멀린암살
-            gameModeContent.startKillMarline();
-        } else if (gameModeContent.getLoseCount() == 3) {
-            //패배
-            gameModeContent.declareLose();
-        } else{
-            // 원정이 끝났으므로 기존 원정 종료 및 새원정 시작
-            gameModeContent.experditionContent().stop();
-            gameModeContent.experditionContent().start();
-        }
+        nextShowTitleSleep(5);
     }
 
     private void resetVoteTimer() {

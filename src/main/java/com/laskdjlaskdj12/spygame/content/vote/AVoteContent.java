@@ -51,8 +51,8 @@ public abstract class AVoteContent {
         //기존 블록들을 아이템 슬롯 3번으로 옮김
         moveItemToUpper(character);
 
-        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE)));
-        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLColorToMaterial(DyeColor.BLACK)));
+        character.getPlayer().getInventory().setItem(0, makeCustomItem("찬성", BlockContent.makeWOOLItemByColor(DyeColor.WHITE)));
+        character.getPlayer().getInventory().setItem(1, makeCustomItem("반대", BlockContent.makeWOOLItemByColor(DyeColor.BLACK)));
     }
 
     protected void removeVoteItem(List<ICharacter> characterList) {
@@ -150,6 +150,14 @@ public abstract class AVoteContent {
 
     private ItemStack makeCustomItem(String name, Material blockMaterial) {
         ItemStack block = new ItemStack(blockMaterial);
+        ItemMeta blockMetadata = block.getItemMeta();
+        blockMetadata.setDisplayName(name);
+        block.setItemMeta(blockMetadata);
+
+        return block;
+    }
+
+    private ItemStack makeCustomItem(String name, ItemStack block) {
         ItemMeta blockMetadata = block.getItemMeta();
         blockMetadata.setDisplayName(name);
         block.setItemMeta(blockMetadata);

@@ -32,14 +32,20 @@ public class ExperditionLeadSequence implements CommandExecutor, IVoteResultHand
             return true;
         }
 
+        System.out.println("current count : " + args.length);
+
+        for (String arg : args) {
+            System.out.println("args : " + arg);
+        }
+
+        for (ICharacter iCharacter :gameModeContent.characterList()){
+            System.out.println("Character Name : " + iCharacter.getPlayer().getDisplayName());
+        }
+
         ICharacter candidate = gameModeContent.findCharacterFromName(args[0]);
 
         if (candidate == null) {
-            sender.sendMessage(new StringBuilder()
-                    .append(candidate)
-                    .append(ChatColor.RED + "은 게임참여자가 아닙니다. 다시 체크해주세요")
-                    .toString());
-
+            sender.sendMessage("선출하려는 대표자는 게임참여자가 아닙니다. 다시 체크해주세요");
             return true;
         }
 

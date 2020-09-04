@@ -46,7 +46,6 @@ public class ExperditionContent {
         this.experditionRoundCount += 1;
         this.experditionInfo = new ExperditionInfo();
         this.experditionInfo.setMaxExperditionMembersCount(ExpeditionConfig.roundByExperditionMemberCount.get(experditionRoundCount - 1));
-        Bukkit.broadcastMessage("제" + experditionRoundCount+ " 번째 원정을 시작합니다.");
     }
 
     public void stop() {

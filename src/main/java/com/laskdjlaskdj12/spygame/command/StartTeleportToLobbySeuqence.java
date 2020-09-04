@@ -32,7 +32,9 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
     }
 
     public static BukkitTask bukkitTask;
+    public static BukkitTask waitTimerTask;
     public static int timerCount = TickUtil.secondToTick(10);
+    public static int waitTimerCount = TickUtil.secondToTick(5);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -58,8 +60,8 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
                     gameModeContent.experditionContent().teleportExperditionMembers(ExpeditionConfig.counsilLocation);
                     gameModeContent.experditionContent().setHorseSequence(false);
 
-                    // 투표결과 공개
-                    showVoteResultCommand.onCommand(sender, command, label, args);
+                    //5초 동안 Stop
+                    waitUntil(5, sender, command, label, args);
                     return;
                 }
 
@@ -93,5 +95,22 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
 
         //칼을 들고있다면 타이머 10초를 제거함
         return true;
+    }
+
+    private void waitUntil(int timerCount, CommandSender sender, Command command, String label, String[] args) {
+        waitTimerCount = TickUtil.secondToTick(timerCount);
+        waitTimerTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            if(waitTimerCount == 0){
+                waitTimerCount = TickUtil.secondToTick(5);
+                Bukkit.getScheduler().cancelTask(waitTimerTask.getTaskId());
+
+                //투표결과 공개
+                showVoteResultCommand.onCommand(sender, command, label, args);
+                return;
+            }
+
+            Bukkit.broadcastMessage("결과 공개까지 [ " + TickUtil.tickToSecond(waitTimerCount) + " ] 초");
+            waitTimerCount -= TickUtil.secondToTick(1);
+        }, 0, 20L);
     }
 }

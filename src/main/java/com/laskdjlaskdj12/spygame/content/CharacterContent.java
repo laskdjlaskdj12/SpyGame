@@ -3,6 +3,7 @@ package com.laskdjlaskdj12.spygame.content;
 import com.laskdjlaskdj12.spygame.content.character.BasicCharacter;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.content.role.IRole;
+import com.laskdjlaskdj12.spygame.util.TickUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,6 +20,19 @@ public class CharacterContent {
         to.setWorld(iCharacter.getPlayer().getWorld());
         iCharacter.getPlayer().teleport(to);
     }
+
+    public static void showTitle(List<ICharacter> sender, String title, String subTitle) {
+        for(ICharacter iCharacter : sender){
+            iCharacter.getPlayer().sendTitle(title, subTitle, TickUtil.secondToTick(2), TickUtil.secondToTick(5), TickUtil.secondToTick(2));
+        }
+    }
+
+    public static void shortShowTime(List<ICharacter> sender, String title, String subTitle) {
+        for(ICharacter iCharacter : sender){
+            iCharacter.getPlayer().sendTitle(title, subTitle, TickUtil.secondToTick(1), TickUtil.secondToTick(2), TickUtil.secondToTick(1));
+        }
+    }
+
     /*
         램덤으로 만든 Role와 유저와 플레이어에게 접목 시킴
      */

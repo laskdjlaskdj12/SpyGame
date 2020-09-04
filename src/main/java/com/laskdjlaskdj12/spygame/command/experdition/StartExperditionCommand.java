@@ -4,6 +4,7 @@ import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +37,7 @@ public class StartExperditionCommand implements CommandExecutor {
 
         //원정이 없다면 원정을 등록함
         experditionContent.start();
+        CharacterContent.showTitle(gameModeContent.characterList(), "제" + gameModeContent.experditionCount() + " " + ChatColor.YELLOW + "원정", "");
         return true;
     }
 }

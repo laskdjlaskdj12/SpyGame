@@ -10,11 +10,13 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Wool;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class PickPlayerVoteContent extends AVoteContent {
 
@@ -69,7 +71,7 @@ public class PickPlayerVoteContent extends AVoteContent {
     public VotingResult collectVoteResult(List<ICharacter> characterList) {
         //4. 손에 블록으로 집계
         List<Boolean> voteResult = characterList.stream()
-                .map(character -> character.getPlayer().getInventory().getItemInMainHand().getType() == BlockContent.makeWOOLColorToMaterial(DyeColor.WHITE))
+                .map(character -> BlockContent.isAiBlock(character.getPlayer().getInventory().getItemInMainHand()))
                 .collect(Collectors.toList());
 
         removeVoteItem(characterList);
