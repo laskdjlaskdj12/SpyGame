@@ -71,7 +71,7 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
                 ICharacter excaliburOwner = gameModeContent.findCharacterByGameRoleInExperditionaCharacter(GAME_ROLE.EXCALIBUR_OWNER);
                 if (excaliburOwner == null) {
                     if(timerCount == TickUtil.secondToTick(10)){
-                        Bukkit.broadcastMessage(ChatColor.RED + "엑스칼리버 소유자 없이 게임을 해서 엑스칼리버를 사용할수없습니다.");
+                        Bukkit.broadcastMessage(ChatColor.RED + "엑스칼리버 소유자 없어서 엑스칼리버를 사용할수없습니다.");
                     }
                 } else {
                     ItemStack handItem = excaliburOwner
@@ -80,7 +80,7 @@ public class StartTeleportToLobbySeuqence implements CommandExecutor {
                             .getItemInMainHand();
 
                     if (handItem.getType() == Material.DIAMOND_SWORD) {
-                        Bukkit.broadcastMessage("[테스트] 칼을 들고있으므로 타이머를 잠시 중지합니다.");
+                        Bukkit.broadcastMessage("엑스칼리버를 들고있으므로 타이머를 잠시 중지 됩니다.");
                         return;
                     }
                 }

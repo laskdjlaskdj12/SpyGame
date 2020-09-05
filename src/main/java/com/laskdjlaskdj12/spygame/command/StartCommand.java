@@ -47,12 +47,12 @@ public class StartCommand implements CommandExecutor {
         World world = Bukkit.getServer().getWorlds().get(0);
         List<Player> players = world.getPlayers();
 
-//        //릴리즈 모드일때 운영진들을 제외함
-//        if(!gameModeContent.isDebugMod()){
-//            players = players.stream()
-//                    .filter(player -> !gameModeContent.isAdmin(player))
-//                    .collect(Collectors.toList());
-//        }
+        //릴리즈 모드일때 운영진들을 제외함
+        if(!gameModeContent.isDebugMod()){
+            players = players.stream()
+                    .filter(player -> !gameModeContent.isAdmin(player))
+                    .collect(Collectors.toList());
+        }
 
         //player가 이미 있는지 체크
         if (players.size() > 10 || players.size() < 5) {
