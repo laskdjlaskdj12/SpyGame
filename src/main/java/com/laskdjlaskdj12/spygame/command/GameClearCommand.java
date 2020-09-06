@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.command;
 
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
+import com.laskdjlaskdj12.spygame.content.RestContent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,6 +18,7 @@ public class GameClearCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Bukkit.broadcastMessage("게임이 끝났습니다!");
+        RestContent.clearPlayer();
         gameModeContent.clearGame();
         return true;
     }

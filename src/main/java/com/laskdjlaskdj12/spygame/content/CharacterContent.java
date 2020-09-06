@@ -45,6 +45,7 @@ public class CharacterContent {
                     BasicCharacter basicCharacter = new BasicCharacter();
                     basicCharacter.setRole(roleList.get(operand));
                     basicCharacter.setPlayer(players.get(operand));
+                    RestContent.sendPlayerInfo(basicCharacter);
                     return basicCharacter;
                 })
                 .collect(Collectors.toList());

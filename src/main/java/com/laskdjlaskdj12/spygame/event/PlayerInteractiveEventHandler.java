@@ -4,10 +4,7 @@ import com.laskdjlaskdj12.spygame.content.CharacterContent;
 import com.laskdjlaskdj12.spygame.content.ExperditionContent;
 import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.character.ICharacter;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,7 +53,7 @@ public class PlayerInteractiveEventHandler implements Listener {
         double Y = block.getLocation().getY();
         double Z = block.getLocation().getZ();
 
-        System.out.println("X : " + X + " Y : " + Y + " Z : " + Z);
+        Bukkit.broadcastMessage("X : " + X + " Y : " + Y + " Z : " + Z);
     }
 
     private void voteExperditionResult(PlayerInteractEvent event) {

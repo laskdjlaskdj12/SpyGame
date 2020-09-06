@@ -319,6 +319,10 @@ public class GameModeContent {
                                 TickUtil.secondToTick(2),
                                 TickUtil.secondToTick(4),
                                 TickUtil.secondToTick(2)));
+
+        characterList.forEach(iCharacter ->
+                RestContent.sendPlayerWin(iCharacter.getPlayer()));
+
         clearGame();
     }
 
@@ -331,6 +335,10 @@ public class GameModeContent {
                                 TickUtil.secondToTick(2),
                                 TickUtil.secondToTick(4),
                                 TickUtil.secondToTick(2)));
+
+        characterList.forEach(iCharacter ->
+                RestContent.sendPlayerLose(iCharacter.getPlayer()));
+
         clearGame();
     }
 

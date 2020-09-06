@@ -1,6 +1,7 @@
 package com.laskdjlaskdj12.spygame.event;
 
 import com.google.gson.Gson;
+import com.laskdjlaskdj12.spygame.content.RestContent;
 import com.laskdjlaskdj12.spygame.domain.JoinInfo;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -34,21 +35,7 @@ public class PlayerJoinEventHandler implements Listener {
         joinInfo.setAddress(address.getAddress().getHostName());
         getLogger().info("접속자 정보 : " + player.getAddress().getHostString() + ":" + player.getAddress().getPort());
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                HttpResponse<String> result = Unirest.post("http://localhost:8080/laskdjos/minecraft/user/save")
-                        .body(new Gson().toJson(joinInfo))
-                        .asString();
-
-                if (result.getStatus() != 200) {
-                    System.out.println("전송이 실패했습니다. \n statusCode : " + result.getStatusText() + " \n 사유 : " + result.getBody());
-                }
-
-                getLogger().info("전송이 완료되었습니다.");
-            } catch (UnirestException e) {
-                e.printStackTrace();
-            }
-        });
+        RestContent.sendConnctedAddress(joinInfo);
 
         getLogger().info("전송된 접속자 정보 : " + player.getAddress().getHostString() + ":" + player.getAddress().getPort());
     }
