@@ -40,7 +40,7 @@
 ### 스트리머
   - [가이코](https://www.twitch.tv/pymyp2288)
   - [공파리파](https://www.twitch.tv/gongparipa)
-  - [김규식](https://www.youtube.com/channel/UC_eXONnL5HKKTpa6_t4BTOw)
+  - [인류 최후의 로멘티스트 김규식](https://www.youtube.com/channel/UC_eXONnL5HKKTpa6_t4BTOw)
   - [랑이씌](https://www.twitch.tv/rang0210)
   - [모카형](https://www.twitch.tv/oilj_far)
   - [금사향](https://www.twitch.tv/sah_yang)
