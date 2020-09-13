@@ -129,6 +129,8 @@ Copyright(c) 2020.laskdjlaskdj12 all right reserved
  - 트리비
  - 판다라고 불러줘
  - 탱탱한 푸탱
+ - 맥남
+ - 시윤
 
 ### 스트리머
   - [가이코](https://www.twitch.tv/pymyp2288)
