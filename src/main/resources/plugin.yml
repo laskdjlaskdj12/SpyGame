@@ -110,3 +110,9 @@ commands:
   addwool:
     description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
     usage: /<command>
+  showcharacter:
+    description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
+    usage: /<command>
+  goldblock:
+    description: "해당 캐릭터를 지정된 캐릭터로 만드는 디버깅 커맨드입니다."
+    usage: /<command>

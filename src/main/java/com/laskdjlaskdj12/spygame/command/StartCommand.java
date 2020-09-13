@@ -52,10 +52,12 @@ public class StartCommand implements CommandExecutor {
             players = players.stream()
                     .filter(player -> !gameModeContent.isAdmin(player))
                     .collect(Collectors.toList());
+            Bukkit.broadcastMessage("인원수 : " + players.size());
         }
 
         //player가 이미 있는지 체크
-        if (players.size() > 10 || players.size() < 5) {
+        if (players.size() > 11 || players.size() < 5) {
+            Bukkit.broadcastMessage("체크인원수 : " + players.size());
             sender.sendMessage(ChatColor.RED + "인원수가 부족합니다.");
             sender.sendMessage(ChatColor.RED + "최소 플레이는 5명 에서 10명 까지입니다.");
 

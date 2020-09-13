@@ -83,6 +83,8 @@ public class Run extends JavaPlugin {
         getCommand("디버그모드").setExecutor(new ActiveDebugModeCommand(gameModeContent));
         getCommand("템이동").setExecutor(new ItemMoveCommand(gameModeContent));
         getCommand("addwool").setExecutor(new AddWoolCommand());
+        getCommand("showcharacter").setExecutor(new ShowCharacterCommand(gameModeContent));
+        getCommand("goldblock").setExecutor(new ChangeToGoldBlockCommand());
     }
 
     @Override

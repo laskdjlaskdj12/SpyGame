@@ -74,7 +74,7 @@ public class ExperditionContent {
 
         return experditionInfo.getApplyCharacters()
                 .stream()
-                .filter(iCharacter -> iCharacter == findCharacter).findFirst()
+                .filter(iCharacter -> iCharacter.getPlayer().getDisplayName().equals(findCharacter.getPlayer().getDisplayName())).findFirst()
                 .orElse(null);
     }
 
@@ -112,7 +112,7 @@ public class ExperditionContent {
     public ICharacter findExpertiesFromPlayer(Player player) {
         return experditionInfo.getApplyCharacters()
                 .stream()
-                .filter(character -> character.getPlayer().getUniqueId() == player.getUniqueId())
+                .filter(character -> character.getPlayer().getDisplayName().equals(player.getDisplayName()))
                 .findFirst()
                 .orElse(null);
     }

@@ -67,13 +67,17 @@ public class GameModeContent {
 
     @Nullable
     public ICharacter findCharacterFromPlayer(Player player) {
-        return characterList.stream().filter(character -> character.getPlayer() == player)
+        return characterList.stream().filter(character -> character.getPlayer().getDisplayName().equals(player.getDisplayName()))
                 .findAny()
                 .orElse(null);
     }
 
     @Nullable
     public ICharacter findCharacterFromName(String name) {
+        if(characterList == null){
+            return null;
+        }
+
         return characterList.stream()
                 .filter(character -> character.getPlayer().getDisplayName().equals(name))
                 .findAny()
@@ -100,7 +104,7 @@ public class GameModeContent {
     @Nullable
     public ICharacter findCharacterByGameRole(GAME_ROLE gameRole) {
         for (ICharacter iCharacter : characterList) {
-            if (iCharacter.getGameRole() == gameRole) {
+            if (iCharacter.getGameRole().getName().equals(gameRole.getName())) {
                 return iCharacter;
             }
         }
@@ -401,10 +405,12 @@ public class GameModeContent {
     }
 
     public boolean isAdmin(Player player) {
-        String result = Arrays.stream(Admin.ADMIN_LIST).filter(s -> player.getDisplayName().equals(s))
-                .findAny()
-                .orElse(null);
+        for (String admin : Admin.ADMIN_LIST){
+            if(admin.equals(player.getDisplayName())){
+                return true;
+            }
+        }
 
-        return result != null;
+        return false;
     }
 }

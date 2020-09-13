@@ -1,11 +1,9 @@
 package com.laskdjlaskdj12.spygame.event;
 
-import com.google.gson.Gson;
+import com.laskdjlaskdj12.spygame.content.GameModeContent;
 import com.laskdjlaskdj12.spygame.content.RestContent;
+import com.laskdjlaskdj12.spygame.content.character.ICharacter;
 import com.laskdjlaskdj12.spygame.domain.JoinInfo;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.CompletableFuture;
 
 import static org.bukkit.Bukkit.getLogger;
 
@@ -27,7 +24,6 @@ public class PlayerJoinEventHandler implements Listener {
         if (address == null) {
             return;
         }
-
         player.sendMessage("모든 세팅이 완료되었습니다!! Dev by " + ChatColor.YELLOW + "laskdjlaskdj12 (라스크) " + ChatColor.WHITE + "& Thanks for " + ChatColor.GREEN + "우리들의 마인크래프트 공간");
 
         JoinInfo joinInfo = new JoinInfo();
