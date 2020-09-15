@@ -133,7 +133,7 @@ Copyright(c) 2020.laskdjlaskdj12 all right reserved
  - 시윤
 
 ### 스트리머
-  - [가이코](https://www.twitch.tv/pymyp2288)
+  - [세상을 정복하던 가이코](https://www.twitch.tv/pymyp2288)
   - [공파리파, 세상을 치유했던 목소리](https://www.twitch.tv/gongparipa)
   - [인류 최후의 로멘티스트 김규식](https://www.youtube.com/channel/UC_eXONnL5HKKTpa6_t4BTOw)
   - [3대 500쳤던 소녀 랑이씌](https://www.twitch.tv/rang0210)
