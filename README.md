@@ -14,7 +14,7 @@
 
 아무도 죽지 않는 마피아게임 으로써 악의 세력을 가진 사람들이 판을 망치는것을 막아야하는 게임입니다.
 
-자세한 부분은 [설명영상](https://youtu.be/vt5fpE0bzSY) 으로 확인할수있습니다.
+자세한 부분은 [설명영상](https://www.youtube.com/watch?v=MYO7WHi50Es&feature=youtu.be&ab_channel=%EA%B2%8C%EB%B0%9C%EC%9E%90%EB%9D%BC%EC%8A%A4%ED%81%AC) 으로 확인할수있습니다.
 
 
 ## 마인크래프트 플러그인이 뭐에요❓
