@@ -46,8 +46,10 @@ $ gradle jar
 ```
 
 # 버전 정보
+```
 CatServer: 1.12.2 All Version
 Spigot : 1.12.0 ~ 1.12.2
+```
 
 ## 구조
 
